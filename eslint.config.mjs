@@ -10,6 +10,7 @@ export default tseslint.config(
       "**/dist/**",
       "**/node_modules/**",
       "storybook-static/**",
+      "coverage/**",
       "**/*.config.{js,mjs,ts}",
     ],
   },
@@ -23,9 +24,26 @@ export default tseslint.config(
         ...globals.es2020,
       },
       parserOptions: {
-        projectService: true,
+        projectService: {
+          allowDefaultProject: [
+            ".storybook/*.ts",
+            "vitest.setup.ts",
+            "stories/*.tsx",
+            "stories/helpers/*.ts",
+            "packages/core/src/components/__tests__/*.test.tsx",
+            "packages/core/src/utils/__tests__/*.test.ts",
+          ],
+        },
         tsconfigRootDir: import.meta.dirname,
       },
+    },
+  },
+  {
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
     },
   },
   {
@@ -43,9 +61,15 @@ export default tseslint.config(
     },
   },
   {
-    files: ["**/*.test.ts", "**/*.test.tsx", "**/*.stories.tsx"],
+    files: [
+      "**/*.test.ts",
+      "**/*.test.tsx",
+      "**/*.stories.tsx",
+      "vitest.setup.ts",
+    ],
     rules: {
       "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
       "@typescript-eslint/no-unsafe-member-access": "off",
       "@typescript-eslint/no-floating-promises": "off",
     },
