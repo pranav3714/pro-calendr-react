@@ -5,6 +5,8 @@ export function useDrag() {
   return {
     dragState,
     startDrag: setDragState,
-    endDrag: () => { setDragState(null); },
+    endDrag: () => {
+      setDragState(null);
+    },
   };
 }

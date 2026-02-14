@@ -1,4 +1,8 @@
-import type { CalendarEvent, CalendarResource, CalendarResourceGroup } from "@pro-calendr-react/core";
+import type {
+  CalendarEvent,
+  CalendarResource,
+  CalendarResourceGroup,
+} from "@pro-calendr-react/core";
 
 const today = new Date();
 const year = today.getFullYear();

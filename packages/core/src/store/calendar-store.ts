@@ -30,13 +30,27 @@ export const useCalendarStore = create<CalendarStore>()((set) => ({
   hoveredSlot: null,
   filteredResourceIds: [],
 
-  setView: (view) => { set({ currentView: view }); },
-  setDate: (date) => { set({ currentDate: date }); },
-  setDateRange: (range) => { set({ dateRange: range }); },
-  setSelection: (selection) => { set({ selection }); },
-  setDragState: (state) => { set({ dragState: state }); },
-  setHoveredSlot: (slot) => { set({ hoveredSlot: slot }); },
-  setFilteredResourceIds: (ids) => { set({ filteredResourceIds: ids }); },
+  setView: (view) => {
+    set({ currentView: view });
+  },
+  setDate: (date) => {
+    set({ currentDate: date });
+  },
+  setDateRange: (range) => {
+    set({ dateRange: range });
+  },
+  setSelection: (selection) => {
+    set({ selection });
+  },
+  setDragState: (state) => {
+    set({ dragState: state });
+  },
+  setHoveredSlot: (slot) => {
+    set({ hoveredSlot: slot });
+  },
+  setFilteredResourceIds: (ids) => {
+    set({ filteredResourceIds: ids });
+  },
   navigateDate: (_direction) => {
     // TODO: implement date navigation logic
   },

@@ -14,9 +14,6 @@ export function isSameDay(a: Date, b: Date): boolean {
   );
 }
 
-export function getDateRange(
-  date: Date,
-  _view: string,
-): { start: Date; end: Date } {
+export function getDateRange(date: Date, _view: string): { start: Date; end: Date } {
   return { start: new Date(date), end: new Date(date) };
 }

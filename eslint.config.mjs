@@ -54,19 +54,11 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      "react-refresh/only-export-components": [
-        "warn",
-        { allowConstantExport: true },
-      ],
+      "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     },
   },
   {
-    files: [
-      "**/*.test.ts",
-      "**/*.test.tsx",
-      "**/*.stories.tsx",
-      "vitest.setup.ts",
-    ],
+    files: ["**/*.test.ts", "**/*.test.tsx", "**/*.stories.tsx", "vitest.setup.ts"],
     rules: {
       "@typescript-eslint/no-unsafe-assignment": "off",
       "@typescript-eslint/no-unsafe-call": "off",

@@ -10,11 +10,7 @@ export function ViewSelector({ views = [], activeView, onChange }: ViewSelectorP
   return (
     <div className="pro-calendr-react-view-selector">
       {views.map((view) => (
-        <button
-          key={view}
-          data-active={view === activeView}
-          onClick={() => onChange?.(view)}
-        >
+        <button key={view} data-active={view === activeView} onClick={() => onChange?.(view)}>
           {view}
         </button>
       ))}

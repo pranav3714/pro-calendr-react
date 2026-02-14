@@ -1,7 +1,23 @@
 import type { ReactNode } from "react";
-import type { CalendarEvent, EventContentProps, EventDropInfo, EventResizeInfo, EventClickInfo } from "./event";
-import type { CalendarResource, CalendarResourceGroup, ResourceLabelProps, ResourceGroupHeaderProps } from "./resource";
-import type { SelectInfo, DropValidationResult, ContextMenuTarget, ContextMenuItem } from "./interaction";
+import type {
+  CalendarEvent,
+  EventContentProps,
+  EventDropInfo,
+  EventResizeInfo,
+  EventClickInfo,
+} from "./event";
+import type {
+  CalendarResource,
+  CalendarResourceGroup,
+  ResourceLabelProps,
+  ResourceGroupHeaderProps,
+} from "./resource";
+import type {
+  SelectInfo,
+  DropValidationResult,
+  ContextMenuTarget,
+  ContextMenuItem,
+} from "./interaction";
 import type { CalendarClassNames, CalendarCSSVariables } from "./theme";
 import type { CalendarPlugin } from "./plugin";
 import type {
