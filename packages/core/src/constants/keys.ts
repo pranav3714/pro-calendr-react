@@ -1,0 +1,16 @@
+export const KEYS = {
+  TODAY: "t",
+  DAY_VIEW: "d",
+  WEEK_VIEW: "w",
+  MONTH_VIEW: "m",
+  PREV: "ArrowLeft",
+  NEXT: "ArrowRight",
+  UP: "ArrowUp",
+  DOWN: "ArrowDown",
+  ENTER: "Enter",
+  ESCAPE: "Escape",
+  NEW_EVENT: "n",
+  SEARCH: "/",
+  UNDO: "z",
+  HELP: "?",
+} as const;

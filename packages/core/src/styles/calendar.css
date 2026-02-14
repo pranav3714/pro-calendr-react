@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Pro Calendar — CSS Custom Properties
+ * These variables provide theming for non-Tailwind consumers.
+ * Tailwind consumers can override via classNames prop instead.
+ */
+
+:root {
+  --cal-bg: #ffffff;
+  --cal-bg-muted: #f9fafb;
+  --cal-border: #e5e7eb;
+  --cal-accent: #3b82f6;
+  --cal-accent-hover: #2563eb;
+  --cal-text: #111827;
+  --cal-text-muted: #6b7280;
+  --cal-radius: 8px;
+  --cal-radius-sm: 4px;
+  --cal-radius-lg: 12px;
+  --cal-font-size: 14px;
+  --cal-font-size-sm: 12px;
+  --cal-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --cal-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --cal-now-indicator: #ef4444;
+  --cal-selection: rgb(59 130 246 / 0.2);
+  --cal-event-default-bg: #3b82f6;
+  --cal-event-default-text: #ffffff;
+  --cal-slot-height: 40px;
+  --cal-slot-width: 80px;
+  --cal-resource-width: 180px;
+}
+
+.dark {
+  --cal-bg: #111827;
+  --cal-bg-muted: #1f2937;
+  --cal-border: #374151;
+  --cal-accent: #60a5fa;
+  --cal-accent-hover: #3b82f6;
+  --cal-text: #f9fafb;
+  --cal-text-muted: #9ca3af;
+  --cal-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --cal-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+}
+
+/* Structural styles */
+
+.pro-calendr-react {
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    sans-serif;
+  font-size: var(--cal-font-size);
+  color: var(--cal-text);
+  background-color: var(--cal-bg);
+  border: 1px solid var(--cal-border);
+  border-radius: var(--cal-radius);
+  overflow: hidden;
+}
+
+.pro-calendr-react-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--cal-border);
+  gap: 8px;
+}
+
+.pro-calendr-react-toolbar-left,
+.pro-calendr-react-toolbar-center,
+.pro-calendr-react-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pro-calendr-react-now-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--cal-now-indicator);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.pro-calendr-react-now-indicator::before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--cal-now-indicator);
+}
+
+/* Skeleton loading */
+
+.pro-calendr-react-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+}
+
+.pro-calendr-react-skeleton-bar {
+  height: 24px;
+  border-radius: var(--cal-radius-sm);
+  background: linear-gradient(
+    90deg,
+    var(--cal-bg-muted) 25%,
+    var(--cal-border) 50%,
+    var(--cal-bg-muted) 75%
+  );
+  background-size: 200% 100%;
+  animation: pro-calendr-react-shimmer 1.5s ease-in-out infinite;
+}
+
+.pro-calendr-react-skeleton-bar:nth-child(odd) {
+  width: 75%;
+}
+
+.pro-calendr-react-skeleton-bar:nth-child(even) {
+  width: 50%;
+}
+
+@keyframes pro-calendr-react-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Overflow indicator */
+
+.pro-calendr-react-overflow {
+  font-size: var(--cal-font-size-sm);
+  color: var(--cal-text-muted);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 2px 4px;
+  border-radius: var(--cal-radius-sm);
+}
+
+.pro-calendr-react-overflow:hover {
+  background-color: var(--cal-bg-muted);
+  color: var(--cal-text);
+}
+
+/* Print styles */
+
+@media print {
+  .pro-calendr-react {
+    border: none;
+    box-shadow: none;
+  }
+
+  .pro-calendr-react-toolbar {
+    border-bottom: 1px solid #000;
+  }
+
+  .pro-calendr-react-now-indicator {
+    display: none;
+  }
+
+  .pro-calendr-react-skeleton {
+    display: none;
+  }
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .pro-calendr-react-skeleton-bar {
+    animation: none;
+  }
+}

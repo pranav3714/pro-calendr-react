@@ -1,0 +1,139 @@
+{
+  "name": "@pro-calendr-react/core",
+  "version": "0.0.0",
+  "description": "A general-purpose, high-performance React calendar with timeline, week, month, day, and list views. Virtualized, Tailwind-native, and fully extensible.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./views/timeline": {
+      "import": {
+        "types": "./dist/views/timeline.d.ts",
+        "default": "./dist/views/timeline.js"
+      },
+      "require": {
+        "types": "./dist/views/timeline.d.cts",
+        "default": "./dist/views/timeline.cjs"
+      }
+    },
+    "./views/week": {
+      "import": {
+        "types": "./dist/views/week.d.ts",
+        "default": "./dist/views/week.js"
+      },
+      "require": {
+        "types": "./dist/views/week.d.cts",
+        "default": "./dist/views/week.cjs"
+      }
+    },
+    "./views/month": {
+      "import": {
+        "types": "./dist/views/month.d.ts",
+        "default": "./dist/views/month.js"
+      },
+      "require": {
+        "types": "./dist/views/month.d.cts",
+        "default": "./dist/views/month.cjs"
+      }
+    },
+    "./views/day": {
+      "import": {
+        "types": "./dist/views/day.d.ts",
+        "default": "./dist/views/day.js"
+      },
+      "require": {
+        "types": "./dist/views/day.d.cts",
+        "default": "./dist/views/day.cjs"
+      }
+    },
+    "./views/list": {
+      "import": {
+        "types": "./dist/views/list.d.ts",
+        "default": "./dist/views/list.js"
+      },
+      "require": {
+        "types": "./dist/views/list.d.cts",
+        "default": "./dist/views/list.cjs"
+      }
+    },
+    "./headless": {
+      "import": {
+        "types": "./dist/headless.d.ts",
+        "default": "./dist/headless.js"
+      },
+      "require": {
+        "types": "./dist/headless.d.cts",
+        "default": "./dist/headless.cjs"
+      }
+    },
+    "./plugins": {
+      "import": {
+        "types": "./dist/plugins.d.ts",
+        "default": "./dist/plugins.js"
+      },
+      "require": {
+        "types": "./dist/plugins.d.cts",
+        "default": "./dist/plugins.cjs"
+      }
+    },
+    "./styles.css": "./dist/calendar.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsup && pnpm build:css",
+    "build:css": "postcss src/styles/calendar.css -o dist/calendar.css --config ../../postcss.config.mjs",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "dependencies": {
+    "@tanstack/react-virtual": "^3.11.0",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "postcss": "^8.4.0",
+    "postcss-cli": "^11.0.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.7.0"
+  },
+  "keywords": [
+    "react",
+    "calendar",
+    "timeline",
+    "scheduler",
+    "drag-and-drop",
+    "virtualized",
+    "tailwind",
+    "typescript",
+    "resource-timeline",
+    "week-view",
+    "month-view",
+    "day-view"
+  ]
+}

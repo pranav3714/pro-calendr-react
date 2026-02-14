@@ -1,0 +1,121 @@
+/* Pro Calendar — Animations */
+
+@keyframes pro-calendr-react-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pro-calendr-react-fade-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+@keyframes pro-calendr-react-slide-left {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pro-calendr-react-slide-right {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pro-calendr-react-settle {
+  0% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes pro-calendr-react-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Animation utility classes */
+
+.pro-calendr-react-animate-fade-in {
+  animation: pro-calendr-react-fade-in 150ms ease-out;
+}
+
+.pro-calendr-react-animate-fade-out {
+  animation: pro-calendr-react-fade-out 150ms ease-in;
+}
+
+.pro-calendr-react-animate-slide-left {
+  animation: pro-calendr-react-slide-left 200ms ease-out;
+}
+
+.pro-calendr-react-animate-slide-right {
+  animation: pro-calendr-react-slide-right 200ms ease-out;
+}
+
+.pro-calendr-react-animate-settle {
+  animation: pro-calendr-react-settle 100ms ease-out;
+}
+
+.pro-calendr-react-animate-pulse {
+  animation: pro-calendr-react-pulse 2s ease-in-out infinite;
+}
+
+/* Drag states */
+
+.pro-calendr-react-dragging {
+  box-shadow: 0 8px 25px -5px rgb(0 0 0 / 0.2);
+  transform: scale(1.02);
+  opacity: 0.9;
+  cursor: grabbing;
+}
+
+.pro-calendr-react-drag-ghost {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .pro-calendr-react-animate-fade-in,
+  .pro-calendr-react-animate-fade-out,
+  .pro-calendr-react-animate-slide-left,
+  .pro-calendr-react-animate-slide-right,
+  .pro-calendr-react-animate-settle,
+  .pro-calendr-react-animate-pulse {
+    animation: none;
+  }
+
+  .pro-calendr-react-dragging {
+    transform: none;
+  }
+}
