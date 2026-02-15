@@ -47,12 +47,23 @@ export {
   parseDate,
   isSameDay,
   getDateRange,
+  formatTime,
+  formatDateHeader,
+  getDaysInRange,
+  getWeeksInRange,
+  parseTimeToMinutes,
+  minutesToDate,
+  getMinutesSinceMidnight,
+  getDurationMinutes,
+  addDays,
   detectCollisions,
   generateGridTemplate,
   snapToGrid,
   generateTimeSlots,
+  getSlotAtPosition,
   detectConflicts,
 } from "./utils";
+export type { TimeSlot } from "./utils";
 
 // Constants
 export { DEFAULTS, KEYS } from "./constants";
