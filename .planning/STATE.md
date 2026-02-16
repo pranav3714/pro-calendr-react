@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-16)
 
 **Core value:** Handle 1000+ events across all five views without performance degradation -- virtualization, surgical Zustand selectors, and minimal re-renders are non-negotiable.
-**Current focus:** Phase 2 - DayView, MonthView & Shared View Features
+**Current focus:** Phase 3 - Event Interactions
 
 ## Current Position
 
-Phase: 2 of 8 (DayView, MonthView & Shared View Features) -- COMPLETE
-Plan: 5 of 5 in current phase
-Status: Phase Complete
-Last activity: 2026-02-16 -- Completed 02-05-PLAN.md (NowIndicator + BusinessHoursOverlay)
+Phase: 3 of 8 (Event Interactions)
+Plan: 1 of 3 in current phase
+Status: In Progress
+Last activity: 2026-02-16 -- Completed 03-01-PLAN.md (Interaction Foundation)
 
-Progress: [███░░░░░░░] 25%
+Progress: [████░░░░░░] 28%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 10
+- Total plans completed: 11
 - Average duration: 3.7min
-- Total execution time: 0.57 hours
+- Total execution time: 0.64 hours
 
 **By Phase:**
 
@@ -29,9 +29,10 @@ Progress: [███░░░░░░░] 25%
 |-------|-------|-------|----------|
 | 01-foundation-theming | 5/5 | 18min | 3.6min |
 | 02-dayview-monthview-shared-view-features | 5/5 | 19min | 3.8min |
+| 03-event-interactions | 1/3 | 4min | 4min |
 
 **Recent Trend:**
-- Last 5 plans: 02-01 (3min), 02-02 (5min), 02-03 (3min), 02-04 (4min), 02-05 (4min)
+- Last 5 plans: 02-02 (5min), 02-03 (3min), 02-04 (4min), 02-05 (4min), 03-01 (4min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -86,6 +87,10 @@ Recent decisions affecting current work:
 - [02-05]: Z-index layering convention: grid (auto) < business-hours (1) < events (5) < now-indicator (10)
 - [02-05]: NowIndicator always rendered in TimeSlotColumn; self-determines visibility via isSameDay check
 - [02-05]: Config pipeline extension pattern: add to CalendarProviderProps + CalendarConfig, wire through CalendarBody viewProps
+- [03-01]: Renamed dragState to dragEngine across codebase for clarity between old DragState type and new DragEngineState
+- [03-01]: IDLE_DRAG_ENGINE constant with spread copies for state resets ensures no shared references
+- [03-01]: startDragging/updateDragPosition guard on phase to enforce state machine transitions
+- [03-01]: dragThreshold added as DEFAULTS.dragThreshold (4px) following existing constants pattern
 
 ### Pending Todos
 
@@ -98,5 +103,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Completed 02-05-PLAN.md (NowIndicator + BusinessHoursOverlay) -- Phase 2 complete
+Stopped at: Completed 03-01-PLAN.md (Interaction Foundation)
 Resume file: None
