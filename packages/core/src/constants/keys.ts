@@ -11,6 +11,9 @@ export const KEYS = {
   ESCAPE: "Escape",
   NEW_EVENT: "n",
   SEARCH: "/",
+  SPACE: " ",
+  HOME: "Home",
+  END: "End",
   UNDO: "z",
   HELP: "?",
 } as const;

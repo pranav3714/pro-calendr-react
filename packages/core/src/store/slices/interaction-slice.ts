@@ -17,8 +17,10 @@ export interface InteractionSlice {
   selection: Selection | null;
   dragEngine: DragEngineState;
   hoveredSlot: { date: Date; resourceId?: string } | null;
+  focusedDate: Date | null;
 
   setSelection: (selection: Selection | null) => void;
+  setFocusedDate: (date: Date | null) => void;
   startPending: (
     mode: DragMode,
     origin: DragOrigin,
@@ -44,9 +46,13 @@ export const createInteractionSlice: StateCreator<CalendarStore, [], [], Interac
   selection: null,
   dragEngine: { ...IDLE_DRAG_ENGINE },
   hoveredSlot: null,
+  focusedDate: null,
 
   setSelection: (selection) => {
     set({ selection });
+  },
+  setFocusedDate: (date) => {
+    set({ focusedDate: date });
   },
   startPending: (mode, origin, initialPointer) => {
     set({
