@@ -30,6 +30,7 @@ export interface CalendarClassNames {
   timeLabel?: string;
   alldayRow?: string;
   alldayCell?: string;
+  alldayEvent?: string;
   monthView?: string;
   monthHeader?: string;
   monthEvent?: string;

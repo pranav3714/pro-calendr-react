@@ -121,11 +121,9 @@ describe("Calendar", () => {
     expect(screen.getByTestId("pro-calendr-react-week")).toBeDefined();
   });
 
-  it("renders empty body for unimplemented views", () => {
+  it("renders month view when defaultView is month", () => {
     render(<Calendar defaultView="month" />);
-    const body = screen.getByTestId("pro-calendr-react-body");
-    expect(body).toBeDefined();
-    expect(body.children.length).toBe(0);
+    expect(screen.getByTestId("pro-calendr-react-month")).toBeDefined();
   });
 
   it("renders events in the week view", () => {
@@ -249,7 +247,7 @@ describe("Calendar", () => {
     render(<Calendar defaultView="day" />);
     const body = screen.getByTestId("pro-calendr-react-body");
     expect(body).toBeDefined();
-    // Day view returns null (not yet implemented in core)
+    // Day view returns null (not yet routed in CalendarBody)
     expect(body.children.length).toBe(0);
   });
 

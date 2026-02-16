@@ -194,6 +194,8 @@
   display: grid;
   border-bottom: var(--cal-border-width) solid var(--cal-border);
   min-height: 28px;
+  max-height: 100px;
+  overflow-y: auto;
 }
 
 .pro-calendr-react-allday-label {

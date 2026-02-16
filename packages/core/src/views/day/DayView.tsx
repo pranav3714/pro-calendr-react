@@ -7,6 +7,7 @@ import { generateTimeSlots } from "../../utils/slot";
 import { getEventsForDay, partitionAllDayEvents } from "../../utils/event-filter";
 import { DEFAULTS } from "../../constants";
 import { TimeSlotColumn } from "../week/TimeSlotColumn";
+import { AllDayRow } from "../../components/AllDayRow";
 
 export interface DayViewProps {
   events: CalendarEvent[];
@@ -51,17 +52,6 @@ export function DayView({
     [timedEvents, day],
   );
 
-  // Get all-day events for this specific day
-  const dayAllDayEvents = useMemo(
-    () =>
-      allDayEvents.filter((e) => {
-        const start = typeof e.start === "string" ? new Date(e.start) : e.start;
-        const end = typeof e.end === "string" ? new Date(e.end) : e.end;
-        return start <= day && end >= day;
-      }),
-    [allDayEvents, day],
-  );
-
   return (
     <div
       data-testid="pro-calendr-react-day"
@@ -73,31 +63,12 @@ export function DayView({
       </div>
 
       {/* All-day events row */}
-      {dayAllDayEvents.length > 0 && (
-        <div
-          className={cn("pro-calendr-react-allday-row", classNames?.alldayRow)}
-          style={{
-            gridTemplateColumns: "var(--cal-time-label-width, 60px) 1fr",
-          }}
-        >
-          <div className="pro-calendr-react-allday-label">all-day</div>
-          <div className={cn("pro-calendr-react-allday-cell", classNames?.alldayCell)}>
-            {dayAllDayEvents.map((event) => (
-              <div
-                key={event.id}
-                className="pro-calendr-react-event pro-calendr-react-allday-event"
-                data-testid={`event-${event.id}`}
-                style={{
-                  backgroundColor: event.backgroundColor ?? undefined,
-                  color: event.textColor ?? undefined,
-                }}
-              >
-                {event.title}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      <AllDayRow
+        days={[day]}
+        allDayEvents={allDayEvents}
+        eventContent={eventContent}
+        onEventClick={onEventClick}
+      />
 
       {/* Time grid: time labels + single column */}
       <div className="pro-calendr-react-day-grid">

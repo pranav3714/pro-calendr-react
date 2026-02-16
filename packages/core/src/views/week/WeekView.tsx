@@ -8,6 +8,7 @@ import { getEventsForDay, partitionAllDayEvents } from "../../utils/event-filter
 import { DEFAULTS } from "../../constants";
 import { DayColumnHeaders } from "./DayColumnHeaders";
 import { TimeSlotColumn } from "./TimeSlotColumn";
+import { AllDayRow } from "../../components/AllDayRow";
 
 export interface WeekViewProps {
   events: CalendarEvent[];
@@ -57,43 +58,12 @@ export function WeekView({
       <DayColumnHeaders days={days} />
 
       {/* All-day events row */}
-      {allDayEvents.length > 0 && (
-        <div
-          className={cn("pro-calendr-react-allday-row", classNames?.alldayRow)}
-          style={{
-            gridTemplateColumns: `var(--cal-time-label-width, 60px) repeat(${String(days.length)}, 1fr)`,
-          }}
-        >
-          <div className="pro-calendr-react-allday-label">all-day</div>
-          {days.map((day) => {
-            const dayAllDay = allDayEvents.filter((e) => {
-              const start = typeof e.start === "string" ? new Date(e.start) : e.start;
-              const end = typeof e.end === "string" ? new Date(e.end) : e.end;
-              return start <= day && end >= day;
-            });
-            return (
-              <div
-                key={day.toISOString()}
-                className={cn("pro-calendr-react-allday-cell", classNames?.alldayCell)}
-              >
-                {dayAllDay.map((event) => (
-                  <div
-                    key={event.id}
-                    className="pro-calendr-react-event pro-calendr-react-allday-event"
-                    data-testid={`event-${event.id}`}
-                    style={{
-                      backgroundColor: event.backgroundColor ?? undefined,
-                      color: event.textColor ?? undefined,
-                    }}
-                  >
-                    {event.title}
-                  </div>
-                ))}
-              </div>
-            );
-          })}
-        </div>
-      )}
+      <AllDayRow
+        days={days}
+        allDayEvents={allDayEvents}
+        eventContent={eventContent}
+        onEventClick={onEventClick}
+      />
 
       {/* Time grid */}
       <div
