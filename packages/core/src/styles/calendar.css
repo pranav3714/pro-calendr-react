@@ -284,6 +284,10 @@
   min-height: 4px;
 }
 
+.pro-calendr-react-event[data-editable] {
+  cursor: grab;
+}
+
 /* Now indicator */
 
 .pro-calendr-react-now-indicator {
