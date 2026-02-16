@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-16)
 ## Current Position
 
 Phase: 3 of 8 (Event Interactions)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In Progress
-Last activity: 2026-02-16 -- Completed 03-01-PLAN.md (Interaction Foundation)
+Last activity: 2026-02-16 -- Completed 03-02-PLAN.md (Interaction Engine Hook + EventBlock Resize)
 
-Progress: [████░░░░░░] 28%
+Progress: [█████░░░░░] 33%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 11
-- Average duration: 3.7min
-- Total execution time: 0.64 hours
+- Total plans completed: 12
+- Average duration: 3.6min
+- Total execution time: 0.68 hours
 
 **By Phase:**
 
@@ -29,10 +29,10 @@ Progress: [████░░░░░░] 28%
 |-------|-------|-------|----------|
 | 01-foundation-theming | 5/5 | 18min | 3.6min |
 | 02-dayview-monthview-shared-view-features | 5/5 | 19min | 3.8min |
-| 03-event-interactions | 1/3 | 4min | 4min |
+| 03-event-interactions | 2/3 | 7min | 3.5min |
 
 **Recent Trend:**
-- Last 5 plans: 02-02 (5min), 02-03 (3min), 02-04 (4min), 02-05 (4min), 03-01 (4min)
+- Last 5 plans: 02-03 (3min), 02-04 (4min), 02-05 (4min), 03-01 (4min), 03-02 (3min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -91,6 +91,10 @@ Recent decisions affecting current work:
 - [03-01]: IDLE_DRAG_ENGINE constant with spread copies for state resets ensures no shared references
 - [03-01]: startDragging/updateDragPosition guard on phase to enforce state machine transitions
 - [03-01]: dragThreshold added as DEFAULTS.dragThreshold (4px) following existing constants pattern
+- [03-02]: Pointer event handlers read from optionsRef.current to avoid stale closures; only editable/onEventClick/containerRef destructured
+- [03-02]: Used ?? fallback instead of non-null assertion for originalStartRef/originalEndRef (strict ESLint compliance)
+- [03-02]: addMinutes from date-fns for duration arithmetic instead of manual Date manipulation
+- [03-02]: Optional chain for snapped ref comparison (ref?.getTime()) instead of explicit null check
 
 ### Pending Todos
 
@@ -103,5 +107,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Completed 03-01-PLAN.md (Interaction Foundation)
+Stopped at: Completed 03-02-PLAN.md (Interaction Engine Hook + EventBlock Resize)
 Resume file: None
