@@ -35,5 +35,8 @@ pnpm-debug.log*
 # TypeScript incremental
 *.tsbuildinfo
 
+# Planning (local-only)
+.planning/
+
 # Misc
 *.tgz
