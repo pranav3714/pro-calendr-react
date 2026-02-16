@@ -4,6 +4,7 @@ import type { CalendarProps, CalendarRef, CalendarViewType } from "../types";
 import { useCalendarStore, useCalendarConfig } from "./CalendarContext";
 import { CalendarProvider } from "./CalendarProvider";
 import { CalendarBody } from "./CalendarBody";
+import { DragLayer } from "./DragLayer";
 import { CalendarToolbar } from "../toolbar/CalendarToolbar";
 import { DateNavigation } from "../toolbar/DateNavigation";
 import { ViewSelector } from "../toolbar/ViewSelector";
@@ -47,6 +48,7 @@ function CalendarInner({
   const navigateDate = useCalendarStore((s) => s.navigateDate);
   const setView = useCalendarStore((s) => s.setView);
   const setDate = useCalendarStore((s) => s.setDate);
+  const dragPhase = useCalendarStore((s) => s.dragEngine.phase);
 
   // Track previous dateRange/view for callbacks
   const prevDateRange = useRef(dateRange);
@@ -116,6 +118,7 @@ function CalendarInner({
       data-testid="pro-calendr-react"
       className={cn("pro-calendr-react", classNames?.root)}
       data-theme={theme === "dark" ? "dark" : theme === "auto" ? "auto" : undefined}
+      data-dragging={dragPhase === "dragging" || undefined}
       style={style}
     >
       <CalendarToolbar
@@ -124,6 +127,7 @@ function CalendarInner({
         right={toolbarRight ?? defaultRight}
       />
       {loading ? <Skeleton count={skeletonCount} /> : <CalendarBody />}
+      <DragLayer />
     </div>
   );
 }

@@ -1,5 +1,12 @@
 import { useMemo, type ReactNode } from "react";
-import type { CalendarEvent, EventContentProps } from "../../types";
+import type {
+  CalendarEvent,
+  EventContentProps,
+  EventDropInfo,
+  EventResizeInfo,
+  SelectInfo,
+  DropValidationResult,
+} from "../../types";
 import type { BusinessHours } from "../../types/config";
 import { useCalendarConfig } from "../../components/CalendarContext";
 import { cn } from "../../utils/cn";
@@ -21,6 +28,17 @@ export interface WeekViewProps {
   businessHours?: BusinessHours;
   eventContent?: (props: EventContentProps) => ReactNode;
   onEventClick?: (event: CalendarEvent, nativeEvent: React.MouseEvent) => void;
+  editable?: boolean;
+  selectable?: boolean;
+  onEventDrop?: (info: EventDropInfo) => void;
+  onEventResize?: (info: EventResizeInfo) => void;
+  onSelect?: (info: SelectInfo) => void;
+  validateDrop?: (info: {
+    event: CalendarEvent;
+    newStart: Date;
+    newEnd: Date;
+    newResourceId?: string;
+  }) => DropValidationResult;
 }
 
 export function WeekView({
@@ -33,6 +51,12 @@ export function WeekView({
   businessHours,
   eventContent,
   onEventClick,
+  editable = false,
+  selectable = false,
+  onEventDrop,
+  onEventResize,
+  onSelect,
+  validateDrop,
 }: WeekViewProps) {
   const { classNames } = useCalendarConfig();
 
@@ -51,6 +75,8 @@ export function WeekView({
     () => partitionAllDayEvents(events),
     [events],
   );
+
+  const timeLabelsWidth = 60;
 
   return (
     <div
@@ -105,6 +131,14 @@ export function WeekView({
               businessHours={businessHours}
               eventContent={eventContent}
               onEventClick={onEventClick}
+              editable={editable}
+              selectable={selectable}
+              onEventDrop={onEventDrop}
+              onEventResize={onEventResize}
+              onSelect={onSelect}
+              validateDrop={validateDrop}
+              days={days}
+              timeLabelsWidth={timeLabelsWidth}
             />
           );
         })}
