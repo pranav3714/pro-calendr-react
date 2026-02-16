@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation & Theming** - Harden store, timezone, and CSS architecture before building more views
 - [x] **Phase 2: DayView, MonthView & Shared View Features** - Complete day/month views with all-day events, now indicator, and business hours
 - [x] **Phase 3: Event Interactions** - Drag, resize, slot selection, and event click with full state machine
-- [ ] **Phase 4: Keyboard Navigation & Accessibility** - Arrow keys, shortcuts, roving tabindex, ARIA grid semantics
+- [x] **Phase 4: Keyboard Navigation & Accessibility** - Arrow keys, shortcuts, roving tabindex, ARIA grid semantics
 - [ ] **Phase 5: Resources & ListView** - Resource data model with grouping/filtering and chronological list view
 - [ ] **Phase 6: TimelineView & Virtualization** - Horizontal timeline with resource rows, dual-axis virtualization for 1000+ events
 - [ ] **Phase 7: Context Menus & Multi-Select** - Right-click menus on events/slots/resources and Cmd+click batch selection
@@ -90,9 +90,9 @@ Plans:
 **Plans**: 3 plans in 2 waves
 
 Plans:
-- [ ] 04-01-PLAN.md -- useRovingGrid hook, interaction slice focusedDate extension, focus indicator CSS (Wave 1)
-- [ ] 04-02-PLAN.md -- ARIA grid attributes and useRovingGrid wiring for all views (Wave 2)
-- [ ] 04-03-PLAN.md -- Keyboard shortcuts, Escape chain, and focus restoration on view switch (Wave 2)
+- [x] 04-01-PLAN.md -- useRovingGrid hook, interaction slice focusedDate extension, focus indicator CSS (Wave 1)
+- [x] 04-02-PLAN.md -- ARIA grid attributes and useRovingGrid wiring for all views (Wave 2)
+- [x] 04-03-PLAN.md -- Keyboard shortcuts, Escape chain, and focus restoration on view switch (Wave 2)
 
 ### Phase 5: Resources & ListView
 **Goal**: Calendar supports resource-based scheduling with grouping and filtering, and users can view events as a chronological list
@@ -103,13 +103,11 @@ Plans:
   2. User can filter visible resources by ID array, and resource groups are collapsible in the sidebar
   3. Consumer can customize resource labels and group headers via resourceLabel and resourceGroupHeader render slots
   4. User can switch to ListView and see events as a chronological sorted list grouped by date
-**Plans**: TBD
+**Plans**: 2 plans in 2 waves
 
 Plans:
-- [ ] 05-01: Resource data model, store slice, and useResources hook
-- [ ] 05-02: Resource grouping, filtering, and collapse state
-- [ ] 05-03: Resource render slots (labels, group headers)
-- [ ] 05-04: ListView component
+- [ ] 05-01-PLAN.md -- Resource data layer: store slice, buildResourceTree utility, useResources hook, CalendarConfig wiring (Wave 1)
+- [ ] 05-02-PLAN.md -- ListView component with date grouping, event rows, CalendarBody routing, and CSS (Wave 2)
 
 ### Phase 6: TimelineView & Virtualization
 **Goal**: Users can view resource schedules on a horizontal timeline that handles 100+ resources and 1000+ events without jank, with drag and keyboard navigation working correctly across virtualized rows
@@ -174,8 +172,8 @@ Note: Phase 5 depends only on Phase 1, so it could execute in parallel with Phas
 | 1. Foundation & Theming | 5/5 | Complete | 2026-02-16 |
 | 2. DayView, MonthView & Shared View Features | 5/5 | Complete | 2026-02-16 |
 | 3. Event Interactions | 3/3 | Complete | 2026-02-16 |
-| 4. Keyboard Navigation & Accessibility | 0/3 | Not started | - |
-| 5. Resources & ListView | 0/4 | Not started | - |
+| 4. Keyboard Navigation & Accessibility | 3/3 | Complete | 2026-02-17 |
+| 5. Resources & ListView | 0/2 | Not started | - |
 | 6. TimelineView & Virtualization | 0/5 | Not started | - |
 | 7. Context Menus & Multi-Select | 0/3 | Not started | - |
 | 8. Search, Conflict Detection & Loading States | 0/4 | Not started | - |

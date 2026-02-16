@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-02-16)
 
 **Core value:** Handle 1000+ events across all five views without performance degradation -- virtualization, surgical Zustand selectors, and minimal re-renders are non-negotiable.
-**Current focus:** Phase 4 - Keyboard Navigation & Accessibility
+**Current focus:** Phase 4 complete — ready for Phase 5
 
 ## Current Position
 
 Phase: 4 of 8 (Keyboard Navigation & Accessibility)
 Plan: 3 of 3 in current phase
-Status: Phase Complete
-Last activity: 2026-02-16 -- Completed 04-03-PLAN.md (Keyboard Shortcuts + Focus Restoration)
+Status: Phase Complete — Verified (21/21 must-haves)
+Last activity: 2026-02-17 -- Phase 4 verified and marked complete
 
-Progress: [████████░░] 47%
+Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
@@ -37,6 +37,7 @@ Progress: [████████░░] 47%
 - Trend: stable
 
 *Updated after each plan completion*
+| Phase 04 P02 | 5min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -108,6 +109,10 @@ Recent decisions affecting current work:
 - [04-03]: Escape priority chain: drag > selection > nothing, using store.getState() getters to avoid stale closures
 - [04-03]: Calendar root uses tabIndex={-1} (focusable but not in tab order) for keyboard event bubbling
 - [04-03]: Focus restoration uses requestAnimationFrame to wait for new view DOM before querying tabIndex={0} element
+- [Phase 04-02]: TimeSlot.start (not .time) used for slot time extraction -- TimeSlot interface has start/end/label
+- [Phase 04-02]: getCellProps and dayIndex are optional props on TimeSlotColumn for backward compatibility
+- [Phase 04-02]: MonthView grid container is a separate div wrapping week rows (not the root div) to keep header outside grid
+- [Phase 04-02]: Array indexing uses 'as T | undefined' cast to satisfy strict TypeScript no-unnecessary-condition rule
 
 ### Pending Todos
 
