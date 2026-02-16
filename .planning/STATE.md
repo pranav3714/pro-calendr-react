@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-16)
 
 **Core value:** Handle 1000+ events across all five views without performance degradation -- virtualization, surgical Zustand selectors, and minimal re-renders are non-negotiable.
-**Current focus:** Phase 5 in progress — Resources & ListView
+**Current focus:** Phase 5 complete — ready for Phase 6 (Timeline View)
 
 ## Current Position
 
-Phase: 5 of 8 (Resources & ListView)
-Plan: 1 of 2 in current phase
-Status: Plan 05-01 complete — resource data layer built
-Last activity: 2026-02-17 -- Completed 05-01-PLAN.md
+Phase: 5 of 8 (Resources & ListView) -- COMPLETE
+Plan: 2 of 2 in current phase (all done)
+Status: Phase 05 complete — ready for Phase 06
+Last activity: 2026-02-17 -- Completed 05-02-PLAN.md
 
-Progress: [██████░░░░] 56%
+Progress: [██████░░░░] 60%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 17
-- Average duration: 3.5min
-- Total execution time: 0.98 hours
+- Total plans completed: 18
+- Average duration: 3.4min
+- Total execution time: 1.01 hours
 
 **By Phase:**
 
@@ -31,14 +31,15 @@ Progress: [██████░░░░] 56%
 | 02-dayview-monthview-shared-view-features | 5/5 | 19min | 3.8min |
 | 03-event-interactions | 3/3 | 14min | 4.7min |
 | 04-keyboard-navigation-accessibility | 3/3 | 9min | 3.0min |
-| 05-resources-listview | 1/2 | 3min | 3.0min |
+| 05-resources-listview | 2/2 | 5min | 2.5min |
 
 **Recent Trend:**
-- Last 5 plans: 03-03 (7min), 04-01 (3min), 04-02 (3min), 04-03 (3min), 05-01 (3min)
+- Last 5 plans: 04-01 (3min), 04-02 (3min), 04-03 (3min), 05-01 (3min), 05-02 (2min)
 - Trend: stable
 
 *Updated after each plan completion*
 | Phase 05 P01 | 3min | 2 tasks | 7 files |
+| Phase 05 P02 | 2min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -118,6 +119,10 @@ Recent decisions affecting current work:
 - [05-01]: buildResourceTree accepts arrays but converts to Set internally for O(1) lookups
 - [05-01]: Groups with no matching resources are excluded from tree output (no empty group nodes)
 - [05-01]: Resources with groupId not matching any defined group placed in ungrouped array
+- [05-02]: Used backgroundColor (not color) from CalendarEvent type with extendedProps.color fallback for event dot coloring
+- [05-02]: ListDateGroup parses YYYY-MM-DD key via component extraction to avoid timezone offset issues
+- [05-02]: ListEventRow uses tabIndex={0} with onKeyDown Enter/Space for keyboard accessibility
+- [05-02]: Empty state renders without role="list" since an empty list has no semantic meaning
 
 ### Pending Todos
 
@@ -130,5 +135,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-17
-Stopped at: Completed 05-01-PLAN.md (Resource Data Layer) -- ready for 05-02
+Stopped at: Completed 05-02-PLAN.md (ListView) -- Phase 05 complete, ready for Phase 06
 Resume file: None
