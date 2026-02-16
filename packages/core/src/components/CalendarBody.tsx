@@ -31,6 +31,12 @@ export function CalendarBody() {
     businessHours: config.businessHours,
     eventContent: config.eventContent,
     onEventClick: handleEventClick,
+    editable: config.editable,
+    selectable: config.selectable,
+    onEventDrop: config.onEventDrop,
+    onEventResize: config.onEventResize,
+    onSelect: config.onSelect,
+    validateDrop: config.validateDrop,
   };
 
   // MonthView has different props (no time-grid concepts)

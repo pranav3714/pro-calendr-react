@@ -499,6 +499,121 @@
   font-size: var(--cal-font-size-sm);
 }
 
+/* === Event Interactions === */
+
+/* Drag ghost element following cursor */
+.pro-calendr-react-drag-ghost {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.85;
+  box-shadow: var(--cal-shadow-lg);
+  border-radius: var(--cal-radius-sm);
+  overflow: hidden;
+}
+
+/* Original event during drag */
+.pro-calendr-react-event[data-dragging] {
+  opacity: 0.3;
+}
+
+/* Selection overlay */
+.pro-calendr-react-selection-overlay {
+  position: absolute;
+  background-color: var(--cal-selection);
+  border: 1px solid var(--cal-accent);
+  border-radius: var(--cal-radius-sm);
+  pointer-events: none;
+  z-index: 8;
+}
+
+/* Drop validity indicators */
+.pro-calendr-react-drop-indicator {
+  position: absolute;
+  pointer-events: none;
+  z-index: 15;
+  border-radius: var(--cal-radius-sm);
+}
+
+.pro-calendr-react-drop-indicator--valid {
+  outline: 2px solid #22c55e;
+  outline-offset: -2px;
+}
+
+.pro-calendr-react-drop-indicator--invalid {
+  outline: 2px solid #ef4444;
+  outline-offset: -2px;
+}
+
+/* Resize handles */
+.pro-calendr-react-event-resize-handle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6px;
+  cursor: ns-resize;
+  z-index: 6;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.pro-calendr-react-event:hover .pro-calendr-react-event-resize-handle {
+  opacity: 1;
+}
+
+.pro-calendr-react-event-resize-handle--top {
+  top: 0;
+  border-radius: var(--cal-radius-sm) var(--cal-radius-sm) 0 0;
+}
+
+.pro-calendr-react-event-resize-handle--bottom {
+  bottom: 0;
+  border-radius: 0 0 var(--cal-radius-sm) var(--cal-radius-sm);
+}
+
+.pro-calendr-react-event-resize-handle:hover {
+  background-color: rgb(255 255 255 / 0.3);
+}
+
+/* Prevent text selection during drag */
+.pro-calendr-react[data-dragging] {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Time tooltip during drag */
+.pro-calendr-react-drag-tooltip {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1001;
+  background: var(--cal-bg);
+  color: var(--cal-text);
+  border: 1px solid var(--cal-border);
+  border-radius: var(--cal-radius-sm);
+  padding: 4px 8px;
+  font-size: var(--cal-font-size-sm);
+  box-shadow: var(--cal-shadow);
+  white-space: nowrap;
+}
+
+/* Drag tooltip validity colors */
+.pro-calendr-react-drag-tooltip--valid {
+  border-color: #22c55e;
+}
+
+.pro-calendr-react-drag-tooltip--invalid {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+/* Drag layer portal overlay */
+.pro-calendr-react-drag-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+
 /* Print styles */
 
 @media print {

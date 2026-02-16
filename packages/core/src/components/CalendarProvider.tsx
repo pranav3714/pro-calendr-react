@@ -1,5 +1,14 @@
 import { useState, useEffect, useMemo, type ReactNode } from "react";
-import type { CalendarEvent, CalendarViewType, EventContentProps, EventClickInfo } from "../types";
+import type {
+  CalendarEvent,
+  CalendarViewType,
+  EventContentProps,
+  EventClickInfo,
+  EventDropInfo,
+  EventResizeInfo,
+  SelectInfo,
+  DropValidationResult,
+} from "../types";
 import type { CalendarClassNames } from "../types/theme";
 import type { BusinessHours } from "../types/config";
 import { createCalendarStore } from "../store/calendar-store";
@@ -22,6 +31,15 @@ export interface CalendarConfig {
   businessHours?: BusinessHours;
   eventContent?: (props: EventContentProps) => ReactNode;
   onEventClick?: (info: EventClickInfo) => void;
+  onEventDrop?: (info: EventDropInfo) => void;
+  onEventResize?: (info: EventResizeInfo) => void;
+  onSelect?: (info: SelectInfo) => void;
+  validateDrop?: (info: {
+    event: CalendarEvent;
+    newStart: Date;
+    newEnd: Date;
+    newResourceId?: string;
+  }) => DropValidationResult;
   onDateRangeChange?: (range: { start: Date; end: Date }) => void;
   onViewChange?: (view: CalendarViewType) => void;
   toolbarLeft?: ReactNode;
@@ -50,6 +68,15 @@ export interface CalendarProviderProps {
   businessHours?: BusinessHours;
   eventContent?: (props: EventContentProps) => ReactNode;
   onEventClick?: (info: EventClickInfo) => void;
+  onEventDrop?: (info: EventDropInfo) => void;
+  onEventResize?: (info: EventResizeInfo) => void;
+  onSelect?: (info: SelectInfo) => void;
+  validateDrop?: (info: {
+    event: CalendarEvent;
+    newStart: Date;
+    newEnd: Date;
+    newResourceId?: string;
+  }) => DropValidationResult;
   onDateRangeChange?: (range: { start: Date; end: Date }) => void;
   onViewChange?: (view: CalendarViewType) => void;
   toolbarLeft?: ReactNode;
@@ -78,6 +105,10 @@ export function CalendarProvider({
   businessHours,
   eventContent,
   onEventClick,
+  onEventDrop,
+  onEventResize,
+  onSelect,
+  validateDrop,
   onDateRangeChange,
   onViewChange,
   toolbarLeft,
@@ -125,6 +156,10 @@ export function CalendarProvider({
       businessHours,
       eventContent,
       onEventClick,
+      onEventDrop,
+      onEventResize,
+      onSelect,
+      validateDrop,
       onDateRangeChange,
       onViewChange,
       toolbarLeft,
@@ -148,6 +183,10 @@ export function CalendarProvider({
       businessHours,
       eventContent,
       onEventClick,
+      onEventDrop,
+      onEventResize,
+      onSelect,
+      validateDrop,
       onDateRangeChange,
       onViewChange,
       toolbarLeft,
