@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-16)
 
 **Core value:** Handle 1000+ events across all five views without performance degradation -- virtualization, surgical Zustand selectors, and minimal re-renders are non-negotiable.
-**Current focus:** Phase 3 - Event Interactions
+**Current focus:** Phase 3 - Event Interactions (COMPLETE)
 
 ## Current Position
 
 Phase: 3 of 8 (Event Interactions)
-Plan: 2 of 3 in current phase
-Status: In Progress
-Last activity: 2026-02-16 -- Completed 03-02-PLAN.md (Interaction Engine Hook + EventBlock Resize)
+Plan: 3 of 3 in current phase
+Status: Phase Complete
+Last activity: 2026-02-16 -- Completed 03-03-PLAN.md (Visual Feedback Components + View Integration)
 
-Progress: [█████░░░░░] 33%
+Progress: [██████░░░░] 38%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 12
-- Average duration: 3.6min
-- Total execution time: 0.68 hours
+- Total plans completed: 13
+- Average duration: 3.7min
+- Total execution time: 0.80 hours
 
 **By Phase:**
 
@@ -29,10 +29,10 @@ Progress: [█████░░░░░] 33%
 |-------|-------|-------|----------|
 | 01-foundation-theming | 5/5 | 18min | 3.6min |
 | 02-dayview-monthview-shared-view-features | 5/5 | 19min | 3.8min |
-| 03-event-interactions | 2/3 | 7min | 3.5min |
+| 03-event-interactions | 3/3 | 14min | 4.7min |
 
 **Recent Trend:**
-- Last 5 plans: 02-03 (3min), 02-04 (4min), 02-05 (4min), 03-01 (4min), 03-02 (3min)
+- Last 5 plans: 02-04 (4min), 02-05 (4min), 03-01 (4min), 03-02 (3min), 03-03 (7min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -95,6 +95,11 @@ Recent decisions affecting current work:
 - [03-02]: Used ?? fallback instead of non-null assertion for originalStartRef/originalEndRef (strict ESLint compliance)
 - [03-02]: addMinutes from date-fns for duration arithmetic instead of manual Date manipulation
 - [03-02]: Optional chain for snapped ref comparison (ref?.getTime()) instead of explicit null check
+- [03-03]: DragGhost reads event data from useCalendarConfig().events via find-by-id rather than extending DragOrigin type
+- [03-03]: DragTimeTooltip inlined inside DragLayer (not a separate component file) since it is small and tightly coupled
+- [03-03]: useSlotSelection uses local useState for selectionPixels (not Zustand store) to avoid expensive store updates on pointermove
+- [03-03]: TimeSlotColumn uses callback ref pattern to capture parent grid container for useEventInteractions coordinate calculation
+- [03-03]: Drop indicator position computed in useMemo from store state to avoid redundant conditional narrowing
 
 ### Pending Todos
 
@@ -107,5 +112,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Completed 03-02-PLAN.md (Interaction Engine Hook + EventBlock Resize)
+Stopped at: Completed 03-03-PLAN.md (Visual Feedback Components + View Integration) -- Phase 3 complete
 Resume file: None
