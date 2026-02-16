@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-16)
 ## Current Position
 
 Phase: 2 of 8 (DayView, MonthView & Shared View Features)
-Plan: 2 of 5 in current phase
+Plan: 3 of 5 in current phase
 Status: In Progress
-Last activity: 2026-02-16 -- Completed 02-02-PLAN.md (MonthView with lane allocation)
+Last activity: 2026-02-16 -- Completed 02-03-PLAN.md (DayView + collision layout)
 
-Progress: [██░░░░░░░░] 17%
+Progress: [██░░░░░░░░] 20%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7
-- Average duration: 3.6min
-- Total execution time: 0.42 hours
+- Total plans completed: 8
+- Average duration: 3.5min
+- Total execution time: 0.47 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation-theming | 5/5 | 18min | 3.6min |
-| 02-dayview-monthview-shared-view-features | 2/5 | 8min | 4min |
+| 02-dayview-monthview-shared-view-features | 3/5 | 11min | 3.7min |
 
 **Recent Trend:**
-- Last 5 plans: 01-03 (3min), 01-04 (5min), 01-05 (5min), 02-01 (3min), 02-02 (5min)
+- Last 5 plans: 01-04 (5min), 01-05 (5min), 02-01 (3min), 02-02 (5min), 02-03 (3min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -73,6 +73,10 @@ Recent decisions affecting current work:
 - [02-02]: buildEventSegments clips events to week boundaries with isStart/isEnd flags for continuation styling
 - [02-02]: MonthView currentMonth derived from midpoint of dateRange (handles cross-month boundaries)
 - [02-02]: Event chips use CSS Grid grid-column for multi-day spanning
+- [02-03]: DayView reuses TimeSlotColumn directly rather than duplicating time-grid rendering
+- [02-03]: Collision positioning returns raw percentages (0-100) for caller flexibility
+- [02-03]: Single non-overlapping events retain pixel-based positioning; overlapping use percentage-based
+- [02-03]: Collision map pattern: useMemo builds Map<eventId, {column, totalColumns}> for O(1) lookups
 
 ### Pending Todos
 
@@ -85,5 +89,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Completed 02-02-PLAN.md (MonthView with lane allocation)
+Stopped at: Completed 02-03-PLAN.md (DayView + collision layout)
 Resume file: None
