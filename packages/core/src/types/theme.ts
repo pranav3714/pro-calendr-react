@@ -23,6 +23,13 @@ export interface CalendarClassNames {
   contextMenuItem?: string;
   dragGhost?: string;
   dropIndicator?: string;
+  dateNav?: string;
+  viewSelector?: string;
+  weekView?: string;
+  dayHeaders?: string;
+  timeLabel?: string;
+  alldayRow?: string;
+  alldayCell?: string;
 }
 
 export interface CalendarCSSVariables {

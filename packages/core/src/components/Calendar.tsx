@@ -176,7 +176,7 @@ export const Calendar = forwardRef<CalendarRef, CalendarProps>(function Calendar
       toolbarLeft={toolbarLeft}
       toolbarCenter={toolbarCenter}
       toolbarRight={toolbarRight}
-      classNames={classNames as Record<string, string>}
+      classNames={classNames}
       style={style}
     >
       <CalendarInner {...props} {...rest} calendarRef={ref} />

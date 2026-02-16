@@ -1,5 +1,6 @@
-import { useState, useEffect, type ReactNode } from "react";
+import { useState, useEffect, useMemo, type ReactNode } from "react";
 import type { CalendarEvent, CalendarViewType, EventContentProps, EventClickInfo } from "../types";
+import type { CalendarClassNames } from "../types/theme";
 import { createCalendarStore } from "../store/calendar-store";
 import { getDateRange } from "../utils/date-utils";
 import { DEFAULTS } from "../constants";
@@ -24,7 +25,7 @@ export interface CalendarConfig {
   toolbarLeft?: ReactNode;
   toolbarCenter?: ReactNode;
   toolbarRight?: ReactNode;
-  classNames?: Record<string, string>;
+  classNames?: CalendarClassNames;
   style?: React.CSSProperties;
 }
 
@@ -51,7 +52,7 @@ export interface CalendarProviderProps {
   toolbarLeft?: ReactNode;
   toolbarCenter?: ReactNode;
   toolbarRight?: ReactNode;
-  classNames?: Record<string, string>;
+  classNames?: CalendarClassNames;
   style?: React.CSSProperties;
 }
 
@@ -104,28 +105,52 @@ export function CalendarProvider({
     store.getState().setFirstDay(firstDay);
   }, [firstDay, store]);
 
-  const config: CalendarConfig = {
-    events,
-    slotDuration,
-    slotMinTime,
-    slotMaxTime,
-    slotHeight,
-    views,
-    loading,
-    editable,
-    selectable,
-    hour12,
-    skeletonCount,
-    eventContent,
-    onEventClick,
-    onDateRangeChange,
-    onViewChange,
-    toolbarLeft,
-    toolbarCenter,
-    toolbarRight,
-    classNames,
-    style,
-  };
+  const config = useMemo<CalendarConfig>(
+    () => ({
+      events,
+      slotDuration,
+      slotMinTime,
+      slotMaxTime,
+      slotHeight,
+      views,
+      loading,
+      editable,
+      selectable,
+      hour12,
+      skeletonCount,
+      eventContent,
+      onEventClick,
+      onDateRangeChange,
+      onViewChange,
+      toolbarLeft,
+      toolbarCenter,
+      toolbarRight,
+      classNames,
+      style,
+    }),
+    [
+      events,
+      slotDuration,
+      slotMinTime,
+      slotMaxTime,
+      slotHeight,
+      views,
+      loading,
+      editable,
+      selectable,
+      hour12,
+      skeletonCount,
+      eventContent,
+      onEventClick,
+      onDateRangeChange,
+      onViewChange,
+      toolbarLeft,
+      toolbarCenter,
+      toolbarRight,
+      classNames,
+      style,
+    ],
+  );
 
   return (
     <CalendarStoreContext.Provider value={store}>
