@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-16)
 ## Current Position
 
 Phase: 4 of 8 (Keyboard Navigation & Accessibility)
-Plan: 1 of 3 in current phase
-Status: In Progress
-Last activity: 2026-02-16 -- Completed 04-01-PLAN.md (Roving Grid Hook + Focus Styles)
+Plan: 3 of 3 in current phase
+Status: Phase Complete
+Last activity: 2026-02-16 -- Completed 04-03-PLAN.md (Keyboard Shortcuts + Focus Restoration)
 
-Progress: [███████░░░] 41%
+Progress: [████████░░] 47%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 14
-- Average duration: 3.6min
-- Total execution time: 0.85 hours
+- Total plans completed: 16
+- Average duration: 3.5min
+- Total execution time: 0.93 hours
 
 **By Phase:**
 
@@ -30,10 +30,10 @@ Progress: [███████░░░] 41%
 | 01-foundation-theming | 5/5 | 18min | 3.6min |
 | 02-dayview-monthview-shared-view-features | 5/5 | 19min | 3.8min |
 | 03-event-interactions | 3/3 | 14min | 4.7min |
-| 04-keyboard-navigation-accessibility | 1/3 | 3min | 3.0min |
+| 04-keyboard-navigation-accessibility | 3/3 | 9min | 3.0min |
 
 **Recent Trend:**
-- Last 5 plans: 02-05 (4min), 03-01 (4min), 03-02 (3min), 03-03 (7min), 04-01 (3min)
+- Last 5 plans: 03-02 (3min), 03-03 (7min), 04-01 (3min), 04-02 (3min), 04-03 (3min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -104,6 +104,10 @@ Recent decisions affecting current work:
 - [04-01]: useRovingGrid uses ref for position + render tick counter (not useState for position) to avoid re-render lag on arrow key press
 - [04-01]: focusedDate stored in InteractionSlice (not a separate slice) since it is interaction state
 - [04-01]: Focus indicators use outline for cells and box-shadow for rounded elements (events) for cross-browser consistency
+- [04-03]: useKeyboard attaches keydown listener to calendar root element (not document) for scope isolation
+- [04-03]: Escape priority chain: drag > selection > nothing, using store.getState() getters to avoid stale closures
+- [04-03]: Calendar root uses tabIndex={-1} (focusable but not in tab order) for keyboard event bubbling
+- [04-03]: Focus restoration uses requestAnimationFrame to wait for new view DOM before querying tabIndex={0} element
 
 ### Pending Todos
 
@@ -116,5 +120,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Completed 04-01-PLAN.md (Roving Grid Hook + Focus Styles)
+Stopped at: Completed 04-03-PLAN.md (Keyboard Shortcuts + Focus Restoration) -- Phase 04 complete
 Resume file: None
