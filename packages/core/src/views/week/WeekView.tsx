@@ -1,4 +1,4 @@
-import { useMemo, type ReactNode } from "react";
+import { useCallback, useMemo, useRef, type ReactNode } from "react";
 import type {
   CalendarEvent,
   EventContentProps,
@@ -8,12 +8,13 @@ import type {
   DropValidationResult,
 } from "../../types";
 import type { BusinessHours } from "../../types/config";
-import { useCalendarConfig } from "../../components/CalendarContext";
+import { useCalendarConfig, useCalendarStore } from "../../components/CalendarContext";
 import { cn } from "../../utils/cn";
-import { getDaysInRange } from "../../utils/date-utils";
+import { getDaysInRange, isSameDay } from "../../utils/date-utils";
 import { generateTimeSlots } from "../../utils/slot";
 import { getEventsForDay, partitionAllDayEvents } from "../../utils/event-filter";
 import { DEFAULTS } from "../../constants";
+import { useRovingGrid, type GridPosition } from "../../hooks/use-roving-grid";
 import { DayColumnHeaders } from "./DayColumnHeaders";
 import { TimeSlotColumn } from "./TimeSlotColumn";
 import { AllDayRow } from "../../components/AllDayRow";
@@ -59,6 +60,10 @@ export function WeekView({
   validateDrop,
 }: WeekViewProps) {
   const { classNames } = useCalendarConfig();
+  const setFocusedDate = useCalendarStore((s) => s.setFocusedDate);
+  const focusedDate = useCalendarStore((s) => s.focusedDate);
+
+  const gridRef = useRef<HTMLDivElement>(null);
 
   const days = useMemo(
     () => getDaysInRange(dateRange.start, dateRange.end),
@@ -69,6 +74,41 @@ export function WeekView({
     () => generateTimeSlots(slotMinTime, slotMaxTime, slotDuration),
     [slotMinTime, slotMaxTime, slotDuration],
   );
+
+  // Compute initial grid position from focusedDate
+  const initialPosition = useMemo<GridPosition>(() => {
+    if (!focusedDate) return { row: 0, col: 0 };
+    const colIndex = days.findIndex((d) => isSameDay(d, focusedDate));
+    if (colIndex === -1) return { row: 0, col: 0 };
+    // Find the matching time slot row based on hours/minutes
+    const focusedMinutes = focusedDate.getHours() * 60 + focusedDate.getMinutes();
+    const rowIndex = slots.findIndex((s) => {
+      const slotMinutes = s.start.getHours() * 60 + s.start.getMinutes();
+      return slotMinutes === focusedMinutes;
+    });
+    return { row: rowIndex === -1 ? 0 : rowIndex, col: colIndex };
+  }, [focusedDate, days, slots]);
+
+  const onCellFocus = useCallback(
+    (pos: GridPosition) => {
+      const focusDay = days[pos.col] as Date | undefined;
+      const slot = slots[pos.row] as (typeof slots)[number] | undefined;
+      if (focusDay && slot) {
+        const date = new Date(focusDay);
+        date.setHours(slot.start.getHours(), slot.start.getMinutes(), 0, 0);
+        setFocusedDate(date);
+      }
+    },
+    [days, slots, setFocusedDate],
+  );
+
+  const { getCellProps } = useRovingGrid({
+    rows: slots.length,
+    cols: days.length,
+    gridRef,
+    onCellFocus,
+    initialPosition,
+  });
 
   // Separate all-day events
   const { allDay: allDayEvents, timed: timedEvents } = useMemo(
@@ -96,7 +136,12 @@ export function WeekView({
 
       {/* Time grid */}
       <div
+        ref={gridRef}
         className="pro-calendr-react-week-grid"
+        role="grid"
+        aria-label="Week view calendar grid"
+        aria-rowcount={slots.length}
+        aria-colcount={days.length}
         style={{
           gridTemplateColumns: `var(--cal-time-label-width, 60px) repeat(${String(days.length)}, 1fr)`,
         }}
@@ -115,7 +160,7 @@ export function WeekView({
         </div>
 
         {/* Day columns */}
-        {days.map((day) => {
+        {days.map((day, index) => {
           const dayEvents = getEventsForDay(timedEvents, day).filter((e) => !e.allDay);
 
           return (
@@ -139,6 +184,8 @@ export function WeekView({
               validateDrop={validateDrop}
               days={days}
               timeLabelsWidth={timeLabelsWidth}
+              getCellProps={getCellProps}
+              dayIndex={index}
             />
           );
         })}

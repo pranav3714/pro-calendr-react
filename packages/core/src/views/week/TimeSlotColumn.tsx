@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useRef, type ReactNode } from "react";
+import { format } from "date-fns";
 import type {
   CalendarEvent,
   EventContentProps,
@@ -9,6 +10,7 @@ import type {
 } from "../../types";
 import type { BusinessHours } from "../../types/config";
 import type { TimeSlot } from "../../utils/slot";
+import type { UseRovingGridReturn } from "../../hooks/use-roving-grid";
 import { useCalendarStore, useCalendarConfig } from "../../components/CalendarContext";
 import { cn } from "../../utils/cn";
 import { calculateEventPosition, calculateCollisionPosition } from "../../utils/event-position";
@@ -46,6 +48,8 @@ export interface TimeSlotColumnProps {
   }) => DropValidationResult;
   days: Date[];
   timeLabelsWidth: number;
+  getCellProps?: UseRovingGridReturn["getCellProps"];
+  dayIndex?: number;
 }
 
 export function TimeSlotColumn({
@@ -67,6 +71,8 @@ export function TimeSlotColumn({
   validateDrop,
   days,
   timeLabelsWidth,
+  getCellProps,
+  dayIndex = 0,
 }: TimeSlotColumnProps) {
   const { classNames } = useCalendarConfig();
   const columnRef = useRef<HTMLDivElement>(null);
@@ -177,11 +183,16 @@ export function TimeSlotColumn({
       onPointerDown={selectable ? handleSlotPointerDown : undefined}
     >
       {/* Slot grid lines */}
-      {slots.map((_slot, i) => (
+      {slots.map((slot, i) => (
         <div
           key={i}
           className={cn("pro-calendr-react-time-slot", classNames?.timeSlot)}
           style={{ height: slotHeight }}
+          role="gridcell"
+          aria-rowindex={i + 1}
+          aria-colindex={dayIndex + 1}
+          aria-label={`${slot.label}, ${format(day, "EEEE, MMMM d")}`}
+          {...(getCellProps ? getCellProps(i, dayIndex) : {})}
         />
       ))}
 
