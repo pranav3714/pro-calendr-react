@@ -503,6 +503,47 @@
   font-size: var(--cal-font-size-sm);
 }
 
+/* === Keyboard Focus Indicators === */
+
+/* Time slot cells - inset outline to stay within container */
+.pro-calendr-react-time-slot:focus-visible {
+  outline: 2px solid var(--cal-accent);
+  outline-offset: -2px;
+  z-index: 2;
+  position: relative;
+}
+
+/* Month day cells */
+.pro-calendr-react-month-day-cell:focus-visible {
+  outline: 2px solid var(--cal-accent);
+  outline-offset: -2px;
+  z-index: 2;
+}
+
+/* Events within grid - use box-shadow for rounded corners */
+.pro-calendr-react-event:focus-visible {
+  box-shadow: var(--cal-focus-ring);
+  outline: none;
+}
+
+/* Month event chips */
+.pro-calendr-react-month-event:focus-visible {
+  box-shadow: var(--cal-focus-ring);
+  outline: none;
+}
+
+/* All-day events */
+.pro-calendr-react-allday-event:focus-visible {
+  box-shadow: var(--cal-focus-ring);
+  outline: none;
+}
+
+/* Overflow indicator */
+.pro-calendr-react-overflow:focus-visible {
+  outline: 2px solid var(--cal-accent);
+  outline-offset: 1px;
+}
+
 /* === Event Interactions === */
 
 /* Drag ghost element following cursor */
