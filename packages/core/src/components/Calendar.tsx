@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { format } from "date-fns";
 import type { CalendarProps, CalendarRef, CalendarViewType } from "../types";
-import { useCalendarStore } from "../store/calendar-store";
+import { useCalendarStore } from "./CalendarContext";
 import { CalendarProvider } from "./CalendarProvider";
 import { CalendarBody } from "./CalendarBody";
 import { CalendarToolbar } from "../toolbar/CalendarToolbar";

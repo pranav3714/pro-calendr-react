@@ -36,7 +36,9 @@ export {
 } from "./hooks";
 
 // Store
-export { useCalendarStore } from "./store";
+export { useCalendarStore } from "./components/CalendarContext";
+export { createCalendarStore } from "./store";
+export type { CalendarStore } from "./store";
 
 // Plugins
 export { createPlugin } from "./plugins";

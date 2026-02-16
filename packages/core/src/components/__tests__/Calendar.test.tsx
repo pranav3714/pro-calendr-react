@@ -1,9 +1,8 @@
 import { render, screen, fireEvent, act } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { createRef } from "react";
 import { Calendar } from "../Calendar";
 import type { CalendarRef, CalendarEvent } from "../../types";
-import { useCalendarStore } from "../../store/calendar-store";
 
 function makeEvent(overrides: Partial<CalendarEvent> = {}): CalendarEvent {
   return {
@@ -15,30 +14,12 @@ function makeEvent(overrides: Partial<CalendarEvent> = {}): CalendarEvent {
   };
 }
 
-// Reset store between tests
-function resetStore() {
-  useCalendarStore.setState({
-    currentView: "week",
-    currentDate: new Date(),
-    dateRange: { start: new Date(), end: new Date() },
-    firstDay: 1,
-    selection: null,
-    dragState: null,
-    hoveredSlot: null,
-    filteredResourceIds: [],
-  });
-}
-
 function getRef(ref: React.RefObject<CalendarRef | null>): CalendarRef {
   if (!ref.current) throw new Error("Ref not set");
   return ref.current;
 }
 
 describe("Calendar", () => {
-  beforeEach(() => {
-    resetStore();
-  });
-
   it("renders without crashing", () => {
     render(<Calendar />);
     expect(screen.getByTestId("pro-calendr-react")).toBeInTheDocument();

@@ -1,4 +1,4 @@
-import { useCalendarStore } from "../store/calendar-store";
+import { useCalendarStore } from "./CalendarContext";
 import { useCalendarConfig } from "./CalendarContext";
 import { WeekView } from "../views/week/WeekView";
 import type { CalendarEvent } from "../types";
