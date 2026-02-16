@@ -86,7 +86,7 @@ export function EventBlock({
       data-editable={canDrag || undefined}
       data-density={density}
       role="button"
-      tabIndex={0}
+      tabIndex={-1}
       onClick={(e) => onClick?.(event, e)}
       onPointerDown={
         canDrag

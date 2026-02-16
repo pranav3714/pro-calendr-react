@@ -1,5 +1,6 @@
 import { useMemo, type ReactNode } from "react";
 import type { CalendarEvent, EventContentProps } from "../../types";
+import type { UseRovingGridReturn } from "../../hooks/use-roving-grid";
 import { useCalendarConfig } from "../../components/CalendarContext";
 import { cn } from "../../utils/cn";
 import { getDaysInRange, isSameDay } from "../../utils/date-utils";
@@ -15,6 +16,8 @@ export interface WeekRowProps {
   currentMonth: Date;
   eventContent?: (props: EventContentProps) => ReactNode;
   onEventClick?: (event: CalendarEvent, nativeEvent: React.MouseEvent) => void;
+  getCellProps?: UseRovingGridReturn["getCellProps"];
+  weekRowIndex?: number;
 }
 
 function getToday(): Date {
@@ -31,14 +34,13 @@ export function WeekRow({
   currentMonth,
   eventContent,
   onEventClick,
+  getCellProps,
+  weekRowIndex = 0,
 }: WeekRowProps) {
   const { classNames } = useCalendarConfig();
   const today = useMemo(() => getToday(), []);
 
-  const days = useMemo(
-    () => getDaysInRange(weekStart, weekEnd),
-    [weekStart, weekEnd],
-  );
+  const days = useMemo(() => getDaysInRange(weekStart, weekEnd), [weekStart, weekEnd]);
 
   const segments = useMemo(
     () => buildEventSegments(events, weekStart, weekEnd),
@@ -66,7 +68,7 @@ export function WeekRow({
   return (
     <div className={cn("pro-calendr-react-month-week-row", classNames?.weekRow)}>
       {/* Date numbers row */}
-      <div className="pro-calendr-react-month-dates-row">
+      <div className="pro-calendr-react-month-dates-row" role="row">
         {days.map((day, i) => (
           <DayCell
             key={day.toISOString()}
@@ -74,6 +76,9 @@ export function WeekRow({
             isToday={isSameDay(day, today)}
             isOtherMonth={day.getMonth() !== currentMonth.getMonth()}
             overflowCount={overflowCounts[i]}
+            getCellProps={getCellProps}
+            rowIndex={weekRowIndex}
+            colIndex={i}
           />
         ))}
       </div>
@@ -143,7 +148,7 @@ function MonthEventChip({
       data-is-start={String(isStart)}
       data-is-end={String(isEnd)}
       role="button"
-      tabIndex={0}
+      tabIndex={-1}
       onClick={(e) => onEventClick?.(event, e)}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
