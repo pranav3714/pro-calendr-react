@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-16)
 
 **Core value:** Handle 1000+ events across all five views without performance degradation -- virtualization, surgical Zustand selectors, and minimal re-renders are non-negotiable.
-**Current focus:** Phase 3 - Event Interactions (COMPLETE)
+**Current focus:** Phase 4 - Keyboard Navigation & Accessibility
 
 ## Current Position
 
-Phase: 3 of 8 (Event Interactions)
-Plan: 3 of 3 in current phase
-Status: Phase Complete
-Last activity: 2026-02-16 -- Completed 03-03-PLAN.md (Visual Feedback Components + View Integration)
+Phase: 4 of 8 (Keyboard Navigation & Accessibility)
+Plan: 1 of 3 in current phase
+Status: In Progress
+Last activity: 2026-02-16 -- Completed 04-01-PLAN.md (Roving Grid Hook + Focus Styles)
 
-Progress: [██████░░░░] 38%
+Progress: [███████░░░] 41%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 13
-- Average duration: 3.7min
-- Total execution time: 0.80 hours
+- Total plans completed: 14
+- Average duration: 3.6min
+- Total execution time: 0.85 hours
 
 **By Phase:**
 
@@ -30,9 +30,10 @@ Progress: [██████░░░░] 38%
 | 01-foundation-theming | 5/5 | 18min | 3.6min |
 | 02-dayview-monthview-shared-view-features | 5/5 | 19min | 3.8min |
 | 03-event-interactions | 3/3 | 14min | 4.7min |
+| 04-keyboard-navigation-accessibility | 1/3 | 3min | 3.0min |
 
 **Recent Trend:**
-- Last 5 plans: 02-04 (4min), 02-05 (4min), 03-01 (4min), 03-02 (3min), 03-03 (7min)
+- Last 5 plans: 02-05 (4min), 03-01 (4min), 03-02 (3min), 03-03 (7min), 04-01 (3min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -100,6 +101,9 @@ Recent decisions affecting current work:
 - [03-03]: useSlotSelection uses local useState for selectionPixels (not Zustand store) to avoid expensive store updates on pointermove
 - [03-03]: TimeSlotColumn uses callback ref pattern to capture parent grid container for useEventInteractions coordinate calculation
 - [03-03]: Drop indicator position computed in useMemo from store state to avoid redundant conditional narrowing
+- [04-01]: useRovingGrid uses ref for position + render tick counter (not useState for position) to avoid re-render lag on arrow key press
+- [04-01]: focusedDate stored in InteractionSlice (not a separate slice) since it is interaction state
+- [04-01]: Focus indicators use outline for cells and box-shadow for rounded elements (events) for cross-browser consistency
 
 ### Pending Todos
 
@@ -112,5 +116,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Completed 03-03-PLAN.md (Visual Feedback Components + View Integration) -- Phase 3 complete
+Stopped at: Completed 04-01-PLAN.md (Roving Grid Hook + Focus Styles)
 Resume file: None
