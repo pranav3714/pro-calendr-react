@@ -64,6 +64,7 @@ export function EventBlock({
       data-event-id={event.id}
       data-selected={isSelected || undefined}
       data-dragging={isDragging || undefined}
+      data-density={density}
       role="button"
       tabIndex={0}
       onClick={(e) => onClick?.(event, e)}
@@ -76,15 +77,7 @@ export function EventBlock({
       style={{
         backgroundColor: bgColor,
         color: textColor,
-        borderLeft: `3px solid ${borderColor}`,
-        borderRadius: "var(--cal-radius-sm)",
-        padding: density === "micro" ? "0" : "2px 4px",
-        fontSize: "var(--cal-font-size-sm)",
-        overflow: "hidden",
-        cursor: "pointer",
-        position: "absolute",
-        boxSizing: "border-box",
-        minHeight: density === "micro" ? "4px" : undefined,
+        borderLeftColor: borderColor,
         ...style,
       }}
     >

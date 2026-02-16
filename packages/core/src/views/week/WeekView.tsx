@@ -54,24 +54,10 @@ export function WeekView({
         <div
           className="pro-calendr-react-allday-row"
           style={{
-            display: "grid",
-            gridTemplateColumns: `60px repeat(${String(days.length)}, 1fr)`,
-            borderBottom: "1px solid var(--cal-border)",
-            minHeight: 28,
+            gridTemplateColumns: `var(--cal-time-label-width, 60px) repeat(${String(days.length)}, 1fr)`,
           }}
         >
-          <div
-            style={{
-              fontSize: "var(--cal-font-size-sm)",
-              color: "var(--cal-text-muted)",
-              padding: "4px 8px",
-              borderRight: "1px solid var(--cal-border)",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            all-day
-          </div>
+          <div className="pro-calendr-react-allday-label">all-day</div>
           {days.map((day) => {
             const dayAllDay = allDayEvents.filter((e) => {
               const start = typeof e.start === "string" ? new Date(e.start) : e.start;
@@ -79,29 +65,15 @@ export function WeekView({
               return start <= day && end >= day;
             });
             return (
-              <div
-                key={day.toISOString()}
-                className="pro-calendr-react-allday-cell"
-                style={{
-                  padding: "2px 4px",
-                  borderRight: "1px solid var(--cal-border)",
-                }}
-              >
+              <div key={day.toISOString()} className="pro-calendr-react-allday-cell">
                 {dayAllDay.map((event) => (
                   <div
                     key={event.id}
                     className="pro-calendr-react-event pro-calendr-react-allday-event"
                     data-testid={`event-${event.id}`}
                     style={{
-                      backgroundColor: event.backgroundColor ?? "var(--cal-event-default-bg)",
-                      color: event.textColor ?? "var(--cal-event-default-text)",
-                      borderRadius: "var(--cal-radius-sm)",
-                      padding: "1px 4px",
-                      fontSize: "var(--cal-font-size-sm)",
-                      marginBottom: 2,
-                      overflow: "hidden",
-                      whiteSpace: "nowrap",
-                      textOverflow: "ellipsis",
+                      backgroundColor: event.backgroundColor ?? undefined,
+                      color: event.textColor ?? undefined,
                     }}
                   >
                     {event.title}
@@ -117,34 +89,13 @@ export function WeekView({
       <div
         className="pro-calendr-react-week-grid"
         style={{
-          display: "grid",
-          gridTemplateColumns: `60px repeat(${String(days.length)}, 1fr)`,
-          overflow: "auto",
+          gridTemplateColumns: `var(--cal-time-label-width, 60px) repeat(${String(days.length)}, 1fr)`,
         }}
       >
         {/* Time labels column */}
-        <div
-          className="pro-calendr-react-time-labels"
-          style={{
-            borderRight: "1px solid var(--cal-border)",
-          }}
-        >
+        <div className="pro-calendr-react-time-labels">
           {slots.map((slot, i) => (
-            <div
-              key={i}
-              className="pro-calendr-react-time-label"
-              style={{
-                height: slotHeight,
-                display: "flex",
-                alignItems: "flex-start",
-                justifyContent: "flex-end",
-                paddingRight: 8,
-                fontSize: "var(--cal-font-size-sm)",
-                color: "var(--cal-text-muted)",
-                transform: "translateY(-50%)",
-                boxSizing: "border-box",
-              }}
-            >
+            <div key={i} className="pro-calendr-react-time-label" style={{ height: slotHeight }}>
               {i > 0 ? slot.label : ""}
             </div>
           ))}

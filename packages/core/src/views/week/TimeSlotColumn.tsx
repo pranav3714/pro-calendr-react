@@ -30,22 +30,12 @@ export function TimeSlotColumn({
       className="pro-calendr-react-time-slot-column"
       data-date={day.toISOString()}
       style={{
-        position: "relative",
-        borderRight: "1px solid var(--cal-border)",
         minHeight: slots.length * slotHeight,
       }}
     >
       {/* Slot grid lines */}
       {slots.map((_slot, i) => (
-        <div
-          key={i}
-          className="pro-calendr-react-time-slot"
-          style={{
-            height: slotHeight,
-            borderBottom: "1px solid var(--cal-border)",
-            boxSizing: "border-box",
-          }}
-        />
+        <div key={i} className="pro-calendr-react-time-slot" style={{ height: slotHeight }} />
       ))}
 
       {/* Events positioned absolutely */}

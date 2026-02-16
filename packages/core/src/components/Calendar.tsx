@@ -38,6 +38,7 @@ function CalendarInner({
   toolbarRight,
   classNames,
   style,
+  theme,
 }: CalendarProps & { calendarRef: React.Ref<CalendarRef> }) {
   const currentView = useCalendarStore((s) => s.currentView);
   const currentDate = useCalendarStore((s) => s.currentDate);
@@ -113,6 +114,7 @@ function CalendarInner({
     <div
       data-testid="pro-calendr-react"
       className={`pro-calendr-react ${classNames?.root ?? ""}`}
+      data-theme={theme === "dark" ? "dark" : theme === "auto" ? "auto" : undefined}
       style={style}
     >
       <CalendarToolbar
