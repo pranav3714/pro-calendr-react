@@ -13,4 +13,5 @@ export const DEFAULTS = {
   mobileBreakpoint: 768,
   skeletonCount: 5,
   resourceAreaWidth: 180,
+  dragThreshold: 4,
 } as const;
