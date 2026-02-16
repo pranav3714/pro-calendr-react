@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-16)
 ## Current Position
 
 Phase: 2 of 8 (DayView, MonthView & Shared View Features)
-Plan: 3 of 5 in current phase
+Plan: 4 of 5 in current phase
 Status: In Progress
-Last activity: 2026-02-16 -- Completed 02-03-PLAN.md (DayView + collision layout)
+Last activity: 2026-02-16 -- Completed 02-04-PLAN.md (AllDayRow extraction + view routing)
 
-Progress: [██░░░░░░░░] 20%
+Progress: [██░░░░░░░░] 23%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 8
-- Average duration: 3.5min
-- Total execution time: 0.47 hours
+- Total plans completed: 9
+- Average duration: 3.6min
+- Total execution time: 0.53 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation-theming | 5/5 | 18min | 3.6min |
-| 02-dayview-monthview-shared-view-features | 3/5 | 11min | 3.7min |
+| 02-dayview-monthview-shared-view-features | 4/5 | 15min | 3.8min |
 
 **Recent Trend:**
-- Last 5 plans: 01-04 (5min), 01-05 (5min), 02-01 (3min), 02-02 (5min), 02-03 (3min)
+- Last 5 plans: 01-05 (5min), 02-01 (3min), 02-02 (5min), 02-03 (3min), 02-04 (4min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -77,6 +77,10 @@ Recent decisions affecting current work:
 - [02-03]: Collision positioning returns raw percentages (0-100) for caller flexibility
 - [02-03]: Single non-overlapping events retain pixel-based positioning; overlapping use percentage-based
 - [02-03]: Collision map pattern: useMemo builds Map<eventId, {column, totalColumns}> for O(1) lookups
+- [02-04]: AllDayRow returns null when no all-day events (conditional rendering inside component, not parent)
+- [02-04]: AllDayRow uses parseDate() for date comparison consistency across string/Date inputs
+- [02-04]: MonthView gets separate monthViewProps excluding time-grid props; DayView shares viewProps with WeekView
+- [02-04]: Shared component extraction pattern: duplicated view logic moves to components/ for reuse
 
 ### Pending Todos
 
@@ -89,5 +93,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Completed 02-03-PLAN.md (DayView + collision layout)
+Stopped at: Completed 02-04-PLAN.md (AllDayRow extraction + view routing)
 Resume file: None
