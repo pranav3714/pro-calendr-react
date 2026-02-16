@@ -1,5 +1,6 @@
 import { useCalendarStore, useCalendarConfig } from "./CalendarContext";
 import { WeekView } from "../views/week/WeekView";
+import { MonthView } from "../views/month/MonthView";
 import { cn } from "../utils/cn";
 import type { CalendarEvent } from "../types";
 
@@ -42,6 +43,8 @@ export function CalendarBody() {
     switch (currentView) {
       case "week":
         return <WeekView {...viewProps} />;
+      case "month":
+        return <MonthView {...viewProps} />;
       default:
         return null;
     }

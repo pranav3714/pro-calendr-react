@@ -30,6 +30,10 @@ export interface CalendarClassNames {
   timeLabel?: string;
   alldayRow?: string;
   alldayCell?: string;
+  monthView?: string;
+  monthHeader?: string;
+  monthEvent?: string;
+  monthEventContinuation?: string;
 }
 
 export interface CalendarCSSVariables {

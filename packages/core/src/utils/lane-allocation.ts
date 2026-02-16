@@ -132,8 +132,7 @@ export function allocateLanes(
     let placed = false;
 
     // Try to find an existing lane with no overlap
-    for (let i = 0; i < lanes.length; i++) {
-      const lane = lanes[i];
+    for (const lane of lanes) {
       const hasOverlap = lane.some(
         (existing) => existing.left < segment.right && segment.left < existing.right,
       );
