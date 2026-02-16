@@ -1,7 +1,8 @@
-import { useCalendarStore } from "../store";
+import { useCalendarStore } from "../components/CalendarContext";
 
 export function useDrag() {
-  const { dragState, setDragState } = useCalendarStore();
+  const dragState = useCalendarStore((s) => s.dragState);
+  const setDragState = useCalendarStore((s) => s.setDragState);
   return {
     dragState,
     startDrag: setDragState,

@@ -6,5 +6,6 @@ export { useSelection } from "../hooks/use-selection";
 export { useKeyboard } from "../hooks/use-keyboard";
 export { useVirtualization } from "../hooks/use-virtualization";
 export { useDensity } from "../hooks/use-density";
-export { useCalendarStore } from "../store";
+export { useCalendarStore } from "../components/CalendarContext";
+export { createCalendarStore } from "../store";
 export type { CalendarStore } from "../store";
