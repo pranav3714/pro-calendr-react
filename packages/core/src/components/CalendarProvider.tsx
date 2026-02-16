@@ -9,6 +9,12 @@ import type {
   SelectInfo,
   DropValidationResult,
 } from "../types";
+import type {
+  CalendarResource,
+  CalendarResourceGroup,
+  ResourceLabelProps,
+  ResourceGroupHeaderProps,
+} from "../types/resource";
 import type { CalendarClassNames } from "../types/theme";
 import type { BusinessHours } from "../types/config";
 import { createCalendarStore } from "../store/calendar-store";
@@ -45,6 +51,12 @@ export interface CalendarConfig {
   toolbarLeft?: ReactNode;
   toolbarCenter?: ReactNode;
   toolbarRight?: ReactNode;
+  resources?: CalendarResource[];
+  resourceGroups?: CalendarResourceGroup[];
+  resourceLabel?: (props: ResourceLabelProps) => ReactNode;
+  resourceGroupHeader?: (props: ResourceGroupHeaderProps) => ReactNode;
+  resourceAreaWidth?: number | string;
+  filterResourcesWithEvents?: boolean;
   classNames?: CalendarClassNames;
   style?: React.CSSProperties;
 }
@@ -82,6 +94,12 @@ export interface CalendarProviderProps {
   toolbarLeft?: ReactNode;
   toolbarCenter?: ReactNode;
   toolbarRight?: ReactNode;
+  resources?: CalendarResource[];
+  resourceGroups?: CalendarResourceGroup[];
+  resourceLabel?: (props: ResourceLabelProps) => ReactNode;
+  resourceGroupHeader?: (props: ResourceGroupHeaderProps) => ReactNode;
+  resourceAreaWidth?: number | string;
+  filterResourcesWithEvents?: boolean;
   classNames?: CalendarClassNames;
   style?: React.CSSProperties;
 }
@@ -103,6 +121,12 @@ export function CalendarProvider({
   hour12 = false,
   skeletonCount = DEFAULTS.skeletonCount,
   businessHours,
+  resources,
+  resourceGroups,
+  resourceLabel,
+  resourceGroupHeader,
+  resourceAreaWidth,
+  filterResourcesWithEvents,
   eventContent,
   onEventClick,
   onEventDrop,
@@ -154,6 +178,12 @@ export function CalendarProvider({
       hour12,
       skeletonCount,
       businessHours,
+      resources,
+      resourceGroups,
+      resourceLabel,
+      resourceGroupHeader,
+      resourceAreaWidth,
+      filterResourcesWithEvents,
       eventContent,
       onEventClick,
       onEventDrop,
@@ -181,6 +211,12 @@ export function CalendarProvider({
       hour12,
       skeletonCount,
       businessHours,
+      resources,
+      resourceGroups,
+      resourceLabel,
+      resourceGroupHeader,
+      resourceAreaWidth,
+      filterResourcesWithEvents,
       eventContent,
       onEventClick,
       onEventDrop,

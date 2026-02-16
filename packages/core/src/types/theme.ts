@@ -37,6 +37,10 @@ export interface CalendarClassNames {
   monthEventContinuation?: string;
   dayView?: string;
   dayHeaderBar?: string;
+  listView?: string;
+  listDateHeader?: string;
+  listEventRow?: string;
+  listEmptyMessage?: string;
 }
 
 export interface CalendarCSSVariables {
