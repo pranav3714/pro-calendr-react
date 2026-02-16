@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { TZDate } from "@date-fns/tz";
 import {
   parseDate,
   isSameDay,
@@ -12,6 +13,8 @@ import {
   minutesToDate,
   getMinutesSinceMidnight,
   getDurationMinutes,
+  createCalendarDate,
+  getToday,
 } from "../date-utils";
 
 describe("parseDate", () => {
@@ -313,5 +316,122 @@ describe("getDurationMinutes", () => {
   it("returns 0 for same time", () => {
     const date = new Date(2026, 1, 14, 9, 0);
     expect(getDurationMinutes(date, date)).toBe(0);
+  });
+});
+
+// ─── Timezone-aware tests ───────────────────────────────────────────────────
+
+describe("createCalendarDate", () => {
+  it("creates a TZDate when timezone is provided with a string", () => {
+    const result = createCalendarDate("2026-02-16T10:00:00", "America/New_York");
+    expect(result).toBeInstanceOf(TZDate);
+    expect(result.getHours()).toBe(10);
+    expect(result.getMinutes()).toBe(0);
+  });
+
+  it("creates a TZDate when timezone is provided with a Date", () => {
+    const date = new Date(2026, 1, 16, 10, 0, 0);
+    const result = createCalendarDate(date, "America/New_York");
+    expect(result).toBeInstanceOf(TZDate);
+  });
+
+  it("returns a plain Date when no timezone is provided with a string", () => {
+    const result = createCalendarDate("2026-02-16T10:00:00");
+    expect(result).toBeInstanceOf(Date);
+    // Should NOT be a TZDate
+    expect(result.constructor.name).toBe("Date");
+  });
+
+  it("returns the same Date when no timezone is provided with a Date", () => {
+    const date = new Date(2026, 1, 16, 10, 0, 0);
+    const result = createCalendarDate(date);
+    expect(result).toBe(date);
+  });
+});
+
+describe("getToday", () => {
+  it("returns a TZDate when timezone is provided", () => {
+    const result = getToday("America/New_York");
+    expect(result).toBeInstanceOf(TZDate);
+  });
+
+  it("returns a plain Date when no timezone is provided", () => {
+    const result = getToday();
+    expect(result).toBeInstanceOf(Date);
+    expect(result.constructor.name).toBe("Date");
+  });
+});
+
+describe("parseDate with timezone", () => {
+  it("returns a TZDate when timezone is provided with a string", () => {
+    const result = parseDate("2026-02-16T10:00:00", "America/New_York");
+    expect(result).toBeInstanceOf(TZDate);
+    expect(result.getHours()).toBe(10);
+  });
+
+  it("converts a Date to TZDate when timezone is provided", () => {
+    const date = new Date(2026, 1, 16, 10, 0, 0);
+    const result = parseDate(date, "America/New_York");
+    expect(result).toBeInstanceOf(TZDate);
+  });
+
+  it("returns a plain Date when no timezone is provided (backward compat)", () => {
+    const date = new Date(2026, 1, 16, 10, 0, 0);
+    const result = parseDate(date);
+    expect(result).toBe(date);
+  });
+});
+
+describe("isSameDay with TZDate", () => {
+  it("works correctly with TZDate instances", () => {
+    const a = new TZDate(2026, 1, 16, 10, 0, 0, "America/New_York");
+    const b = new TZDate(2026, 1, 16, 18, 30, 0, "America/New_York");
+    expect(isSameDay(a, b)).toBe(true);
+  });
+
+  it("returns false for different days in TZDate", () => {
+    const a = new TZDate(2026, 1, 16, 10, 0, 0, "America/New_York");
+    const b = new TZDate(2026, 1, 17, 10, 0, 0, "America/New_York");
+    expect(isSameDay(a, b)).toBe(false);
+  });
+});
+
+describe("getDateRange with TZDate", () => {
+  it("returns TZDate start/end when input is TZDate", () => {
+    const tzDate = new TZDate(2026, 1, 11, 12, 0, 0, "America/New_York");
+    const range = getDateRange(tzDate, "week", 1);
+    expect(range.start).toBeInstanceOf(TZDate);
+    expect(range.end).toBeInstanceOf(TZDate);
+    expect(range.start.getDay()).toBe(1); // Monday
+    expect(range.end.getDay()).toBe(0); // Sunday
+  });
+
+  it("handles DST spring forward (March 8 2026 US)", () => {
+    // March 8, 2026 is when US springs forward (2:00 AM -> 3:00 AM)
+    const tzDate = new TZDate(2026, 2, 8, 12, 0, 0, "America/New_York");
+    const range = getDateRange(tzDate, "week", 1);
+    // Week should be March 2 (Mon) to March 8 (Sun)
+    expect(range.start.getDate()).toBe(2);
+    expect(range.end.getDate()).toBe(8);
+    expect(range.start).toBeInstanceOf(TZDate);
+    expect(range.end).toBeInstanceOf(TZDate);
+  });
+});
+
+describe("minutesToDate with timezone", () => {
+  it("produces TZDate when timezone is provided", () => {
+    const ref = new TZDate(2026, 1, 14, 0, 0, 0, "America/New_York");
+    const result = minutesToDate(510, ref, "America/New_York"); // 8:30 AM
+    expect(result).toBeInstanceOf(TZDate);
+    expect(result.getHours()).toBe(8);
+    expect(result.getMinutes()).toBe(30);
+  });
+
+  it("produces plain Date when no timezone (backward compat)", () => {
+    const ref = new Date(2026, 1, 14);
+    const result = minutesToDate(510, ref);
+    expect(result.getHours()).toBe(8);
+    expect(result.getMinutes()).toBe(30);
+    expect(result.constructor.name).toBe("Date");
   });
 });

@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { TZDate } from "@date-fns/tz";
 import {
   filterEventsInRange,
   groupEventsByDate,
@@ -189,5 +190,61 @@ describe("partitionAllDayEvents", () => {
     expect(allDay).toHaveLength(1);
     expect(allDay[0].id).toBe("1");
     expect(timed).toHaveLength(2);
+  });
+});
+
+// ─── Timezone-aware event filter tests ──────────────────────────────────────
+
+describe("filterEventsInRange with TZDate", () => {
+  it("correctly includes events when using TZDate range boundaries", () => {
+    const range = {
+      start: new TZDate(2026, 1, 9, 0, 0, 0, "America/New_York"),
+      end: new TZDate(2026, 1, 15, 23, 59, 59, "America/New_York"),
+    };
+    const events = [
+      makeEvent({
+        start: new TZDate(2026, 1, 12, 9, 0, 0, "America/New_York"),
+        end: new TZDate(2026, 1, 12, 10, 0, 0, "America/New_York"),
+      }),
+    ];
+    expect(filterEventsInRange(events, range)).toHaveLength(1);
+  });
+
+  it("excludes events outside TZDate range", () => {
+    const range = {
+      start: new TZDate(2026, 1, 9, 0, 0, 0, "America/New_York"),
+      end: new TZDate(2026, 1, 15, 23, 59, 59, "America/New_York"),
+    };
+    const events = [
+      makeEvent({
+        start: new TZDate(2026, 1, 20, 9, 0, 0, "America/New_York"),
+        end: new TZDate(2026, 1, 20, 10, 0, 0, "America/New_York"),
+      }),
+    ];
+    expect(filterEventsInRange(events, range)).toHaveLength(0);
+  });
+});
+
+describe("getEventsForDay with TZDate", () => {
+  it("includes events on the TZDate day", () => {
+    const day = new TZDate(2026, 1, 14, 0, 0, 0, "America/New_York");
+    const events = [
+      makeEvent({
+        start: new TZDate(2026, 1, 14, 9, 0, 0, "America/New_York"),
+        end: new TZDate(2026, 1, 14, 10, 0, 0, "America/New_York"),
+      }),
+    ];
+    expect(getEventsForDay(events, day)).toHaveLength(1);
+  });
+
+  it("excludes events on other TZDate days", () => {
+    const day = new TZDate(2026, 1, 14, 0, 0, 0, "America/New_York");
+    const events = [
+      makeEvent({
+        start: new TZDate(2026, 1, 15, 9, 0, 0, "America/New_York"),
+        end: new TZDate(2026, 1, 15, 10, 0, 0, "America/New_York"),
+      }),
+    ];
+    expect(getEventsForDay(events, day)).toHaveLength(0);
   });
 });

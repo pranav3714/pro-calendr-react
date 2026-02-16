@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { TZDate } from "@date-fns/tz";
 import { generateTimeSlots, getSlotAtPosition } from "../slot";
 
 describe("generateTimeSlots", () => {
@@ -112,5 +113,30 @@ describe("getSlotAtPosition", () => {
 
   it("returns 0 for zero totalSlots", () => {
     expect(getSlotAtPosition(100, 40, 0)).toBe(0);
+  });
+});
+
+// ─── Timezone-aware slot generation tests ───────────────────────────────────
+
+describe("generateTimeSlots with timezone", () => {
+  it("produces slots with TZDate boundaries when timezone is provided", () => {
+    const refDate = new TZDate(2026, 1, 14, 0, 0, 0, "America/New_York");
+    const slots = generateTimeSlots("08:00", "12:00", 60, refDate, false, "America/New_York");
+    expect(slots).toHaveLength(4);
+    slots.forEach((slot) => {
+      expect(slot.start).toBeInstanceOf(TZDate);
+      expect(slot.end).toBeInstanceOf(TZDate);
+    });
+    expect(slots[0].start.getHours()).toBe(8);
+    expect(slots[3].end.getHours()).toBe(12);
+  });
+
+  it("produces plain Date slots when no timezone is provided (backward compat)", () => {
+    const refDate = new Date(2026, 1, 14);
+    const slots = generateTimeSlots("08:00", "12:00", 60, refDate);
+    expect(slots).toHaveLength(4);
+    slots.forEach((slot) => {
+      expect(slot.start.constructor.name).toBe("Date");
+    });
   });
 });

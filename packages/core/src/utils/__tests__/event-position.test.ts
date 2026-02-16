@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { TZDate } from "@date-fns/tz";
 import { calculateEventPosition, calculateTimelinePosition } from "../event-position";
 import type { CalendarEvent } from "../../types";
 
@@ -129,5 +130,41 @@ describe("calculateTimelinePosition", () => {
     const pos = calculateTimelinePosition(makeEvent(), rangeStart, rangeStart);
     expect(pos.left).toBe(0);
     expect(pos.width).toBe(0);
+  });
+});
+
+// ─── Timezone-aware event position tests ────────────────────────────────────
+
+describe("calculateEventPosition with TZDate", () => {
+  const slotMinTime = "00:00";
+  const slotDuration = 30;
+  const slotHeight = 40;
+
+  it("positions TZDate event at 10:00 AM New York correctly", () => {
+    const event = makeEvent({
+      start: new TZDate(2026, 1, 14, 10, 0, 0, "America/New_York"),
+      end: new TZDate(2026, 1, 14, 11, 0, 0, "America/New_York"),
+    });
+    const pos = calculateEventPosition(event, slotMinTime, slotDuration, slotHeight);
+    // 10 hours * 60 min / 30 min/slot * 40 px/slot = 800
+    expect(pos.top).toBe(800);
+    // 60 min / 30 * 40 = 80
+    expect(pos.height).toBe(80);
+  });
+
+  it("produces same pixel positions as equivalent local time", () => {
+    const localEvent = makeEvent({
+      start: new Date(2026, 1, 14, 9, 0),
+      end: new Date(2026, 1, 14, 10, 0),
+    });
+    const tzEvent = makeEvent({
+      start: new TZDate(2026, 1, 14, 9, 0, 0, "America/New_York"),
+      end: new TZDate(2026, 1, 14, 10, 0, 0, "America/New_York"),
+    });
+    const localPos = calculateEventPosition(localEvent, slotMinTime, slotDuration, slotHeight);
+    const tzPos = calculateEventPosition(tzEvent, slotMinTime, slotDuration, slotHeight);
+    // Same wall-clock time should produce same positions
+    expect(tzPos.top).toBe(localPos.top);
+    expect(tzPos.height).toBe(localPos.height);
   });
 });
