@@ -6,42 +6,108 @@
  * Pro Calendar — CSS Custom Properties
  * These variables provide theming for non-Tailwind consumers.
  * Tailwind consumers can override via classNames prop instead.
+ *
+ * All variables are scoped to .pro-calendr-react to prevent
+ * collisions with consumer CSS.
  */
 
-:root {
+.pro-calendr-react {
+  /* Colors */
   --cal-bg: #ffffff;
   --cal-bg-muted: #f9fafb;
+  --cal-bg-hover: #f3f4f6;
   --cal-border: #e5e7eb;
   --cal-accent: #3b82f6;
   --cal-accent-hover: #2563eb;
+  --cal-accent-light: rgb(59 130 246 / 0.1);
   --cal-text: #111827;
   --cal-text-muted: #6b7280;
+  --cal-text-inverse: #ffffff;
+
+  /* Event colors */
+  --cal-event-default-bg: #3b82f6;
+  --cal-event-default-text: #ffffff;
+  --cal-event-default-border: #3b82f6;
+
+  /* Spacing */
+  --cal-toolbar-padding: 8px 16px;
+  --cal-slot-padding: 2px 4px;
+  --cal-event-padding: 2px 4px;
+
+  /* Sizing */
+  --cal-slot-height: 40px;
+  --cal-slot-width: 80px;
+  --cal-time-label-width: 60px;
+  --cal-resource-width: 180px;
+
+  /* Typography */
+  --cal-font-size: 14px;
+  --cal-font-size-sm: 12px;
+  --cal-font-size-lg: 16px;
+  --cal-font-weight: 400;
+  --cal-font-weight-medium: 500;
+  --cal-font-weight-bold: 700;
+
+  /* Borders */
   --cal-radius: 8px;
   --cal-radius-sm: 4px;
   --cal-radius-lg: 12px;
-  --cal-font-size: 14px;
-  --cal-font-size-sm: 12px;
+  --cal-border-width: 1px;
+
+  /* Shadows */
   --cal-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --cal-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* Special */
   --cal-now-indicator: #ef4444;
   --cal-selection: rgb(59 130 246 / 0.2);
-  --cal-event-default-bg: #3b82f6;
-  --cal-event-default-text: #ffffff;
-  --cal-slot-height: 40px;
-  --cal-slot-width: 80px;
-  --cal-resource-width: 180px;
+  --cal-focus-ring: 0 0 0 2px var(--cal-accent);
 }
 
-.dark {
+/* Dark mode via data-theme attribute */
+.pro-calendr-react[data-theme="dark"] {
   --cal-bg: #111827;
   --cal-bg-muted: #1f2937;
+  --cal-bg-hover: #374151;
   --cal-border: #374151;
   --cal-accent: #60a5fa;
   --cal-accent-hover: #3b82f6;
+  --cal-accent-light: rgb(96 165 250 / 0.15);
   --cal-text: #f9fafb;
   --cal-text-muted: #9ca3af;
+  --cal-text-inverse: #111827;
+  --cal-event-default-bg: #3b82f6;
+  --cal-event-default-text: #ffffff;
+  --cal-event-default-border: #60a5fa;
   --cal-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
   --cal-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --cal-now-indicator: #f87171;
+  --cal-selection: rgb(96 165 250 / 0.25);
+  --cal-focus-ring: 0 0 0 2px var(--cal-accent);
+}
+
+/* Auto dark mode via prefers-color-scheme */
+@media (prefers-color-scheme: dark) {
+  .pro-calendr-react[data-theme="auto"] {
+    --cal-bg: #111827;
+    --cal-bg-muted: #1f2937;
+    --cal-bg-hover: #374151;
+    --cal-border: #374151;
+    --cal-accent: #60a5fa;
+    --cal-accent-hover: #3b82f6;
+    --cal-accent-light: rgb(96 165 250 / 0.15);
+    --cal-text: #f9fafb;
+    --cal-text-muted: #9ca3af;
+    --cal-text-inverse: #111827;
+    --cal-event-default-bg: #3b82f6;
+    --cal-event-default-text: #ffffff;
+    --cal-event-default-border: #60a5fa;
+    --cal-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+    --cal-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+    --cal-now-indicator: #f87171;
+    --cal-selection: rgb(96 165 250 / 0.25);
+    --cal-focus-ring: 0 0 0 2px var(--cal-accent);
+  }
 }
 
 /* Structural styles */
@@ -55,17 +121,19 @@
   font-size: var(--cal-font-size);
   color: var(--cal-text);
   background-color: var(--cal-bg);
-  border: 1px solid var(--cal-border);
+  border: var(--cal-border-width) solid var(--cal-border);
   border-radius: var(--cal-radius);
   overflow: hidden;
 }
+
+/* Toolbar */
 
 .pro-calendr-react-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 16px;
-  border-bottom: 1px solid var(--cal-border);
+  padding: var(--cal-toolbar-padding);
+  border-bottom: var(--cal-border-width) solid var(--cal-border);
   gap: 8px;
 }
 
@@ -76,6 +144,132 @@
   align-items: center;
   gap: 8px;
 }
+
+/* Day column headers */
+
+.pro-calendr-react-day-headers {
+  display: grid;
+  border-bottom: var(--cal-border-width) solid var(--cal-border);
+}
+
+.pro-calendr-react-day-header-corner {
+  border-right: var(--cal-border-width) solid var(--cal-border);
+}
+
+.pro-calendr-react-day-header {
+  text-align: center;
+  padding: var(--cal-day-header-padding, 8px 4px);
+  font-size: var(--cal-font-size-sm);
+  color: var(--cal-text-muted);
+  font-weight: var(--cal-font-weight-medium);
+  border-right: var(--cal-border-width) solid var(--cal-border);
+}
+
+.pro-calendr-react-day-header[data-today] {
+  color: var(--cal-accent);
+  font-weight: var(--cal-font-weight-bold);
+}
+
+.pro-calendr-react-day-header-date {
+  font-size: var(--cal-font-size);
+  font-weight: var(--cal-font-weight);
+  color: var(--cal-text);
+}
+
+.pro-calendr-react-day-header[data-today] .pro-calendr-react-day-header-date {
+  font-weight: var(--cal-font-weight-bold);
+  color: var(--cal-accent);
+}
+
+/* Week grid */
+
+.pro-calendr-react-week-grid {
+  display: grid;
+  overflow: auto;
+}
+
+/* All-day row */
+
+.pro-calendr-react-allday-row {
+  display: grid;
+  border-bottom: var(--cal-border-width) solid var(--cal-border);
+  min-height: 28px;
+}
+
+.pro-calendr-react-allday-label {
+  font-size: var(--cal-font-size-sm);
+  color: var(--cal-text-muted);
+  padding: 4px 8px;
+  border-right: var(--cal-border-width) solid var(--cal-border);
+  display: flex;
+  align-items: center;
+}
+
+.pro-calendr-react-allday-cell {
+  padding: var(--cal-slot-padding);
+  border-right: var(--cal-border-width) solid var(--cal-border);
+}
+
+.pro-calendr-react-allday-event {
+  border-radius: var(--cal-radius-sm);
+  padding: 1px 4px;
+  font-size: var(--cal-font-size-sm);
+  margin-bottom: 2px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Time labels */
+
+.pro-calendr-react-time-labels {
+  border-right: var(--cal-border-width) solid var(--cal-border);
+}
+
+.pro-calendr-react-time-label {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding-right: 8px;
+  font-size: var(--cal-font-size-sm);
+  color: var(--cal-text-muted);
+  transform: translateY(-50%);
+  box-sizing: border-box;
+}
+
+/* Time slot column */
+
+.pro-calendr-react-time-slot-column {
+  position: relative;
+  border-right: var(--cal-border-width) solid var(--cal-border);
+}
+
+.pro-calendr-react-time-slot {
+  border-bottom: var(--cal-border-width) solid var(--cal-border);
+  box-sizing: border-box;
+}
+
+/* Event block */
+
+.pro-calendr-react-event {
+  background-color: var(--cal-event-default-bg);
+  color: var(--cal-event-default-text);
+  border-left: 3px solid var(--cal-event-default-border);
+  border-radius: var(--cal-radius-sm);
+  padding: var(--cal-event-padding);
+  font-size: var(--cal-font-size-sm);
+  overflow: hidden;
+  cursor: pointer;
+  position: absolute;
+  box-sizing: border-box;
+}
+
+.pro-calendr-react-event[data-density="micro"] {
+  padding: 0;
+  min-height: 4px;
+}
+
+/* Now indicator */
 
 .pro-calendr-react-now-indicator {
   position: absolute;

@@ -50,6 +50,7 @@ export interface CalendarProps {
   views?: CalendarViewType[];
   defaultDate?: Date | string;
   timezone?: string;
+  theme?: "light" | "dark" | "auto";
 
   // --- Time configuration ---
   slotDuration?: number;
