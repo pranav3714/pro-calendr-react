@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation & Theming** - Harden store, timezone, and CSS architecture before building more views
 - [x] **Phase 2: DayView, MonthView & Shared View Features** - Complete day/month views with all-day events, now indicator, and business hours
-- [ ] **Phase 3: Event Interactions** - Drag, resize, slot selection, and event click with full state machine
+- [x] **Phase 3: Event Interactions** - Drag, resize, slot selection, and event click with full state machine
 - [ ] **Phase 4: Keyboard Navigation & Accessibility** - Arrow keys, shortcuts, roving tabindex, ARIA grid semantics
 - [ ] **Phase 5: Resources & ListView** - Resource data model with grouping/filtering and chronological list view
 - [ ] **Phase 6: TimelineView & Virtualization** - Horizontal timeline with resource rows, dual-axis virtualization for 1000+ events
@@ -74,9 +74,9 @@ Plans:
 **Plans**: 3 plans in 3 waves
 
 Plans:
-- [ ] 03-01-PLAN.md -- Interaction types, drag state machine slice, coordinate utils, CalendarProvider wiring, CSS (Wave 1)
-- [ ] 03-02-PLAN.md -- useEventInteractions drag/resize engine hook, EventBlock resize handles (Wave 2)
-- [ ] 03-03-PLAN.md -- Visual feedback components, SelectionOverlay, view integration, edge case handling (Wave 3)
+- [x] 03-01-PLAN.md -- Interaction types, drag state machine slice, coordinate utils, CalendarProvider wiring, CSS (Wave 1)
+- [x] 03-02-PLAN.md -- useEventInteractions drag/resize engine hook, EventBlock resize handles (Wave 2)
+- [x] 03-03-PLAN.md -- Visual feedback components, SelectionOverlay, view integration, edge case handling (Wave 3)
 
 ### Phase 4: Keyboard Navigation & Accessibility
 **Goal**: Users can navigate the entire calendar with keyboard only, with proper focus management, view shortcuts, and WCAG-compliant ARIA semantics
@@ -87,12 +87,12 @@ Plans:
   2. Pressing T, D, W, M switches to Today, Day, Week, Month views respectively, and shortcuts only fire when the calendar is focused (no global capture)
   3. Enter/Space activates the focused event (triggering onEventClick) or confirms a slot selection, and Escape cancels active drag, closes context menus, or clears selection
   4. Time grid views have correct ARIA attributes (role="grid", role="row", role="gridcell") with roving tabindex -- only one element has tabIndex={0} within the grid at any time
-**Plans**: TBD
+**Plans**: 3 plans in 2 waves
 
 Plans:
-- [ ] 04-01: useKeyboard hook with roving tabindex pattern
-- [ ] 04-02: View shortcuts and focus management across view transitions
-- [ ] 04-03: ARIA attributes and focus indicators
+- [ ] 04-01-PLAN.md -- useRovingGrid hook, interaction slice focusedDate extension, focus indicator CSS (Wave 1)
+- [ ] 04-02-PLAN.md -- ARIA grid attributes and useRovingGrid wiring for all views (Wave 2)
+- [ ] 04-03-PLAN.md -- Keyboard shortcuts, Escape chain, and focus restoration on view switch (Wave 2)
 
 ### Phase 5: Resources & ListView
 **Goal**: Calendar supports resource-based scheduling with grouping and filtering, and users can view events as a chronological list
@@ -173,7 +173,7 @@ Note: Phase 5 depends only on Phase 1, so it could execute in parallel with Phas
 |-------|----------------|--------|-----------|
 | 1. Foundation & Theming | 5/5 | Complete | 2026-02-16 |
 | 2. DayView, MonthView & Shared View Features | 5/5 | Complete | 2026-02-16 |
-| 3. Event Interactions | 0/3 | Not started | - |
+| 3. Event Interactions | 3/3 | Complete | 2026-02-16 |
 | 4. Keyboard Navigation & Accessibility | 0/3 | Not started | - |
 | 5. Resources & ListView | 0/4 | Not started | - |
 | 6. TimelineView & Virtualization | 0/5 | Not started | - |
