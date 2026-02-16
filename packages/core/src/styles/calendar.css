@@ -251,6 +251,18 @@
   box-sizing: border-box;
 }
 
+/* Business hours overlay */
+
+.pro-calendr-react-business-hours-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-color: var(--cal-bg-muted);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 1;
+}
+
 /* Event block */
 
 .pro-calendr-react-event {
@@ -264,6 +276,7 @@
   cursor: pointer;
   position: absolute;
   box-sizing: border-box;
+  z-index: 5;
 }
 
 .pro-calendr-react-event[data-density="micro"] {
