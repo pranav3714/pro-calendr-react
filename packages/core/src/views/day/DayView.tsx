@@ -1,3 +1,5 @@
+// DayView — not yet implemented
+// Will be built as a proper library view in a future milestone
 export function DayView() {
-  return <div data-testid="pro-calendr-react-day" className="pro-calendr-react-day" />;
+  return null;
 }

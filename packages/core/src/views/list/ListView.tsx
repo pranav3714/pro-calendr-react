@@ -1,3 +1,5 @@
+// ListView — not yet implemented
+// Will be built as a proper library view in a future milestone
 export function ListView() {
-  return <div data-testid="pro-calendr-react-list" className="pro-calendr-react-list" />;
+  return null;
 }

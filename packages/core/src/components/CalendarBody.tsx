@@ -39,21 +39,6 @@ export function CalendarBody() {
     switch (currentView) {
       case "week":
         return <WeekView {...viewProps} />;
-      case "day":
-      case "month":
-      case "list":
-      case "timeline-day":
-      case "timeline-week":
-      case "timeline-month":
-      case "timeline-year":
-        return (
-          <div
-            className="pro-calendr-react-placeholder"
-            style={{ padding: 24, textAlign: "center", color: "var(--cal-text-muted)" }}
-          >
-            {currentView} view coming soon
-          </div>
-        );
       default:
         return null;
     }
