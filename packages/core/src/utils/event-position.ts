@@ -42,6 +42,33 @@ export function calculateEventPosition(
   return { top, height };
 }
 
+export interface CollisionPosition {
+  leftPercent: number;
+  widthPercent: number;
+}
+
+/**
+ * Calculate the horizontal left and width (as percentages 0-100) for a collision-aware event.
+ *
+ * Each event in a collision group is assigned a column (0-based) and total column count.
+ * This function converts those to percentage-based horizontal positioning.
+ *
+ * @param column - The 0-based column index for this event
+ * @param totalColumns - Total number of columns in the collision group
+ * @returns { leftPercent, widthPercent } as numbers 0-100
+ */
+export function calculateCollisionPosition(
+  column: number,
+  totalColumns: number,
+): CollisionPosition {
+  if (totalColumns <= 0) return { leftPercent: 0, widthPercent: 100 };
+
+  const widthPercent = 100 / totalColumns;
+  const leftPercent = column * widthPercent;
+
+  return { leftPercent, widthPercent };
+}
+
 /**
  * Calculate the left position and width (as percentages) for a timeline event.
  *
