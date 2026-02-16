@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, type ReactNode } from "react";
 import type { CalendarEvent, CalendarViewType, EventContentProps, EventClickInfo } from "../types";
 import type { CalendarClassNames } from "../types/theme";
+import type { BusinessHours } from "../types/config";
 import { createCalendarStore } from "../store/calendar-store";
 import { getDateRange } from "../utils/date-utils";
 import { DEFAULTS } from "../constants";
@@ -18,6 +19,7 @@ export interface CalendarConfig {
   selectable: boolean;
   hour12: boolean;
   skeletonCount: number;
+  businessHours?: BusinessHours;
   eventContent?: (props: EventContentProps) => ReactNode;
   onEventClick?: (info: EventClickInfo) => void;
   onDateRangeChange?: (range: { start: Date; end: Date }) => void;
@@ -45,6 +47,7 @@ export interface CalendarProviderProps {
   selectable?: boolean;
   hour12?: boolean;
   skeletonCount?: number;
+  businessHours?: BusinessHours;
   eventContent?: (props: EventContentProps) => ReactNode;
   onEventClick?: (info: EventClickInfo) => void;
   onDateRangeChange?: (range: { start: Date; end: Date }) => void;
@@ -72,6 +75,7 @@ export function CalendarProvider({
   selectable = false,
   hour12 = false,
   skeletonCount = DEFAULTS.skeletonCount,
+  businessHours,
   eventContent,
   onEventClick,
   onDateRangeChange,
@@ -118,6 +122,7 @@ export function CalendarProvider({
       selectable,
       hour12,
       skeletonCount,
+      businessHours,
       eventContent,
       onEventClick,
       onDateRangeChange,
@@ -140,6 +145,7 @@ export function CalendarProvider({
       selectable,
       hour12,
       skeletonCount,
+      businessHours,
       eventContent,
       onEventClick,
       onDateRangeChange,

@@ -1,6 +1,7 @@
 import { useMemo, type ReactNode } from "react";
 import { format } from "date-fns";
 import type { CalendarEvent, EventContentProps } from "../../types";
+import type { BusinessHours } from "../../types/config";
 import { useCalendarConfig } from "../../components/CalendarContext";
 import { cn } from "../../utils/cn";
 import { generateTimeSlots } from "../../utils/slot";
@@ -16,6 +17,7 @@ export interface DayViewProps {
   slotMinTime?: string;
   slotMaxTime?: string;
   slotHeight?: number;
+  businessHours?: BusinessHours;
   eventContent?: (props: EventContentProps) => ReactNode;
   onEventClick?: (event: CalendarEvent, nativeEvent: React.MouseEvent) => void;
 }
@@ -27,6 +29,7 @@ export function DayView({
   slotMinTime = DEFAULTS.slotMinTime,
   slotMaxTime = DEFAULTS.slotMaxTime,
   slotHeight = 40,
+  businessHours,
   eventContent,
   onEventClick,
 }: DayViewProps) {
@@ -91,8 +94,10 @@ export function DayView({
           events={dayEvents}
           slots={slots}
           slotMinTime={slotMinTime}
+          slotMaxTime={slotMaxTime}
           slotDuration={slotDuration}
           slotHeight={slotHeight}
+          businessHours={businessHours}
           eventContent={eventContent}
           onEventClick={onEventClick}
         />

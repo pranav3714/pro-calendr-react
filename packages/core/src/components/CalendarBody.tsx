@@ -28,6 +28,7 @@ export function CalendarBody() {
     slotMinTime: config.slotMinTime,
     slotMaxTime: config.slotMaxTime,
     slotHeight: config.slotHeight,
+    businessHours: config.businessHours,
     eventContent: config.eventContent,
     onEventClick: handleEventClick,
   };

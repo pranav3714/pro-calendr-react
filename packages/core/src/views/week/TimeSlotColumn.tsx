@@ -1,19 +1,24 @@
 import { useMemo, type ReactNode } from "react";
 import type { CalendarEvent, EventContentProps } from "../../types";
+import type { BusinessHours } from "../../types/config";
 import type { TimeSlot } from "../../utils/slot";
 import { useCalendarConfig } from "../../components/CalendarContext";
 import { cn } from "../../utils/cn";
 import { calculateEventPosition, calculateCollisionPosition } from "../../utils/event-position";
 import { layoutCollisions } from "../../utils/collision";
 import { EventBlock } from "../../components/EventBlock";
+import { NowIndicator } from "../../components/NowIndicator";
+import { BusinessHoursOverlay } from "../../components/BusinessHoursOverlay";
 
 export interface TimeSlotColumnProps {
   day: Date;
   events: CalendarEvent[];
   slots: TimeSlot[];
   slotMinTime: string;
+  slotMaxTime: string;
   slotDuration: number;
   slotHeight: number;
+  businessHours?: BusinessHours;
   eventContent?: (props: EventContentProps) => ReactNode;
   onEventClick?: (event: CalendarEvent, nativeEvent: React.MouseEvent) => void;
 }
@@ -23,8 +28,10 @@ export function TimeSlotColumn({
   events,
   slots,
   slotMinTime,
+  slotMaxTime,
   slotDuration,
   slotHeight,
+  businessHours,
   eventContent,
   onEventClick,
 }: TimeSlotColumnProps) {
@@ -60,6 +67,18 @@ export function TimeSlotColumn({
           style={{ height: slotHeight }}
         />
       ))}
+
+      {/* Business hours overlay */}
+      {businessHours && (
+        <BusinessHoursOverlay
+          businessHours={businessHours}
+          day={day}
+          slotMinTime={slotMinTime}
+          slotMaxTime={slotMaxTime}
+          slotDuration={slotDuration}
+          slotHeight={slotHeight}
+        />
+      )}
 
       {/* Events positioned absolutely */}
       {events.map((event) => {
@@ -104,6 +123,15 @@ export function TimeSlotColumn({
           />
         );
       })}
+
+      {/* Now indicator */}
+      <NowIndicator
+        day={day}
+        slotMinTime={slotMinTime}
+        slotMaxTime={slotMaxTime}
+        slotDuration={slotDuration}
+        slotHeight={slotHeight}
+      />
     </div>
   );
 }
