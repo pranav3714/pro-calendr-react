@@ -659,6 +659,75 @@
   z-index: 999;
 }
 
+/* ---- List View ---- */
+
+.pro-calendr-react-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.pro-calendr-react-list-date-header {
+  padding: var(--cal-slot-padding, 8px 16px);
+  font-size: var(--cal-font-size);
+  font-weight: var(--cal-font-weight-bold, 600);
+  color: var(--cal-text);
+  background-color: var(--cal-bg-muted);
+  border-bottom: var(--cal-border-width, 1px) solid var(--cal-border);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.pro-calendr-react-list-event-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border-bottom: var(--cal-border-width, 1px) solid var(--cal-border);
+  cursor: pointer;
+  outline: none;
+}
+
+.pro-calendr-react-list-event-row:hover {
+  background-color: var(--cal-bg-hover);
+}
+
+.pro-calendr-react-list-event-row:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--cal-accent, #3b82f6);
+}
+
+.pro-calendr-react-list-event-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background-color: var(--cal-event-default-bg);
+}
+
+.pro-calendr-react-list-event-time {
+  font-size: var(--cal-font-size-sm);
+  color: var(--cal-text-muted);
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.pro-calendr-react-list-event-title {
+  font-size: var(--cal-font-size);
+  color: var(--cal-text);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pro-calendr-react-list-empty {
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--cal-text-muted);
+  font-size: var(--cal-font-size);
+}
+
 /* Print styles */
 
 @media print {

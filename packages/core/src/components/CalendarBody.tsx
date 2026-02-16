@@ -3,6 +3,7 @@ import { useCalendarStore, useCalendarConfig } from "./CalendarContext";
 import { WeekView } from "../views/week/WeekView";
 import { DayView } from "../views/day/DayView";
 import { MonthView } from "../views/month/MonthView";
+import { ListView } from "../views/list/ListView";
 import { cn } from "../utils/cn";
 import type { CalendarEvent } from "../types";
 
@@ -65,6 +66,14 @@ export function CalendarBody() {
     onEventClick: handleEventClick,
   };
 
+  // ListView props (simple list of events)
+  const listViewProps = {
+    events: config.events,
+    dateRange,
+    eventContent: config.eventContent,
+    onEventClick: handleEventClick,
+  };
+
   return (
     <div
       ref={bodyRef}
@@ -83,6 +92,8 @@ export function CalendarBody() {
         return <DayView {...viewProps} />;
       case "month":
         return <MonthView {...monthViewProps} />;
+      case "list":
+        return <ListView {...listViewProps} />;
       default:
         return null;
     }
