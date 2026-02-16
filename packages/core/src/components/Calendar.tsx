@@ -1,7 +1,7 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import { forwardRef, useContext, useEffect, useImperativeHandle, useRef } from "react";
 import { format } from "date-fns";
 import type { CalendarProps, CalendarRef, CalendarViewType } from "../types";
-import { useCalendarStore, useCalendarConfig } from "./CalendarContext";
+import { useCalendarStore, useCalendarConfig, CalendarStoreContext } from "./CalendarContext";
 import { CalendarProvider } from "./CalendarProvider";
 import { CalendarBody } from "./CalendarBody";
 import { DragLayer } from "./DragLayer";
@@ -9,6 +9,7 @@ import { CalendarToolbar } from "../toolbar/CalendarToolbar";
 import { DateNavigation } from "../toolbar/DateNavigation";
 import { ViewSelector } from "../toolbar/ViewSelector";
 import { Skeleton } from "./Skeleton";
+import { useKeyboard } from "../hooks/use-keyboard";
 import { cn } from "../utils/cn";
 import { DEFAULTS } from "../constants";
 
@@ -42,6 +43,7 @@ function CalendarInner({
   theme,
 }: CalendarProps & { calendarRef: React.Ref<CalendarRef> }) {
   const { classNames } = useCalendarConfig();
+  const store = useContext(CalendarStoreContext);
   const currentView = useCalendarStore((s) => s.currentView);
   const currentDate = useCalendarStore((s) => s.currentDate);
   const dateRange = useCalendarStore((s) => s.dateRange);
@@ -49,6 +51,23 @@ function CalendarInner({
   const setView = useCalendarStore((s) => s.setView);
   const setDate = useCalendarStore((s) => s.setDate);
   const dragPhase = useCalendarStore((s) => s.dragEngine.phase);
+  const cancelDrag = useCalendarStore((s) => s.cancelDrag);
+  const setSelection = useCalendarStore((s) => s.setSelection);
+
+  // Calendar root ref for keyboard event scoping
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  // Wire keyboard shortcuts to the calendar root
+  useKeyboard({
+    rootRef,
+    config: { enabled: true },
+    setView,
+    navigateDate,
+    cancelDrag,
+    setSelection,
+    getDragPhase: () => store?.getState().dragEngine.phase ?? "idle",
+    getSelection: () => store?.getState().selection ?? null,
+  });
 
   // Track previous dateRange/view for callbacks
   const prevDateRange = useRef(dateRange);
@@ -115,6 +134,8 @@ function CalendarInner({
 
   return (
     <div
+      ref={rootRef}
+      tabIndex={-1}
       data-testid="pro-calendr-react"
       className={cn("pro-calendr-react", classNames?.root)}
       data-theme={theme === "dark" ? "dark" : theme === "auto" ? "auto" : undefined}
