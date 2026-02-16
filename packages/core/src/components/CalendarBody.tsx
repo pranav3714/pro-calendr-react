@@ -1,6 +1,6 @@
-import { useCalendarStore } from "./CalendarContext";
-import { useCalendarConfig } from "./CalendarContext";
+import { useCalendarStore, useCalendarConfig } from "./CalendarContext";
 import { WeekView } from "../views/week/WeekView";
+import { cn } from "../utils/cn";
 import type { CalendarEvent } from "../types";
 
 export function CalendarBody() {
@@ -30,7 +30,10 @@ export function CalendarBody() {
   };
 
   return (
-    <div data-testid="pro-calendr-react-body" className="pro-calendr-react-body">
+    <div
+      data-testid="pro-calendr-react-body"
+      className={cn("pro-calendr-react-body", config.classNames?.body)}
+    >
       {renderView()}
     </div>
   );

@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 import type { CalendarEvent, EventContentProps, EventDensity } from "../types";
+import { useCalendarConfig } from "./CalendarContext";
+import { cn } from "../utils/cn";
 
 export interface EventBlockProps {
   event: CalendarEvent;
@@ -47,6 +49,7 @@ export function EventBlock({
   eventContent,
   onClick,
 }: EventBlockProps) {
+  const { classNames } = useCalendarConfig();
   const bgColor = event.backgroundColor ?? "var(--cal-event-default-bg)";
   const textColor = event.textColor ?? "var(--cal-event-default-text)";
   const borderColor = event.borderColor ?? bgColor;
@@ -59,7 +62,12 @@ export function EventBlock({
 
   return (
     <div
-      className="pro-calendr-react-event"
+      className={cn(
+        "pro-calendr-react-event",
+        classNames?.event,
+        isSelected && classNames?.eventSelected,
+        isDragging && classNames?.eventDragging,
+      )}
       data-testid={`event-${event.id}`}
       data-event-id={event.id}
       data-selected={isSelected || undefined}

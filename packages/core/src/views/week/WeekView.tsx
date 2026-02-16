@@ -1,5 +1,7 @@
 import { useMemo, type ReactNode } from "react";
 import type { CalendarEvent, EventContentProps } from "../../types";
+import { useCalendarConfig } from "../../components/CalendarContext";
+import { cn } from "../../utils/cn";
 import { getDaysInRange } from "../../utils/date-utils";
 import { generateTimeSlots } from "../../utils/slot";
 import { getEventsForDay, partitionAllDayEvents } from "../../utils/event-filter";
@@ -28,6 +30,8 @@ export function WeekView({
   eventContent,
   onEventClick,
 }: WeekViewProps) {
+  const { classNames } = useCalendarConfig();
+
   const days = useMemo(
     () => getDaysInRange(dateRange.start, dateRange.end),
     [dateRange.start, dateRange.end],
@@ -45,14 +49,17 @@ export function WeekView({
   );
 
   return (
-    <div data-testid="pro-calendr-react-week" className="pro-calendr-react-week">
+    <div
+      data-testid="pro-calendr-react-week"
+      className={cn("pro-calendr-react-week", classNames?.weekView)}
+    >
       {/* Day column headers */}
       <DayColumnHeaders days={days} />
 
       {/* All-day events row */}
       {allDayEvents.length > 0 && (
         <div
-          className="pro-calendr-react-allday-row"
+          className={cn("pro-calendr-react-allday-row", classNames?.alldayRow)}
           style={{
             gridTemplateColumns: `var(--cal-time-label-width, 60px) repeat(${String(days.length)}, 1fr)`,
           }}
@@ -65,7 +72,10 @@ export function WeekView({
               return start <= day && end >= day;
             });
             return (
-              <div key={day.toISOString()} className="pro-calendr-react-allday-cell">
+              <div
+                key={day.toISOString()}
+                className={cn("pro-calendr-react-allday-cell", classNames?.alldayCell)}
+              >
                 {dayAllDay.map((event) => (
                   <div
                     key={event.id}
@@ -95,7 +105,11 @@ export function WeekView({
         {/* Time labels column */}
         <div className="pro-calendr-react-time-labels">
           {slots.map((slot, i) => (
-            <div key={i} className="pro-calendr-react-time-label" style={{ height: slotHeight }}>
+            <div
+              key={i}
+              className={cn("pro-calendr-react-time-label", classNames?.timeLabel)}
+              style={{ height: slotHeight }}
+            >
               {i > 0 ? slot.label : ""}
             </div>
           ))}

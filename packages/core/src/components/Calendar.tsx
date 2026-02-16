@@ -1,13 +1,14 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { format } from "date-fns";
 import type { CalendarProps, CalendarRef, CalendarViewType } from "../types";
-import { useCalendarStore } from "./CalendarContext";
+import { useCalendarStore, useCalendarConfig } from "./CalendarContext";
 import { CalendarProvider } from "./CalendarProvider";
 import { CalendarBody } from "./CalendarBody";
 import { CalendarToolbar } from "../toolbar/CalendarToolbar";
 import { DateNavigation } from "../toolbar/DateNavigation";
 import { ViewSelector } from "../toolbar/ViewSelector";
 import { Skeleton } from "./Skeleton";
+import { cn } from "../utils/cn";
 import { DEFAULTS } from "../constants";
 
 function getToolbarTitle(date: Date, view: CalendarViewType): string {
@@ -36,10 +37,10 @@ function CalendarInner({
   toolbarLeft,
   toolbarCenter,
   toolbarRight,
-  classNames,
   style,
   theme,
 }: CalendarProps & { calendarRef: React.Ref<CalendarRef> }) {
+  const { classNames } = useCalendarConfig();
   const currentView = useCalendarStore((s) => s.currentView);
   const currentDate = useCalendarStore((s) => s.currentDate);
   const dateRange = useCalendarStore((s) => s.dateRange);
@@ -113,7 +114,7 @@ function CalendarInner({
   return (
     <div
       data-testid="pro-calendr-react"
-      className={`pro-calendr-react ${classNames?.root ?? ""}`}
+      className={cn("pro-calendr-react", classNames?.root)}
       data-theme={theme === "dark" ? "dark" : theme === "auto" ? "auto" : undefined}
       style={style}
     >

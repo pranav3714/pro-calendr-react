@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import type { CalendarEvent, EventContentProps } from "../../types";
 import type { TimeSlot } from "../../utils/slot";
+import { useCalendarConfig } from "../../components/CalendarContext";
+import { cn } from "../../utils/cn";
 import { calculateEventPosition } from "../../utils/event-position";
 import { EventBlock } from "../../components/EventBlock";
 
@@ -25,6 +27,8 @@ export function TimeSlotColumn({
   eventContent,
   onEventClick,
 }: TimeSlotColumnProps) {
+  const { classNames } = useCalendarConfig();
+
   return (
     <div
       className="pro-calendr-react-time-slot-column"
@@ -35,7 +39,11 @@ export function TimeSlotColumn({
     >
       {/* Slot grid lines */}
       {slots.map((_slot, i) => (
-        <div key={i} className="pro-calendr-react-time-slot" style={{ height: slotHeight }} />
+        <div
+          key={i}
+          className={cn("pro-calendr-react-time-slot", classNames?.timeSlot)}
+          style={{ height: slotHeight }}
+        />
       ))}
 
       {/* Events positioned absolutely */}

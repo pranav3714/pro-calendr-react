@@ -1,5 +1,7 @@
 import { format } from "date-fns";
 import { isSameDay } from "../../utils/date-utils";
+import { useCalendarConfig } from "../../components/CalendarContext";
+import { cn } from "../../utils/cn";
 
 export interface DayColumnHeadersProps {
   days: Date[];
@@ -7,11 +9,12 @@ export interface DayColumnHeadersProps {
 }
 
 export function DayColumnHeaders({ days, today }: DayColumnHeadersProps) {
+  const { classNames } = useCalendarConfig();
   const now = today ?? new Date();
 
   return (
     <div
-      className="pro-calendr-react-day-headers"
+      className={cn("pro-calendr-react-day-headers", classNames?.dayHeaders)}
       style={{
         gridTemplateColumns: `var(--cal-time-label-width, 60px) repeat(${String(days.length)}, 1fr)`,
       }}
@@ -23,7 +26,11 @@ export function DayColumnHeaders({ days, today }: DayColumnHeadersProps) {
         return (
           <div
             key={day.toISOString()}
-            className="pro-calendr-react-day-header"
+            className={cn(
+              "pro-calendr-react-day-header",
+              classNames?.dayCell,
+              isToday && classNames?.dayCellToday,
+            )}
             data-today={isToday || undefined}
           >
             <div>{format(day, "EEE")}</div>

@@ -1,6 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { WeekView } from "../WeekView";
+import { CalendarProvider } from "../../../components/CalendarProvider";
 import type { CalendarEvent } from "../../../types";
 
 function makeEvent(overrides: Partial<CalendarEvent> = {}): CalendarEvent {
@@ -18,20 +20,25 @@ const weekRange = {
   end: new Date(2026, 1, 15), // Sunday Feb 15
 };
 
+/** Wraps children in CalendarProvider to provide config context */
+function Wrapper({ children }: { children: ReactNode }) {
+  return <CalendarProvider>{children}</CalendarProvider>;
+}
+
 describe("WeekView", () => {
   it("renders without crashing", () => {
-    render(<WeekView events={[]} dateRange={weekRange} />);
+    render(<WeekView events={[]} dateRange={weekRange} />, { wrapper: Wrapper });
     expect(screen.getByTestId("pro-calendr-react-week")).toBeDefined();
   });
 
   it("renders 7 day columns", () => {
-    render(<WeekView events={[]} dateRange={weekRange} />);
+    render(<WeekView events={[]} dateRange={weekRange} />, { wrapper: Wrapper });
     const headers = screen.getAllByText(/Mon|Tue|Wed|Thu|Fri|Sat|Sun/);
     expect(headers.length).toBe(7);
   });
 
   it("renders day numbers in headers", () => {
-    render(<WeekView events={[]} dateRange={weekRange} />);
+    render(<WeekView events={[]} dateRange={weekRange} />, { wrapper: Wrapper });
     // Days 9-15 should be rendered
     expect(screen.getByText("9")).toBeDefined();
     expect(screen.getByText("15")).toBeDefined();
@@ -46,6 +53,7 @@ describe("WeekView", () => {
         slotMaxTime="12:00"
         slotDuration={60}
       />,
+      { wrapper: Wrapper },
     );
     // Labels should include hour marks (but not the first 08:00)
     expect(screen.getByText("09:00")).toBeDefined();
@@ -62,7 +70,7 @@ describe("WeekView", () => {
         end: new Date(2026, 1, 11, 10, 0),
       }),
     ];
-    render(<WeekView events={events} dateRange={weekRange} />);
+    render(<WeekView events={events} dateRange={weekRange} />, { wrapper: Wrapper });
     expect(screen.getByTestId("event-e1")).toBeDefined();
   });
 
@@ -79,7 +87,7 @@ describe("WeekView", () => {
         end: new Date(2026, 1, 12, 15, 0),
       }),
     ];
-    render(<WeekView events={events} dateRange={weekRange} />);
+    render(<WeekView events={events} dateRange={weekRange} />, { wrapper: Wrapper });
     expect(screen.getByTestId("event-e1")).toBeDefined();
     expect(screen.getByTestId("event-e2")).toBeDefined();
   });
@@ -94,13 +102,13 @@ describe("WeekView", () => {
         end: new Date(2026, 1, 11),
       }),
     ];
-    render(<WeekView events={events} dateRange={weekRange} />);
+    render(<WeekView events={events} dateRange={weekRange} />, { wrapper: Wrapper });
     expect(screen.getByText("all-day")).toBeDefined();
     expect(screen.getByTestId("event-allday1")).toBeDefined();
   });
 
   it("does not render all-day row when no all-day events", () => {
-    render(<WeekView events={[makeEvent()]} dateRange={weekRange} />);
+    render(<WeekView events={[makeEvent()]} dateRange={weekRange} />, { wrapper: Wrapper });
     expect(screen.queryByText("all-day")).toBeNull();
   });
 
@@ -112,13 +120,14 @@ describe("WeekView", () => {
         dateRange={weekRange}
         eventContent={({ event }) => <span data-testid="custom-content">{event.title}!</span>}
       />,
+      { wrapper: Wrapper },
     );
     expect(screen.getByTestId("custom-content")).toBeDefined();
     expect(screen.getByText("Custom!")).toBeDefined();
   });
 
   it("renders time slot columns", () => {
-    render(<WeekView events={[]} dateRange={weekRange} />);
+    render(<WeekView events={[]} dateRange={weekRange} />, { wrapper: Wrapper });
     const columns = document.querySelectorAll(".pro-calendr-react-time-slot-column");
     expect(columns.length).toBe(7);
   });
@@ -132,6 +141,7 @@ describe("WeekView", () => {
         slotMaxTime="12:00"
         slotDuration={60}
       />,
+      { wrapper: Wrapper },
     );
     // 4 slots (08:00-09:00, 09:00-10:00, 10:00-11:00, 11:00-12:00)
     // Each column has 4 slots, 7 columns = 28 slots + 4 time labels
@@ -147,7 +157,7 @@ describe("WeekView", () => {
         textColor: "#ffffff",
       }),
     ];
-    render(<WeekView events={events} dateRange={weekRange} />);
+    render(<WeekView events={events} dateRange={weekRange} />, { wrapper: Wrapper });
     const eventEl = screen.getByTestId("event-colored");
     expect(eventEl.style.backgroundColor).toBe("rgb(255, 0, 0)");
     expect(eventEl.style.color).toBe("rgb(255, 255, 255)");
@@ -161,7 +171,7 @@ describe("WeekView", () => {
         end: new Date(2026, 1, 20, 10, 0),
       }),
     ];
-    render(<WeekView events={events} dateRange={weekRange} />);
+    render(<WeekView events={events} dateRange={weekRange} />, { wrapper: Wrapper });
     expect(screen.queryByTestId("event-outside")).toBeNull();
   });
 });
