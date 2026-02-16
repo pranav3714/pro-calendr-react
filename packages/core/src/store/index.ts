@@ -10,7 +10,7 @@ export {
   selectCurrentDate,
   selectDateRange,
   selectSelection,
-  selectDragState,
+  selectDragEngine,
   selectHoveredSlot,
   selectFilteredResourceIds,
 } from "./selectors";

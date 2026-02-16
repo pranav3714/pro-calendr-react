@@ -1,29 +1,96 @@
 import type { StateCreator } from "zustand";
-import type { Selection, DragState } from "../../types";
+import type { Selection, DragEngineState, DragMode, DragOrigin, DragPosition } from "../../types";
 import type { CalendarStore } from "../calendar-store";
+
+const IDLE_DRAG_ENGINE: DragEngineState = {
+  phase: "idle",
+  mode: null,
+  origin: null,
+  current: null,
+  initialPointer: null,
+  isValid: true,
+  snappedStart: null,
+  snappedEnd: null,
+};
 
 export interface InteractionSlice {
   selection: Selection | null;
-  dragState: DragState | null;
+  dragEngine: DragEngineState;
   hoveredSlot: { date: Date; resourceId?: string } | null;
 
   setSelection: (selection: Selection | null) => void;
-  setDragState: (state: DragState | null) => void;
+  startPending: (
+    mode: DragMode,
+    origin: DragOrigin,
+    initialPointer: { x: number; y: number },
+  ) => void;
+  startDragging: () => void;
+  updateDragPosition: (
+    current: DragPosition,
+    snappedStart: Date,
+    snappedEnd: Date,
+    isValid: boolean,
+    validationMessage?: string,
+  ) => void;
+  completeDrag: () => void;
+  cancelDrag: () => void;
   setHoveredSlot: (slot: { date: Date; resourceId?: string } | null) => void;
 }
 
 export const createInteractionSlice: StateCreator<CalendarStore, [], [], InteractionSlice> = (
   set,
+  get,
 ) => ({
   selection: null,
-  dragState: null,
+  dragEngine: { ...IDLE_DRAG_ENGINE },
   hoveredSlot: null,
 
   setSelection: (selection) => {
     set({ selection });
   },
-  setDragState: (state) => {
-    set({ dragState: state });
+  startPending: (mode, origin, initialPointer) => {
+    set({
+      dragEngine: {
+        phase: "pending",
+        mode,
+        origin,
+        current: null,
+        initialPointer,
+        isValid: true,
+        snappedStart: null,
+        snappedEnd: null,
+      },
+    });
+  },
+  startDragging: () => {
+    const { dragEngine } = get();
+    if (dragEngine.phase !== "pending") return;
+    set({
+      dragEngine: {
+        ...dragEngine,
+        phase: "dragging",
+      },
+    });
+  },
+  updateDragPosition: (current, snappedStart, snappedEnd, isValid, validationMessage) => {
+    const { dragEngine } = get();
+    if (dragEngine.phase !== "dragging") return;
+    set({
+      dragEngine: {
+        ...dragEngine,
+        current,
+        snappedStart,
+        snappedEnd,
+        isValid,
+        validationMessage,
+      },
+    });
+  },
+  completeDrag: () => {
+    set({ dragEngine: { ...IDLE_DRAG_ENGINE } });
+  },
+  cancelDrag: () => {
+    set({ dragEngine: { ...IDLE_DRAG_ENGINE } });
   },
   setHoveredSlot: (slot) => {
     set({ hoveredSlot: slot });
