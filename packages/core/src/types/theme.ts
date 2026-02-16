@@ -34,6 +34,8 @@ export interface CalendarClassNames {
   monthHeader?: string;
   monthEvent?: string;
   monthEventContinuation?: string;
+  dayView?: string;
+  dayHeaderBar?: string;
 }
 
 export interface CalendarCSSVariables {

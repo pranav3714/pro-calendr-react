@@ -348,6 +348,27 @@
   color: var(--cal-text);
 }
 
+/* DayView */
+
+.pro-calendr-react-day {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.pro-calendr-react-day-header-bar {
+  font-size: var(--cal-font-size-lg);
+  font-weight: var(--cal-font-weight-medium);
+  padding: 8px 16px;
+  border-bottom: var(--cal-border-width) solid var(--cal-border);
+}
+
+.pro-calendr-react-day-grid {
+  display: grid;
+  grid-template-columns: var(--cal-time-label-width, 60px) 1fr;
+  overflow: auto;
+}
+
 /* MonthView */
 
 .pro-calendr-react-month {
