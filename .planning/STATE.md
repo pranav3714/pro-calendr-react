@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-16)
 ## Current Position
 
 Phase: 2 of 8 (DayView, MonthView & Shared View Features)
-Plan: 1 of 5 in current phase
+Plan: 2 of 5 in current phase
 Status: In Progress
-Last activity: 2026-02-16 -- Completed 02-01-PLAN.md (Collision layout algorithm)
+Last activity: 2026-02-16 -- Completed 02-02-PLAN.md (MonthView with lane allocation)
 
-Progress: [██░░░░░░░░] 15%
+Progress: [██░░░░░░░░] 17%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
-- Average duration: 3.5min
-- Total execution time: 0.35 hours
+- Total plans completed: 7
+- Average duration: 3.6min
+- Total execution time: 0.42 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation-theming | 5/5 | 18min | 3.6min |
-| 02-dayview-monthview-shared-view-features | 1/5 | 3min | 3min |
+| 02-dayview-monthview-shared-view-features | 2/5 | 8min | 4min |
 
 **Recent Trend:**
-- Last 5 plans: 01-02 (3min), 01-03 (3min), 01-04 (5min), 01-05 (5min), 02-01 (3min)
+- Last 5 plans: 01-03 (3min), 01-04 (5min), 01-05 (5min), 02-01 (3min), 02-02 (5min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -69,6 +69,10 @@ Recent decisions affecting current work:
 - [02-01]: Replaced detectCollisions/CollisionGroup with layoutCollisions/CollisionResult (breaking change acceptable for unreleased library)
 - [02-01]: Used ?? 0 fallback instead of non-null assertion for Map.get to satisfy strict ESLint
 - [02-01]: Input array not mutated: spread copy before sort
+- [02-02]: Lane allocation uses greedy first-fit: segments sorted by span desc, assigned to first non-overlapping lane
+- [02-02]: buildEventSegments clips events to week boundaries with isStart/isEnd flags for continuation styling
+- [02-02]: MonthView currentMonth derived from midpoint of dateRange (handles cross-month boundaries)
+- [02-02]: Event chips use CSS Grid grid-column for multi-day spanning
 
 ### Pending Todos
 
@@ -76,11 +80,10 @@ None yet.
 
 ### Blockers/Concerns
 
-- Research flagged MonthView multi-day lane allocation as needing validation during Phase 2 planning
 - Research flagged dual-axis virtualization (Phase 6) as most complex -- consider prototype early
 
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Completed 02-01-PLAN.md (Collision layout algorithm)
+Stopped at: Completed 02-02-PLAN.md (MonthView with lane allocation)
 Resume file: None
