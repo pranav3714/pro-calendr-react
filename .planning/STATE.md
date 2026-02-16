@@ -9,29 +9,29 @@ See: .planning/PROJECT.md (updated 2026-02-16)
 
 ## Current Position
 
-Phase: 2 of 8 (DayView, MonthView & Shared View Features)
-Plan: 4 of 5 in current phase
-Status: In Progress
-Last activity: 2026-02-16 -- Completed 02-04-PLAN.md (AllDayRow extraction + view routing)
+Phase: 2 of 8 (DayView, MonthView & Shared View Features) -- COMPLETE
+Plan: 5 of 5 in current phase
+Status: Phase Complete
+Last activity: 2026-02-16 -- Completed 02-05-PLAN.md (NowIndicator + BusinessHoursOverlay)
 
-Progress: [██░░░░░░░░] 23%
+Progress: [███░░░░░░░] 25%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 9
-- Average duration: 3.6min
-- Total execution time: 0.53 hours
+- Total plans completed: 10
+- Average duration: 3.7min
+- Total execution time: 0.57 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation-theming | 5/5 | 18min | 3.6min |
-| 02-dayview-monthview-shared-view-features | 4/5 | 15min | 3.8min |
+| 02-dayview-monthview-shared-view-features | 5/5 | 19min | 3.8min |
 
 **Recent Trend:**
-- Last 5 plans: 01-05 (5min), 02-01 (3min), 02-02 (5min), 02-03 (3min), 02-04 (4min)
+- Last 5 plans: 02-01 (3min), 02-02 (5min), 02-03 (3min), 02-04 (4min), 02-05 (4min)
 - Trend: stable
 
 *Updated after each plan completion*
@@ -81,6 +81,11 @@ Recent decisions affecting current work:
 - [02-04]: AllDayRow uses parseDate() for date comparison consistency across string/Date inputs
 - [02-04]: MonthView gets separate monthViewProps excluding time-grid props; DayView shares viewProps with WeekView
 - [02-04]: Shared component extraction pattern: duplicated view logic moves to components/ for reuse
+- [02-05]: NowIndicator uses local useState + setInterval (60s) for self-contained updates without parent re-renders
+- [02-05]: BusinessHoursOverlay uses pointer-events: none so events beneath remain interactive
+- [02-05]: Z-index layering convention: grid (auto) < business-hours (1) < events (5) < now-indicator (10)
+- [02-05]: NowIndicator always rendered in TimeSlotColumn; self-determines visibility via isSameDay check
+- [02-05]: Config pipeline extension pattern: add to CalendarProviderProps + CalendarConfig, wire through CalendarBody viewProps
 
 ### Pending Todos
 
@@ -93,5 +98,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Completed 02-04-PLAN.md (AllDayRow extraction + view routing)
+Stopped at: Completed 02-05-PLAN.md (NowIndicator + BusinessHoursOverlay) -- Phase 2 complete
 Resume file: None
