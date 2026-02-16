@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-16)
 
 **Core value:** Handle 1000+ events across all five views without performance degradation -- virtualization, surgical Zustand selectors, and minimal re-renders are non-negotiable.
-**Current focus:** Phase 4 complete — ready for Phase 5
+**Current focus:** Phase 5 in progress — Resources & ListView
 
 ## Current Position
 
-Phase: 4 of 8 (Keyboard Navigation & Accessibility)
-Plan: 3 of 3 in current phase
-Status: Phase Complete — Verified (21/21 must-haves)
-Last activity: 2026-02-17 -- Phase 4 verified and marked complete
+Phase: 5 of 8 (Resources & ListView)
+Plan: 1 of 2 in current phase
+Status: Plan 05-01 complete — resource data layer built
+Last activity: 2026-02-17 -- Completed 05-01-PLAN.md
 
-Progress: [█████░░░░░] 50%
+Progress: [██████░░░░] 56%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 16
+- Total plans completed: 17
 - Average duration: 3.5min
-- Total execution time: 0.93 hours
+- Total execution time: 0.98 hours
 
 **By Phase:**
 
@@ -31,13 +31,14 @@ Progress: [█████░░░░░] 50%
 | 02-dayview-monthview-shared-view-features | 5/5 | 19min | 3.8min |
 | 03-event-interactions | 3/3 | 14min | 4.7min |
 | 04-keyboard-navigation-accessibility | 3/3 | 9min | 3.0min |
+| 05-resources-listview | 1/2 | 3min | 3.0min |
 
 **Recent Trend:**
-- Last 5 plans: 03-02 (3min), 03-03 (7min), 04-01 (3min), 04-02 (3min), 04-03 (3min)
+- Last 5 plans: 03-03 (7min), 04-01 (3min), 04-02 (3min), 04-03 (3min), 05-01 (3min)
 - Trend: stable
 
 *Updated after each plan completion*
-| Phase 04 P02 | 5min | 2 tasks | 7 files |
+| Phase 05 P01 | 3min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -113,6 +114,10 @@ Recent decisions affecting current work:
 - [Phase 04-02]: getCellProps and dayIndex are optional props on TimeSlotColumn for backward compatibility
 - [Phase 04-02]: MonthView grid container is a separate div wrapping week rows (not the root div) to keep header outside grid
 - [Phase 04-02]: Array indexing uses 'as T | undefined' cast to satisfy strict TypeScript no-unnecessary-condition rule
+- [05-01]: collapsedGroupIds uses string[] (not Set) per Zustand Object.is equality -- Set mutations bypass change detection
+- [05-01]: buildResourceTree accepts arrays but converts to Set internally for O(1) lookups
+- [05-01]: Groups with no matching resources are excluded from tree output (no empty group nodes)
+- [05-01]: Resources with groupId not matching any defined group placed in ungrouped array
 
 ### Pending Todos
 
@@ -124,6 +129,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-16
-Stopped at: Completed 04-03-PLAN.md (Keyboard Shortcuts + Focus Restoration) -- Phase 04 complete
+Last session: 2026-02-17
+Stopped at: Completed 05-01-PLAN.md (Resource Data Layer) -- ready for 05-02
 Resume file: None
