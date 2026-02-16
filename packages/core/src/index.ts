@@ -58,7 +58,7 @@ export {
   getMinutesSinceMidnight,
   getDurationMinutes,
   addDays,
-  detectCollisions,
+  layoutCollisions,
   generateGridTemplate,
   snapToGrid,
   generateTimeSlots,

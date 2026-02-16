@@ -13,7 +13,8 @@ export {
   getDurationMinutes,
   addDays,
 } from "./date-utils";
-export { detectCollisions } from "./collision";
+export { layoutCollisions } from "./collision";
+export type { CollisionResult } from "./collision";
 export { generateGridTemplate } from "./grid";
 export { snapToGrid } from "./snap";
 export { generateTimeSlots, getSlotAtPosition } from "./slot";
