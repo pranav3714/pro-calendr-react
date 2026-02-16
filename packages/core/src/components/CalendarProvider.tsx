@@ -1,8 +1,9 @@
-import { useEffect, type ReactNode } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import type { CalendarEvent, CalendarViewType, EventContentProps, EventClickInfo } from "../types";
-import { useCalendarStore } from "../store/calendar-store";
+import { createCalendarStore } from "../store/calendar-store";
+import { getDateRange } from "../utils/date-utils";
 import { DEFAULTS } from "../constants";
-import { CalendarContext } from "./CalendarContext";
+import { CalendarStoreContext, CalendarConfigContext } from "./CalendarContext";
 
 export interface CalendarConfig {
   events: CalendarEvent[];
@@ -80,25 +81,28 @@ export function CalendarProvider({
   classNames,
   style,
 }: CalendarProviderProps) {
-  const setView = useCalendarStore((s) => s.setView);
-  const setDate = useCalendarStore((s) => s.setDate);
-  const setFirstDay = useCalendarStore((s) => s.setFirstDay);
+  // Create store instance ONCE per mount via useState initializer
+  const [store] = useState(() => {
+    const initialDate = defaultDate
+      ? typeof defaultDate === "string"
+        ? new Date(defaultDate)
+        : defaultDate
+      : new Date();
+    const initialView = defaultView;
+    const dateRange = getDateRange(initialDate, initialView, firstDay);
 
-  // Initialize store on mount with defaults
-  useEffect(() => {
-    setView(defaultView);
-    if (defaultDate) {
-      const date = typeof defaultDate === "string" ? new Date(defaultDate) : defaultDate;
-      setDate(date);
-    }
-    // Only run on mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return createCalendarStore({
+      currentView: initialView,
+      currentDate: initialDate,
+      dateRange,
+      firstDay,
+    });
+  });
 
-  // Sync firstDay prop to store when it changes
+  // Sync firstDay prop changes to the store
   useEffect(() => {
-    setFirstDay(firstDay);
-  }, [firstDay, setFirstDay]);
+    store.getState().setFirstDay(firstDay);
+  }, [firstDay, store]);
 
   const config: CalendarConfig = {
     events,
@@ -123,5 +127,9 @@ export function CalendarProvider({
     style,
   };
 
-  return <CalendarContext.Provider value={config}>{children}</CalendarContext.Provider>;
+  return (
+    <CalendarStoreContext.Provider value={store}>
+      <CalendarConfigContext.Provider value={config}>{children}</CalendarConfigContext.Provider>
+    </CalendarStoreContext.Provider>
+  );
 }
