@@ -114,7 +114,6 @@
     "@date-fns/tz": "^1.4.1",
     "@tanstack/react-virtual": "^3.11.0",
     "date-fns": "^4.1.0",
-    "date-fns-tz": "^3.2.0",
     "zustand": "^5.0.0"
   },
   "devDependencies": {

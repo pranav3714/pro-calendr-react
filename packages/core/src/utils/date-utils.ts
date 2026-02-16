@@ -13,7 +13,48 @@ import {
   eachWeekOfInterval,
   differenceInMinutes,
 } from "date-fns";
+import { TZDate } from "@date-fns/tz";
 import type { CalendarViewType } from "../types";
+
+/**
+ * Create a calendar date, optionally in a specific timezone.
+ * When timezone is provided, returns a TZDate; otherwise returns a plain Date.
+ *
+ * For string inputs without a timezone offset (e.g. "2026-02-16T10:00:00"),
+ * the string is treated as wall-clock time in the specified timezone.
+ *
+ * @param date - A Date object or ISO string
+ * @param timezone - Optional IANA timezone string (e.g. "America/New_York")
+ */
+export function createCalendarDate(date: Date | string, timezone?: string): Date {
+  if (!timezone) {
+    return typeof date === "string" ? new Date(date) : date;
+  }
+  if (typeof date === "string") {
+    // Parse string components to preserve wall-clock time in the target timezone
+    const parsed = new Date(date);
+    return new TZDate(
+      parsed.getFullYear(),
+      parsed.getMonth(),
+      parsed.getDate(),
+      parsed.getHours(),
+      parsed.getMinutes(),
+      parsed.getSeconds(),
+      timezone,
+    );
+  }
+  return new TZDate(date.getTime(), timezone);
+}
+
+/**
+ * Get "today" in the specified timezone, or as a plain Date if no timezone.
+ *
+ * @param timezone - Optional IANA timezone string
+ */
+export function getToday(timezone?: string): Date {
+  if (!timezone) return new Date();
+  return TZDate.tz(timezone);
+}
 
 /**
  * Format a date using date-fns format tokens.
@@ -23,14 +64,35 @@ export function formatDate(date: Date, formatStr: string): string {
 }
 
 /**
- * Parse a string or Date into a Date object.
+ * Parse a string or Date into a Date object, optionally in a specific timezone.
+ * When timezone is provided, returns a TZDate.
+ *
+ * @param value - A string or Date to parse
+ * @param timezone - Optional IANA timezone string
  */
-export function parseDate(value: string | Date): Date {
-  return typeof value === "string" ? new Date(value) : value;
+export function parseDate(value: string | Date, timezone?: string): Date {
+  if (!timezone) {
+    return typeof value === "string" ? new Date(value) : value;
+  }
+  if (typeof value === "string") {
+    // Parse string components to preserve wall-clock time in the target timezone
+    const parsed = new Date(value);
+    return new TZDate(
+      parsed.getFullYear(),
+      parsed.getMonth(),
+      parsed.getDate(),
+      parsed.getHours(),
+      parsed.getMinutes(),
+      parsed.getSeconds(),
+      timezone,
+    );
+  }
+  return new TZDate(value.getTime(), timezone);
 }
 
 /**
  * Check if two dates represent the same calendar day.
+ * Works with both Date and TZDate instances.
  */
 export function isSameDay(a: Date, b: Date): boolean {
   return (
@@ -92,6 +154,8 @@ export function getWeeksInRange(start: Date, end: Date, firstDay = 1): Date[] {
 
 /**
  * Calculate the visible date range for a given view type and date.
+ * When the input date is a TZDate, all returned dates preserve the timezone.
+ *
  * @param date - The reference date (typically "currentDate")
  * @param view - The calendar view type
  * @param firstDay - 0 = Sunday, 1 = Monday (default 1)
@@ -152,8 +216,19 @@ export function parseTimeToMinutes(time: string): number {
 
 /**
  * Convert total minutes since midnight to a Date on a given reference day.
+ * When timezone is provided, returns a TZDate.
+ *
+ * @param minutes - Minutes since midnight
+ * @param referenceDate - The reference day
+ * @param timezone - Optional IANA timezone string
  */
-export function minutesToDate(minutes: number, referenceDate: Date): Date {
+export function minutesToDate(minutes: number, referenceDate: Date, timezone?: string): Date {
+  if (timezone) {
+    const d = startOfDay(referenceDate);
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return new TZDate(d.getFullYear(), d.getMonth(), d.getDate(), hours, mins, 0, timezone);
+  }
   const d = startOfDay(referenceDate);
   d.setMinutes(minutes);
   return d;
@@ -161,6 +236,7 @@ export function minutesToDate(minutes: number, referenceDate: Date): Date {
 
 /**
  * Get the number of minutes from midnight for a given date.
+ * Works with both Date and TZDate (TZDate.getHours/getMinutes return timezone-local values).
  */
 export function getMinutesSinceMidnight(date: Date): number {
   return date.getHours() * 60 + date.getMinutes();

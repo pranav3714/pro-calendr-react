@@ -10,7 +10,7 @@ import {
 } from "date-fns";
 import type { StateCreator } from "zustand";
 import type { CalendarViewType } from "../../types";
-import { getDateRange } from "../../utils/date-utils";
+import { getDateRange, getToday } from "../../utils/date-utils";
 import type { CalendarStore } from "../calendar-store";
 
 export interface NavigationSlice {
@@ -18,11 +18,13 @@ export interface NavigationSlice {
   currentDate: Date;
   dateRange: { start: Date; end: Date };
   firstDay: number;
+  timezone?: string;
 
   setView: (view: CalendarViewType) => void;
   setDate: (date: Date) => void;
   setDateRange: (range: { start: Date; end: Date }) => void;
   setFirstDay: (firstDay: number) => void;
+  setTimezone: (timezone: string | undefined) => void;
   navigateDate: (direction: "prev" | "next" | "today") => void;
 }
 
@@ -54,6 +56,7 @@ export const createNavigationSlice: StateCreator<CalendarStore, [], [], Navigati
   currentDate: new Date(),
   dateRange: { start: new Date(), end: new Date() },
   firstDay: 1,
+  timezone: undefined,
 
   setView: (view) => {
     const { currentDate, firstDay } = get();
@@ -73,10 +76,15 @@ export const createNavigationSlice: StateCreator<CalendarStore, [], [], Navigati
     const dateRange = getDateRange(currentDate, currentView, firstDay);
     set({ firstDay, dateRange });
   },
+  setTimezone: (timezone) => {
+    set({ timezone });
+  },
   navigateDate: (direction) => {
-    const { currentDate, currentView, firstDay } = get();
+    const { currentDate, currentView, firstDay, timezone } = get();
     const newDate =
-      direction === "today" ? new Date() : navigateForView(currentDate, currentView, direction);
+      direction === "today"
+        ? getToday(timezone)
+        : navigateForView(currentDate, currentView, direction);
     const dateRange = getDateRange(newDate, currentView, firstDay);
     set({ currentDate: newDate, dateRange });
   },

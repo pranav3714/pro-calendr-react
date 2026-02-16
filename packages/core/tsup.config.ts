@@ -23,7 +23,7 @@ export default defineConfig({
     "react/jsx-runtime",
     "zustand",
     "date-fns",
-    "date-fns-tz",
+    "@date-fns/tz",
     "@tanstack/react-virtual",
   ],
   esbuildOptions(options) {

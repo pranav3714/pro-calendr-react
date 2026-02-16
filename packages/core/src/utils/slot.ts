@@ -1,4 +1,5 @@
 import { format, startOfDay } from "date-fns";
+import { TZDate } from "@date-fns/tz";
 import { parseTimeToMinutes } from "./date-utils";
 
 export interface TimeSlot {
@@ -9,12 +10,14 @@ export interface TimeSlot {
 
 /**
  * Generate an array of time slots for a time-based view.
+ * When timezone is provided, slot boundaries are TZDate instances.
  *
  * @param startTime - "HH:mm" string for the first slot (e.g. "00:00" or "06:00")
  * @param endTime - "HH:mm" string for the last slot boundary (e.g. "24:00" or "22:00")
  * @param durationMinutes - Duration of each slot in minutes (e.g. 15, 30, 60)
  * @param referenceDate - Optional date to anchor slot Date objects (defaults to today)
  * @param hour12 - Whether to format labels in 12-hour format
+ * @param timezone - Optional IANA timezone string for TZDate slot boundaries
  */
 export function generateTimeSlots(
   startTime: string,
@@ -22,6 +25,7 @@ export function generateTimeSlots(
   durationMinutes: number,
   referenceDate?: Date,
   hour12 = false,
+  timezone?: string,
 ): TimeSlot[] {
   if (durationMinutes <= 0) return [];
 
@@ -36,11 +40,40 @@ export function generateTimeSlots(
   for (let m = startMinutes; m < endMinutes; m += durationMinutes) {
     const slotEnd = Math.min(m + durationMinutes, endMinutes);
 
-    const start = new Date(refDay);
-    start.setMinutes(m);
+    let start: Date;
+    let end: Date;
 
-    const end = new Date(refDay);
-    end.setMinutes(slotEnd);
+    if (timezone) {
+      const startHours = Math.floor(m / 60);
+      const startMins = m % 60;
+      const endHours = Math.floor(slotEnd / 60);
+      const endMins = slotEnd % 60;
+
+      start = new TZDate(
+        refDay.getFullYear(),
+        refDay.getMonth(),
+        refDay.getDate(),
+        startHours,
+        startMins,
+        0,
+        timezone,
+      );
+      end = new TZDate(
+        refDay.getFullYear(),
+        refDay.getMonth(),
+        refDay.getDate(),
+        endHours,
+        endMins,
+        0,
+        timezone,
+      );
+    } else {
+      start = new Date(refDay);
+      start.setMinutes(m);
+
+      end = new Date(refDay);
+      end.setMinutes(slotEnd);
+    }
 
     const label = format(start, hour12 ? "h:mm a" : "HH:mm");
     slots.push({ start, end, label });
