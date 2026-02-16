@@ -245,10 +245,7 @@ describe("Calendar", () => {
 
   it("respects defaultView prop", () => {
     render(<Calendar defaultView="day" />);
-    const body = screen.getByTestId("pro-calendr-react-body");
-    expect(body).toBeDefined();
-    // Day view returns null (not yet routed in CalendarBody)
-    expect(body.children.length).toBe(0);
+    expect(screen.getByTestId("pro-calendr-react-day")).toBeDefined();
   });
 
   it("respects firstDay prop", () => {
