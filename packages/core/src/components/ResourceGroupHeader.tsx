@@ -1,7 +1,7 @@
-import type { ResourceGroupHeaderProps } from "../../interfaces/day-view-props";
-import { ChevronIcon } from "../../components/icons/ChevronIcon";
-import { GroupIcon } from "../../components/icons/GroupIcon";
-import { useScheduleStore } from "../../hooks/use-schedule-store";
+import type { ResourceGroupHeaderProps } from "../interfaces/shared-component-props";
+import { ChevronIcon } from "./icons/ChevronIcon";
+import { GroupIcon } from "./icons/GroupIcon";
+import { useScheduleStore } from "../hooks/use-schedule-store";
 
 export function ResourceGroupHeader({
   groupId,

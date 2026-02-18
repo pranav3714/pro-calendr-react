@@ -280,6 +280,69 @@
   }
 }
 
+/* --- Interaction ghosts & overlays --- */
+.pro-calendr-react-drag-ghost {
+  pointer-events: none;
+  z-index: var(--cal-z-ghost);
+}
+
+.pro-calendr-react-resize-ghost {
+  pointer-events: none;
+  z-index: var(--cal-z-ghost);
+}
+
+.pro-calendr-react-time-tooltip {
+  pointer-events: none;
+  z-index: var(--cal-z-tooltip);
+}
+
+.pro-calendr-react-popover {
+  z-index: var(--cal-z-popover);
+  animation: pro-calendr-react-fade-in 150ms ease-out;
+}
+
+.pro-calendr-react-slot-selection {
+  pointer-events: none;
+  z-index: var(--cal-z-event);
+}
+
+/* --- Cursor overrides during drag --- */
+.pro-calendr-react-dragging,
+.pro-calendr-react-dragging * {
+  cursor: grabbing !important;
+}
+
+/* --- Week View --- */
+.pro-calendr-react-week-cell-drop {
+  background-color: var(--cal-accent-light);
+  outline: 2px solid var(--cal-accent);
+  outline-offset: -2px;
+}
+
+.pro-calendr-react-week-drag-ghost {
+  position: fixed;
+  width: 140px;
+  height: 20px;
+  pointer-events: none;
+  z-index: var(--cal-z-ghost);
+}
+
+/* --- Month View --- */
+.pro-calendr-react-month-cell-today .pro-calendr-react-month-date {
+  background-color: var(--cal-accent);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pro-calendr-react-month-cell:hover {
+  background-color: var(--cal-hover-bg);
+}
+
 /* --- Focus visible --- */
 .pro-calendr-react :focus-visible {
   outline: 2px solid var(--cal-focus-ring);

@@ -3,9 +3,15 @@ import type { Booking } from "../../interfaces/booking";
 import type { BookingTypeConfig } from "../../interfaces/booking-type";
 import type { LaneResult } from "../../interfaces/lane-result";
 import type { PopoverAnchor } from "../../interfaces/popover-state";
+import type { ResizeEdge } from "../../interfaces/resize-state";
 import type { VirtualItemData } from "../../interfaces/virtual-item-data";
 import { BookingBlock } from "../../components/BookingBlock";
 import { NowIndicator } from "../../components/NowIndicator";
+import { DragGhost } from "../../components/DragGhost";
+import { ResizeGhost } from "../../components/ResizeGhost";
+import { TimeTooltip } from "../../components/TimeTooltip";
+import { SelectionOverlay } from "../../components/SelectionOverlay";
+import { useScheduleStore } from "../../hooks/use-schedule-store";
 import { minutesToPosition } from "../../utils/time-position";
 
 const MIN_BLOCK_WIDTH = 24;
@@ -59,6 +65,15 @@ interface ResourceRowBlocksProps {
     readonly booking: Booking;
     readonly anchor: PopoverAnchor;
   }) => void;
+  readonly onDragStart?: (params: {
+    readonly e: React.PointerEvent;
+    readonly booking: Booking;
+  }) => void;
+  readonly onResizeStart?: (params: {
+    readonly e: React.PointerEvent;
+    readonly booking: Booking;
+    readonly edge: ResizeEdge;
+  }) => void;
 }
 
 function ResourceRowBlocks({
@@ -69,7 +84,11 @@ function ResourceRowBlocks({
   config,
   bookingTypes,
   onBookingClick,
+  onDragStart,
+  onResizeStart,
 }: ResourceRowBlocksProps) {
+  const draggedBookingId = useScheduleStore({ selector: (s) => s.draggedBookingId });
+  const resizedBookingId = useScheduleStore({ selector: (s) => s.resizedBookingId });
   const laneAssignments = laneData ? laneData.laneAssignments : new Map<string, number>();
   const laneCount = laneData ? Math.max(1, laneData.laneCount) : 1;
   const singleLaneHeight = rowHeight / laneCount;
@@ -96,7 +115,11 @@ function ResourceRowBlocks({
             top={position.top}
             height={position.height}
             typeConfig={typeConfig}
+            isDragTarget={draggedBookingId === booking.id}
+            isResizeTarget={resizedBookingId === booking.id}
             onClick={onBookingClick}
+            onDragStart={onDragStart}
+            onResizeStart={onResizeStart}
           />
         );
       })}
@@ -116,6 +139,8 @@ interface RenderVirtualItemParams {
     readonly booking: Booking;
     readonly anchor: PopoverAnchor;
   }) => void;
+  readonly onDragStart?: TimeGridProps["onDragStart"];
+  readonly onResizeStart?: TimeGridProps["onResizeStart"];
 }
 
 function renderGroupHeaderPlaceholder({ height }: { readonly height: number }) {
@@ -130,6 +155,8 @@ function renderResourceRow({
   config,
   bookingTypes,
   onBookingClick,
+  onDragStart,
+  onResizeStart,
 }: Omit<RenderVirtualItemParams, "rowHeight" | "itemData"> & {
   readonly itemData: import("../../interfaces/virtual-item-data").VirtualResourceRow;
 }) {
@@ -146,6 +173,8 @@ function renderResourceRow({
         config={config}
         bookingTypes={bookingTypes}
         onBookingClick={onBookingClick}
+        onDragStart={onDragStart}
+        onResizeStart={onResizeStart}
       />
     </div>
   );
@@ -164,6 +193,8 @@ function renderVirtualItem(params: RenderVirtualItemParams) {
     config: params.config,
     bookingTypes: params.bookingTypes,
     onBookingClick: params.onBookingClick,
+    onDragStart: params.onDragStart,
+    onResizeStart: params.onResizeStart,
   });
 }
 
@@ -173,6 +204,7 @@ export function TimeGrid({
   dayStartHour,
   hourWidth,
   rowHeight,
+  scrollMargin,
   bookingsByResource,
   laneDataByResource,
   virtualItems,
@@ -181,8 +213,21 @@ export function TimeGrid({
   currentTimeMinutes,
   gridBackground,
   onBookingClick,
+  rows,
+  layoutConfig,
+  slotSelection,
+  onDragStart,
+  onResizeStart,
+  onGridPointerDown,
 }: TimeGridProps) {
   const config = { dayStartHour, hourWidth };
+
+  function handleGridPointerDown(e: React.PointerEvent): void {
+    if (!onGridPointerDown) {
+      return;
+    }
+    onGridPointerDown({ e });
+  }
 
   return (
     <div
@@ -193,6 +238,7 @@ export function TimeGrid({
         backgroundImage: gridBackground.backgroundImage,
         backgroundSize: gridBackground.backgroundSize,
       }}
+      onPointerDown={handleGridPointerDown}
     >
       {virtualItems.map((virtualItem) => {
         const itemData = items[virtualItem.index];
@@ -201,7 +247,7 @@ export function TimeGrid({
             key={virtualItem.key}
             className="absolute left-0 w-full"
             style={{
-              top: virtualItem.start,
+              top: virtualItem.start - scrollMargin,
               height: virtualItem.size,
             }}
           >
@@ -214,6 +260,8 @@ export function TimeGrid({
               config,
               bookingTypes,
               onBookingClick,
+              onDragStart,
+              onResizeStart,
             })}
           </div>
         );
@@ -221,6 +269,30 @@ export function TimeGrid({
 
       {currentTimeMinutes !== null && (
         <NowIndicator positionX={minutesToPosition({ minutes: currentTimeMinutes, config })} />
+      )}
+
+      {rows && layoutConfig && (
+        <>
+          <DragGhost
+            bookings={[...bookingsByResource.values()].flat()}
+            bookingTypes={bookingTypes}
+            layoutConfig={layoutConfig}
+            rows={rows}
+            laneDataByResource={laneDataByResource}
+          />
+          <ResizeGhost
+            bookings={[...bookingsByResource.values()].flat()}
+            bookingTypes={bookingTypes}
+            layoutConfig={layoutConfig}
+            rows={rows}
+            laneDataByResource={laneDataByResource}
+          />
+          <TimeTooltip layoutConfig={layoutConfig} />
+        </>
+      )}
+
+      {slotSelection && rows && layoutConfig && (
+        <SelectionOverlay slotSelection={slotSelection} layoutConfig={layoutConfig} rows={rows} />
       )}
     </div>
   );

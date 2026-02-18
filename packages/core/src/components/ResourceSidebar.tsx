@@ -1,5 +1,5 @@
-import type { ResourceSidebarProps } from "../../interfaces/day-view-props";
-import type { VirtualItemData } from "../../interfaces/virtual-item-data";
+import type { ResourceSidebarProps } from "../interfaces/shared-component-props";
+import type { VirtualItemData } from "../interfaces/virtual-item-data";
 import { ResourceGroupHeader } from "./ResourceGroupHeader";
 import { ResourceRow } from "./ResourceRow";
 
@@ -28,6 +28,7 @@ function renderSidebarItem({ itemData, groupHeaderHeight }: RenderSidebarItemPar
 export function ResourceSidebar({
   sidebarWidth,
   totalSize,
+  scrollMargin,
   virtualItems,
   items,
   groupHeaderHeight,
@@ -44,7 +45,7 @@ export function ResourceSidebar({
             key={virtualItem.key}
             className="absolute left-0 w-full"
             style={{
-              top: virtualItem.start,
+              top: virtualItem.start - scrollMargin,
               height: virtualItem.size,
             }}
           >

@@ -27,6 +27,8 @@ export default tseslint.config({
           ".storybook/*.ts",
           "vitest.setup.ts",
           "stories/*.tsx",
+          "demo/*.ts",
+          "demo/*.tsx",
         ],
         maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 40,
       },

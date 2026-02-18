@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  content: ["./packages/core/src/**/*.{ts,tsx}", "./stories/**/*.{ts,tsx}"],
+  content: ["./packages/core/src/**/*.{ts,tsx}", "./stories/**/*.{ts,tsx}", "./demo/**/*.{ts,tsx}"],
   darkMode: "class",
   theme: {
     extend: {},

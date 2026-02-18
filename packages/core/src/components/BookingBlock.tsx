@@ -82,6 +82,33 @@ function StatusDot({ status }: StatusDotProps) {
   );
 }
 
+interface ResizeHandleProps {
+  readonly side: "left" | "right";
+  readonly onPointerDown: (e: React.PointerEvent) => void;
+}
+
+function ResizeHandle({ side, onPointerDown }: ResizeHandleProps) {
+  const isLeft = side === "left";
+
+  function handlePointerDown(e: React.PointerEvent): void {
+    e.stopPropagation();
+    e.preventDefault();
+    onPointerDown(e);
+  }
+
+  return (
+    <div
+      className={cn(
+        "absolute inset-y-0 w-1.5 transition-opacity",
+        "opacity-0 hover:bg-blue-400/30 group-hover/block:opacity-40",
+        isLeft && "left-0 cursor-w-resize rounded-l",
+        !isLeft && "right-0 cursor-e-resize rounded-r",
+      )}
+      onPointerDown={handlePointerDown}
+    />
+  );
+}
+
 function BookingBlockInner({
   booking,
   left,
@@ -89,16 +116,25 @@ function BookingBlockInner({
   top,
   height,
   typeConfig,
+  isDragTarget,
+  isResizeTarget: _isResizeTarget,
   onClick,
+  onDragStart,
+  onResizeStart,
 }: BookingBlockProps) {
   const pointerStartRef = useRef<{ x: number; y: number } | null>(null);
   const isNarrow = width < NARROW_WIDTH;
   const isTiny = width < TINY_WIDTH;
+  const isDimmed = isDragTarget === true;
 
   const timeStr = `${formatTime({ minutes: booking.startMinutes })} \u2013 ${formatTime({ minutes: booking.endMinutes })}`;
 
   function handlePointerDown(e: React.PointerEvent): void {
+    e.stopPropagation();
     pointerStartRef.current = { x: e.clientX, y: e.clientY };
+    if (onDragStart) {
+      onDragStart({ e, booking });
+    }
   }
 
   function handleClick(e: MouseEvent<HTMLButtonElement>): void {
@@ -123,15 +159,30 @@ function BookingBlockInner({
     });
   }
 
+  function handleResizeStartLeft(e: React.PointerEvent): void {
+    if (!onResizeStart) {
+      return;
+    }
+    onResizeStart({ e, booking, edge: "start" });
+  }
+
+  function handleResizeStartRight(e: React.PointerEvent): void {
+    if (!onResizeStart) {
+      return;
+    }
+    onResizeStart({ e, booking, edge: "end" });
+  }
+
   return (
     <button
       data-booking-id={booking.id}
       onClick={handleClick}
       onPointerDown={handlePointerDown}
       className={cn(
-        "absolute overflow-hidden rounded-md border-l-[3px]",
-        "transition-all duration-150 hover:z-30 hover:shadow-lg",
+        "group/block absolute overflow-hidden rounded-md border-l-[3px]",
+        "cursor-grab transition-all duration-150 hover:z-30 hover:shadow-lg",
         "select-none text-left focus:outline-none focus:ring-2",
+        isDimmed && "opacity-30",
         typeConfig.border,
         typeConfig.bg,
         typeConfig.ring,
@@ -145,6 +196,13 @@ function BookingBlockInner({
       </div>
 
       <StatusDot status={booking.status} />
+
+      {onResizeStart && (
+        <>
+          <ResizeHandle side="left" onPointerDown={handleResizeStartLeft} />
+          <ResizeHandle side="right" onPointerDown={handleResizeStartRight} />
+        </>
+      )}
     </button>
   );
 }
@@ -158,7 +216,9 @@ function arePropsEqual(
     prev.left === next.left &&
     prev.width === next.width &&
     prev.top === next.top &&
-    prev.height === next.height
+    prev.height === next.height &&
+    prev.isDragTarget === next.isDragTarget &&
+    prev.isResizeTarget === next.isResizeTarget
   );
 }
 

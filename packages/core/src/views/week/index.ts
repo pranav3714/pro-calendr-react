@@ -1,1 +1,1 @@
-export {};
+export { WeekView } from "./WeekView";

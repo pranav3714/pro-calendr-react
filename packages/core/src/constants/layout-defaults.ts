@@ -5,6 +5,7 @@ export const LAYOUT_DEFAULTS: LayoutConfig = {
   rowHeight: 56,
   sidebarWidth: 208,
   groupHeaderHeight: 36,
+  timeHeaderHeight: 40,
   snapInterval: 15,
   dayStartHour: 0,
   dayEndHour: 24,

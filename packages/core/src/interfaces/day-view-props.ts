@@ -5,8 +5,11 @@ import type { GridBackgroundResult } from "./grid-background-params";
 import type { LaneResult } from "./lane-result";
 import type { LayoutConfig } from "./layout-config";
 import type { PopoverAnchor } from "./popover-state";
-import type { Resource } from "./resource";
+import type { RowData } from "./row-data";
+import type { ResizeEdge } from "./resize-state";
 import type { VirtualItemData } from "./virtual-item-data";
+import type { BookingDropInfo, BookingResizeInfo, SlotSelectInfo } from "./schedule-calendar-props";
+import type { SlotSelectionState } from "./interaction-hook-params";
 
 export interface DayViewProps {
   readonly bookings: readonly Booking[];
@@ -17,6 +20,12 @@ export interface DayViewProps {
     readonly booking: Booking;
     readonly anchor: PopoverAnchor;
   }) => void;
+  readonly onBookingDrop?: (params: { readonly info: BookingDropInfo }) => void;
+  readonly onBookingResize?: (params: { readonly info: BookingResizeInfo }) => void;
+  readonly onBookingDelete?: (params: { readonly bookingId: string }) => void;
+  readonly onBookingDuplicate?: (params: { readonly bookingId: string }) => void;
+  readonly onBookingEdit?: (params: { readonly bookingId: string }) => void;
+  readonly onSlotSelect?: (params: { readonly info: SlotSelectInfo }) => void;
 }
 
 export interface TimeHeaderProps {
@@ -25,6 +34,7 @@ export interface TimeHeaderProps {
   readonly sidebarWidth: number;
   readonly hourWidth: number;
   readonly dayStartHour: number;
+  readonly timeHeaderHeight: number;
 }
 
 export interface TimeGridProps {
@@ -34,6 +44,7 @@ export interface TimeGridProps {
   readonly dayStartHour: number;
   readonly hourWidth: number;
   readonly rowHeight: number;
+  readonly scrollMargin: number;
   readonly bookingsByResource: ReadonlyMap<string, readonly Booking[]>;
   readonly laneDataByResource: ReadonlyMap<string, LaneResult>;
   readonly virtualItems: readonly VirtualItem[];
@@ -45,26 +56,17 @@ export interface TimeGridProps {
     readonly booking: Booking;
     readonly anchor: PopoverAnchor;
   }) => void;
-}
-
-export interface ResourceSidebarProps {
-  readonly sidebarWidth: number;
-  readonly totalSize: number;
-  readonly virtualItems: readonly VirtualItem[];
-  readonly items: readonly VirtualItemData[];
-  readonly groupHeaderHeight: number;
-}
-
-export interface ResourceGroupHeaderProps {
-  readonly groupId: string;
-  readonly label: string;
-  readonly icon?: string;
-  readonly resourceCount: number;
-  readonly isCollapsed: boolean;
-  readonly height: number;
-}
-
-export interface ResourceRowProps {
-  readonly resource: Resource;
-  readonly rowHeight: number;
+  readonly rows?: readonly RowData[];
+  readonly layoutConfig?: LayoutConfig;
+  readonly slotSelection?: SlotSelectionState | null;
+  readonly onDragStart?: (params: {
+    readonly e: React.PointerEvent;
+    readonly booking: Booking;
+  }) => void;
+  readonly onResizeStart?: (params: {
+    readonly e: React.PointerEvent;
+    readonly booking: Booking;
+    readonly edge: ResizeEdge;
+  }) => void;
+  readonly onGridPointerDown?: (params: { readonly e: React.PointerEvent }) => void;
 }

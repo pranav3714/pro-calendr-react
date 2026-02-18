@@ -1,5 +1,5 @@
-import type { ResourceRowProps } from "../../interfaces/day-view-props";
-import { ResourceAvatar } from "../../components/ResourceAvatar";
+import type { ResourceRowProps } from "../interfaces/shared-component-props";
+import { ResourceAvatar } from "./ResourceAvatar";
 
 export function ResourceRow({ resource, rowHeight }: ResourceRowProps) {
   return (

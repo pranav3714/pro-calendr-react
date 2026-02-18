@@ -24,19 +24,18 @@ function HourMark({ hour, dayStartHour, dayEndHour, hourWidth }: HourMarkProps) 
   );
 }
 
-const HEADER_HEIGHT = 40;
-
 export function TimeHeader({
   hours,
   timelineWidth,
   sidebarWidth,
   hourWidth,
   dayStartHour,
+  timeHeaderHeight,
 }: TimeHeaderProps) {
   const dayEndHour = dayStartHour + hours.length - 1;
 
   return (
-    <div className="sticky top-0 z-20 flex" style={{ height: HEADER_HEIGHT }}>
+    <div className="sticky top-0 z-20 flex" style={{ height: timeHeaderHeight }}>
       <div
         className="sticky left-0 z-30 flex items-end border-b border-r border-gray-200 bg-white"
         style={{ width: sidebarWidth, minWidth: sidebarWidth }}

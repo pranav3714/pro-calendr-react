@@ -8,6 +8,7 @@ export interface Booking {
   readonly instructor?: string;
   readonly aircraft?: string;
   readonly notes?: string;
+  readonly date?: string;
   readonly startMinutes: number;
   readonly endMinutes: number;
   readonly status: "confirmed" | "pending" | "in-progress" | "completed" | "cancelled";
