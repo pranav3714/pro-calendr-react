@@ -152,6 +152,21 @@ describe("assignLanes", () => {
     expect(result.laneAssignments.size).toBe(500);
   });
 
+  it("handles 1000 bookings within 50ms", () => {
+    const bookings = Array.from({ length: 1000 }, (_, i) =>
+      makeBooking({
+        id: `bk${String(i)}`,
+        startMinutes: Math.floor((i * 7) % 1440),
+        endMinutes: Math.floor((i * 7) % 1440) + 60 + (i % 90),
+      }),
+    );
+    const start = performance.now();
+    const result = assignLanes({ bookings });
+    const elapsed = performance.now() - start;
+    expect(elapsed).toBeLessThan(50);
+    expect(result.laneAssignments.size).toBe(1000);
+  });
+
   it("handles a single very long booking spanning the entire day", () => {
     const bookings = [
       makeBooking({ id: "long", startMinutes: 0, endMinutes: 1440 }),
