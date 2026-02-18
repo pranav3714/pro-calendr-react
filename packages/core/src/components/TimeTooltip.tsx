@@ -19,7 +19,8 @@ export function TimeTooltip({ layoutConfig }: TimeTooltipProps) {
 
     return (
       <div
-        className="pro-calendr-react-time-tooltip pointer-events-none absolute z-50 whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-[11px] tabular-nums text-white shadow-md"
+        aria-hidden="true"
+        className="pro-calendr-react-time-tooltip pointer-events-none absolute z-50 whitespace-nowrap rounded bg-[var(--cal-tooltip-bg)] px-2 py-1 text-[11px] tabular-nums text-[var(--cal-tooltip-text)] shadow-md"
         style={{ left, top: TOOLTIP_OFFSET_Y }}
       >
         {label}
@@ -33,7 +34,8 @@ export function TimeTooltip({ layoutConfig }: TimeTooltipProps) {
 
     return (
       <div
-        className="pro-calendr-react-time-tooltip pointer-events-none absolute z-50 whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-[11px] tabular-nums text-white shadow-md"
+        aria-hidden="true"
+        className="pro-calendr-react-time-tooltip pointer-events-none absolute z-50 whitespace-nowrap rounded bg-[var(--cal-tooltip-bg)] px-2 py-1 text-[11px] tabular-nums text-[var(--cal-tooltip-text)] shadow-md"
         style={{ left, top: TOOLTIP_OFFSET_Y }}
       >
         {label}

@@ -40,6 +40,26 @@
   /* Colors — Focus */
   --cal-focus-ring: #3b82f6;
 
+  /* Colors — Tooltip */
+  --cal-tooltip-bg: #111827;
+  --cal-tooltip-text: #f9fafb;
+
+  /* Colors — Selection */
+  --cal-selection-border: #93c5fd;
+  --cal-selection-bg: rgba(219, 234, 254, 0.4);
+
+  /* Colors — Status Badges */
+  --cal-status-confirmed-bg: #dcfce7;
+  --cal-status-confirmed-text: #15803d;
+  --cal-status-pending-bg: #fef3c7;
+  --cal-status-pending-text: #b45309;
+  --cal-status-in-progress-bg: #dbeafe;
+  --cal-status-in-progress-text: #1d4ed8;
+  --cal-status-cancelled-bg: #fee2e2;
+  --cal-status-cancelled-text: #dc2626;
+  --cal-status-completed-bg: #f3f4f6;
+  --cal-status-completed-text: #4b5563;
+
   /* Typography */
   --cal-font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
   --cal-font-size-xs: 0.75rem;
@@ -103,6 +123,23 @@
   --cal-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
   --cal-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
   --cal-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+
+  --cal-tooltip-bg: #f9fafb;
+  --cal-tooltip-text: #111827;
+
+  --cal-selection-border: #3b82f6;
+  --cal-selection-bg: rgba(30, 58, 95, 0.4);
+
+  --cal-status-confirmed-bg: #052e16;
+  --cal-status-confirmed-text: #4ade80;
+  --cal-status-pending-bg: #451a03;
+  --cal-status-pending-text: #fbbf24;
+  --cal-status-in-progress-bg: #172554;
+  --cal-status-in-progress-text: #93c5fd;
+  --cal-status-cancelled-bg: #450a0a;
+  --cal-status-cancelled-text: #f87171;
+  --cal-status-completed-bg: #1f2937;
+  --cal-status-completed-text: #9ca3af;
 }
 
 /* --- System dark mode (auto) --- */
@@ -134,6 +171,23 @@
     --cal-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
     --cal-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
     --cal-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+
+    --cal-tooltip-bg: #f9fafb;
+    --cal-tooltip-text: #111827;
+
+    --cal-selection-border: #3b82f6;
+    --cal-selection-bg: rgba(30, 58, 95, 0.4);
+
+    --cal-status-confirmed-bg: #052e16;
+    --cal-status-confirmed-text: #4ade80;
+    --cal-status-pending-bg: #451a03;
+    --cal-status-pending-text: #fbbf24;
+    --cal-status-in-progress-bg: #172554;
+    --cal-status-in-progress-text: #93c5fd;
+    --cal-status-cancelled-bg: #450a0a;
+    --cal-status-cancelled-text: #f87171;
+    --cal-status-completed-bg: #1f2937;
+    --cal-status-completed-text: #9ca3af;
   }
 }
 
@@ -236,6 +290,17 @@
   }
 }
 
+@keyframes pro-calendr-react-fade-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+}
+
 @keyframes pro-calendr-react-shimmer {
   0% {
     background-position: -200% 0;
@@ -276,6 +341,11 @@
 
   .pro-calendr-react-now-line,
   .pro-calendr-react-now-dot {
+    display: none;
+  }
+
+  .pro-calendr-react-stats-bar,
+  .pro-calendr-react-legend {
     display: none;
   }
 }
@@ -341,6 +411,21 @@
 
 .pro-calendr-react-month-cell:hover {
   background-color: var(--cal-hover-bg);
+}
+
+/* --- Stats Bar --- */
+.pro-calendr-react-stats-bar {
+  font-size: var(--cal-font-size-xs);
+}
+
+/* --- Legend Footer --- */
+.pro-calendr-react-legend {
+  font-size: var(--cal-font-size-xs);
+}
+
+/* --- Filter Dropdown --- */
+.pro-calendr-react-filter-dropdown {
+  animation: pro-calendr-react-fade-in 150ms ease-out;
 }
 
 /* --- Focus visible --- */

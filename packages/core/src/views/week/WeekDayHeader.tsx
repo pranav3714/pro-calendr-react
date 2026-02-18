@@ -15,14 +15,14 @@ function DayColumnHeader({ day, isToday }: DayColumnHeaderProps) {
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center border-r border-gray-200 py-1",
-        isToday && "bg-blue-50",
+        "flex flex-col items-center justify-center border-r border-[var(--cal-border)] py-1",
+        isToday && "bg-[var(--cal-today-bg)]",
       )}
     >
       <span
         className={cn(
           "text-[10px] font-medium uppercase tracking-wider",
-          isToday ? "text-blue-600" : "text-gray-500",
+          isToday ? "text-[var(--cal-accent)]" : "text-[var(--cal-text-muted)]",
         )}
       >
         {dayName}
@@ -30,7 +30,7 @@ function DayColumnHeader({ day, isToday }: DayColumnHeaderProps) {
       <span
         className={cn(
           "flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold",
-          isToday ? "bg-blue-600 text-white" : "text-gray-800",
+          isToday ? "bg-[var(--cal-accent)] text-white" : "text-[var(--cal-text)]",
         )}
       >
         {dateNumber}
@@ -41,12 +41,12 @@ function DayColumnHeader({ day, isToday }: DayColumnHeaderProps) {
 
 export function WeekDayHeader({ days, today, sidebarWidth }: WeekDayHeaderProps) {
   return (
-    <div className="sticky top-0 z-20 flex border-b border-gray-200 bg-white">
+    <div className="sticky top-0 z-20 flex border-b border-[var(--cal-border)] bg-[var(--cal-bg)]">
       <div
-        className="sticky left-0 z-30 flex shrink-0 items-center border-r border-gray-200 bg-white px-3"
+        className="sticky left-0 z-30 flex shrink-0 items-center border-r border-[var(--cal-border)] bg-[var(--cal-bg)] px-3"
         style={{ width: sidebarWidth, minWidth: sidebarWidth }}
       >
-        <span className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+        <span className="text-[10px] font-semibold uppercase tracking-wider text-[var(--cal-text-subtle)]">
           Resources
         </span>
       </div>

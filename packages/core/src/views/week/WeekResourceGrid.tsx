@@ -46,7 +46,7 @@ function renderGroupHeader({ virtualItem, scrollMargin, itemData }: RenderGroupH
       }}
     >
       <div
-        className="flex items-center border-b border-gray-200 bg-gray-50/60 px-3"
+        className="flex items-center border-b border-[var(--cal-border)] bg-[var(--cal-bg-subtle)] px-3"
         style={{ height: itemData.height }}
       />
     </div>
@@ -125,7 +125,7 @@ function renderResourceRow({
   return (
     <div
       key={virtualItem.key}
-      className="absolute left-0 w-full border-b border-gray-100"
+      className="absolute left-0 w-full border-b border-[var(--cal-border-light)]"
       style={{
         top: virtualItem.start - scrollMargin,
         height: virtualItem.size,

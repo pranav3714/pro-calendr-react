@@ -57,8 +57,8 @@ export function WeekCell({
   return (
     <div
       className={cn(
-        "relative flex flex-col gap-0.5 overflow-hidden border-r border-gray-100 p-0.5",
-        isDropTarget && "bg-blue-50 ring-2 ring-inset ring-blue-400",
+        "relative flex flex-col gap-0.5 overflow-hidden border-r border-[var(--cal-border-light)] p-0.5",
+        isDropTarget && "bg-[var(--cal-today-bg)] ring-2 ring-inset ring-[var(--cal-accent)]",
       )}
     >
       {visibleBookings.map((booking) => (
@@ -71,7 +71,7 @@ export function WeekCell({
         />
       ))}
       {overflowCount > 0 && (
-        <span className="mt-auto px-1 text-[9px] font-medium text-gray-400">
+        <span className="mt-auto px-1 text-[9px] font-medium text-[var(--cal-text-subtle)]">
           +{overflowCount} more
         </span>
       )}

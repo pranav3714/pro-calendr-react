@@ -1,10 +1,27 @@
 import type { ScheduleCalendarProps } from "./interfaces/schedule-calendar-props";
+import { cn } from "./utils/cn";
+import { ScheduleProvider } from "./components/ScheduleProvider";
+import { ScheduleCalendarShell } from "./components/ScheduleCalendarShell";
 
-export function ScheduleCalendar(_props: ScheduleCalendarProps) {
+function resolveTheme({ darkMode }: { readonly darkMode?: boolean }): string | undefined {
+  if (darkMode === true) {
+    return "dark";
+  }
+  return undefined;
+}
+
+export function ScheduleCalendar({
+  defaultViewMode,
+  defaultDate,
+  darkMode,
+  className,
+  ...shellProps
+}: ScheduleCalendarProps) {
   return (
-    <div className="pro-calendr-react-container">
-      <h1>Schedule Calendar</h1>
-      <p>Calendar component placeholder</p>
+    <div className={cn("pro-calendr-react", className)} data-theme={resolveTheme({ darkMode })}>
+      <ScheduleProvider defaultViewMode={defaultViewMode} defaultDate={defaultDate}>
+        <ScheduleCalendarShell {...shellProps} />
+      </ScheduleProvider>
     </div>
   );
 }

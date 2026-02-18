@@ -15,7 +15,8 @@ export function SelectionOverlay({ slotSelection, layoutConfig, rows }: Selectio
 
   return (
     <div
-      className="z-5 pointer-events-none absolute rounded border border-blue-300 bg-blue-100/40"
+      aria-hidden="true"
+      className="z-5 pointer-events-none absolute rounded border border-[var(--cal-selection-border)] bg-[var(--cal-selection-bg)]"
       style={{
         left,
         width,

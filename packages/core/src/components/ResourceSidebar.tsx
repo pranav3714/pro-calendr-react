@@ -35,7 +35,7 @@ export function ResourceSidebar({
 }: ResourceSidebarProps) {
   return (
     <div
-      className="sticky left-0 z-10 border-r border-gray-200 bg-gray-50/80 backdrop-blur-sm"
+      className="sticky left-0 z-10 border-r border-[var(--cal-border)] bg-[var(--cal-bg-subtle)] backdrop-blur-sm"
       style={{ width: sidebarWidth, minWidth: sidebarWidth, height: totalSize }}
     >
       {virtualItems.map((virtualItem) => {

@@ -189,6 +189,7 @@ function BookingBlockInner({
       )}
       style={{ left, width, top, height }}
       title={`${booking.title} \u00B7 ${timeStr}`}
+      aria-label={`${booking.title} \u00B7 ${timeStr}`}
     >
       <div className="flex h-full min-w-0 flex-col justify-center gap-0 px-2 py-1">
         <TitleRow booking={booking} typeConfig={typeConfig} isTiny={isTiny} />

@@ -56,13 +56,12 @@ describe("MonthView", () => {
     expect(buttons.length).toBe(monthDays.length);
   });
 
-  it("highlights today with blue styling", () => {
+  it("highlights today with aria-current date attribute", () => {
     const today = new Date();
     const { container } = renderMonthView({ currentDate: today });
 
-    // The today circle should have bg-blue-600
-    const todayCircle = container.querySelector(".bg-blue-600");
-    expect(todayCircle).not.toBeNull();
+    const todayCell = container.querySelector("[aria-current='date']");
+    expect(todayCell).not.toBeNull();
   });
 
   it("dims other-month days with reduced opacity", () => {

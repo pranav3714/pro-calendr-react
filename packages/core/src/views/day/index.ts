@@ -1,1 +1,1 @@
-export {};
+export { DayView } from "./DayView";

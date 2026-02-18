@@ -51,11 +51,11 @@ export function MonthCalendarGrid({
 
   return (
     <div>
-      <div className="grid grid-cols-7 border-b border-gray-200">
+      <div className="grid grid-cols-7 border-b border-[var(--cal-border)]">
         {DAY_LABELS.map((label) => (
           <div
             key={label}
-            className="px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-gray-400"
+            className="px-2 py-2 text-center text-[10px] font-semibold uppercase tracking-wider text-[var(--cal-text-subtle)]"
           >
             {label}
           </div>

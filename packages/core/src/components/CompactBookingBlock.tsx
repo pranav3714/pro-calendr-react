@@ -42,14 +42,16 @@ function CompactBookingBlockInner({
   }
 
   return (
-    <div
+    <button
+      type="button"
       className={cn(
-        "flex h-5 cursor-grab items-center gap-1 overflow-hidden rounded-sm border-l-[3px] px-1.5",
+        "flex h-5 cursor-grab items-center gap-1 overflow-hidden rounded-sm border-l-[3px] px-1.5 text-left",
         typeConfig.border,
         typeConfig.bg,
       )}
       onPointerDown={handlePointerDown}
       onClick={handleClick}
+      aria-label={`${booking.title} at ${formatTimeShort({ minutes: booking.startMinutes })}`}
     >
       <span className={cn("truncate text-[10px] font-medium leading-tight", typeConfig.text)}>
         {booking.title}
@@ -57,7 +59,7 @@ function CompactBookingBlockInner({
       <span className={cn("shrink-0 text-[9px] leading-tight", typeConfig.sub)}>
         {formatTimeShort({ minutes: booking.startMinutes })}
       </span>
-    </div>
+    </button>
   );
 }
 

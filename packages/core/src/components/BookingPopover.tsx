@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { BookingPopoverProps } from "../interfaces/ghost-props";
 import type { PopoverPositionResult } from "../interfaces/popover-position";
 import { computePopoverPosition } from "../utils/compute-popover-position";
@@ -13,18 +13,20 @@ interface StatusBadgeProps {
 
 function StatusBadge({ status }: StatusBadgeProps) {
   const colorMap: Record<string, string> = {
-    confirmed: "bg-green-100 text-green-700",
-    pending: "bg-amber-100 text-amber-700",
-    "in-progress": "bg-blue-100 text-blue-700",
-    completed: "bg-gray-100 text-gray-600",
-    cancelled: "bg-red-100 text-red-700",
+    confirmed: "bg-[var(--cal-status-confirmed-bg)] text-[var(--cal-status-confirmed-text)]",
+    pending: "bg-[var(--cal-status-pending-bg)] text-[var(--cal-status-pending-text)]",
+    "in-progress":
+      "bg-[var(--cal-status-in-progress-bg)] text-[var(--cal-status-in-progress-text)]",
+    completed: "bg-[var(--cal-status-completed-bg)] text-[var(--cal-status-completed-text)]",
+    cancelled: "bg-[var(--cal-status-cancelled-bg)] text-[var(--cal-status-cancelled-text)]",
   };
 
   return (
     <span
       className={cn(
         "rounded-full px-2 py-0.5 text-[10px] font-medium capitalize",
-        colorMap[status] ?? "bg-gray-100 text-gray-600",
+        colorMap[status] ??
+          "bg-[var(--cal-status-completed-bg)] text-[var(--cal-status-completed-text)]",
       )}
     >
       {status}
@@ -40,8 +42,8 @@ interface DetailItemProps {
 function DetailItem({ label, value }: DetailItemProps) {
   return (
     <div className="flex items-baseline gap-2">
-      <span className="text-[11px] text-gray-400">{label}</span>
-      <span className="truncate text-[12px] text-gray-700">{value}</span>
+      <span className="text-[11px] text-[var(--cal-text-subtle)]">{label}</span>
+      <span className="truncate text-[12px] text-[var(--cal-text-muted)]">{value}</span>
     </div>
   );
 }
@@ -61,8 +63,8 @@ function ActionButton({ label, onClick, variant }: ActionButtonProps) {
       onClick={onClick}
       className={cn(
         "rounded-md px-3 py-1.5 text-[12px] font-medium transition-colors",
-        isDanger && "text-red-600 hover:bg-red-50",
-        !isDanger && "text-gray-600 hover:bg-gray-100",
+        isDanger && "text-red-500 hover:bg-red-500/10",
+        !isDanger && "text-[var(--cal-text-muted)] hover:bg-[var(--cal-hover-bg)]",
       )}
     >
       {label}
@@ -80,6 +82,8 @@ export function BookingPopover({
   onDelete,
 }: BookingPopoverProps) {
   const popoverRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<Element | null>(null);
   const [position, setPosition] = useState<PopoverPositionResult | null>(null);
 
   useLayoutEffect(() => {
@@ -103,6 +107,47 @@ export function BookingPopover({
     setPosition(result);
   }, [anchor]);
 
+  useEffect(() => {
+    triggerRef.current = document.activeElement;
+    closeButtonRef.current?.focus();
+
+    return () => {
+      if (triggerRef.current instanceof HTMLElement) {
+        triggerRef.current.focus();
+      }
+    };
+  }, []);
+
+  function handleKeyDown(e: React.KeyboardEvent): void {
+    if (e.key !== "Tab") {
+      return;
+    }
+    if (!popoverRef.current) {
+      return;
+    }
+
+    const focusable = popoverRef.current.querySelectorAll<HTMLElement>(
+      'button:not(:disabled), [tabindex]:not([tabindex="-1"])',
+    );
+    if (focusable.length === 0) {
+      return;
+    }
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+      return;
+    }
+
+    if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
   const timeRange = `${formatTime({ minutes: booking.startMinutes })} \u2013 ${formatTime({ minutes: booking.endMinutes })}`;
   const duration = booking.endMinutes - booking.startMinutes;
   const hasActions = onEdit ?? onDuplicate ?? onDelete;
@@ -111,12 +156,15 @@ export function BookingPopover({
     <div
       ref={popoverRef}
       data-popover
-      className="pro-calendr-react-popover fixed z-[40] w-72 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-2xl"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="cal-popover-title"
+      onKeyDown={handleKeyDown}
+      className="pro-calendr-react-popover fixed z-[40] w-72 overflow-hidden rounded-xl border border-[var(--cal-border)] bg-[var(--cal-bg)] shadow-[var(--cal-shadow-lg)]"
       style={{
         top: position ? position.y : -9999,
         left: position ? position.x : -9999,
         visibility: position ? "visible" : "hidden",
-        animation: "pro-calendr-react-fade-in 0.15s ease-out both",
       }}
     >
       {/* Color header bar */}
@@ -133,12 +181,18 @@ export function BookingPopover({
             </span>
             <StatusBadge status={booking.status} />
           </div>
-          <h3 className="mt-1.5 truncate text-sm font-semibold text-gray-900">{booking.title}</h3>
+          <h3
+            id="cal-popover-title"
+            className="mt-1.5 truncate text-sm font-semibold text-[var(--cal-text)]"
+          >
+            {booking.title}
+          </h3>
         </div>
         <button
+          ref={closeButtonRef}
           type="button"
           onClick={onClose}
-          className="ml-2 rounded-md p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+          className="ml-2 rounded-md p-1 text-[var(--cal-text-subtle)] transition-colors hover:bg-[var(--cal-hover-bg)] hover:text-[var(--cal-text-muted)]"
           aria-label="Close"
         >
           <svg
@@ -165,7 +219,7 @@ export function BookingPopover({
 
       {/* Actions */}
       {hasActions && (
-        <div className="flex items-center gap-1 border-t border-gray-100 px-3 py-2">
+        <div className="flex items-center gap-1 border-t border-[var(--cal-border-light)] px-3 py-2">
           {onEdit && <ActionButton label="Edit" onClick={onEdit} />}
           {onDuplicate && <ActionButton label="Duplicate" onClick={onDuplicate} />}
           {onDelete && <ActionButton label="Delete" onClick={onDelete} variant="danger" />}

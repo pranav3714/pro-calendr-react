@@ -8,6 +8,7 @@ import { useBookingSelection } from "../../hooks/use-booking-selection";
 import { useBookingDrag } from "../../hooks/use-booking-drag";
 import { useBookingResize } from "../../hooks/use-booking-resize";
 import { useSlotSelection } from "../../hooks/use-slot-selection";
+import { useFilteredBookings } from "../../hooks/use-filtered-bookings";
 import { buildVirtualItems } from "../../utils/build-virtual-items";
 import { buildGridBackground } from "../../utils/grid-background";
 import { TimeHeader } from "./TimeHeader";
@@ -30,12 +31,14 @@ export function DayView({
 }: DayViewProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  const filteredBookings = useFilteredBookings({ bookings });
+
   const collapsedGroupIds = useScheduleStore({
     selector: (s) => s.collapsedGroupIds,
   });
 
   const layout = useTimelineLayout({
-    bookings,
+    bookings: filteredBookings,
     resourceGroups,
     collapsedGroupIds,
     layoutConfig,

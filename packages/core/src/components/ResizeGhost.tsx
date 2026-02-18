@@ -55,6 +55,7 @@ export function ResizeGhost({
 
   return (
     <div
+      aria-hidden="true"
       className={cn(
         "pro-calendr-react-resize-ghost absolute rounded-md border-2 border-dashed",
         "pointer-events-none z-30 opacity-70 shadow-lg",

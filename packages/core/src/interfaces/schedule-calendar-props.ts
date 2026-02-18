@@ -5,6 +5,7 @@ import type { ResourceGroup } from "./resource";
 import type { LayoutConfig } from "./layout-config";
 import type { ViewMode } from "./view-mode";
 import type { PopoverAnchor } from "./popover-state";
+import type { WeekBookingDropInfo } from "./week-view-props";
 
 export interface BookingClickInfo {
   readonly booking: Booking;
@@ -57,6 +58,10 @@ export interface ScheduleCalendarProps {
   readonly onBookingDelete?: (params: { readonly bookingId: string }) => void;
   readonly onBookingDuplicate?: (params: { readonly bookingId: string }) => void;
   readonly onBookingEdit?: (params: { readonly bookingId: string }) => void;
+  readonly onWeekBookingDrop?: (params: { readonly info: WeekBookingDropInfo }) => void;
+
+  readonly onClose?: () => void;
+  readonly title?: string;
 
   readonly renderBookingContent?: (params: { readonly booking: Booking }) => ReactNode;
   readonly renderResourceLabel?: (params: {

@@ -21,17 +21,20 @@ export function ResourceGroupHeader({
   return (
     <button
       onClick={handleClick}
-      className="flex w-full items-center gap-2 px-3 text-left transition-colors hover:bg-gray-100"
+      aria-expanded={!isCollapsed}
+      className="flex w-full items-center gap-2 px-3 text-left transition-colors hover:bg-[var(--cal-hover-bg)]"
       style={{ height }}
     >
       <ChevronIcon isOpen={!isCollapsed} />
-      <span className="text-gray-500">
+      <span className="text-[var(--cal-text-muted)]">
         <GroupIcon groupId={groupId} />
       </span>
-      <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">
+      <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--cal-text-muted)]">
         {label}
       </span>
-      <span className="ml-auto text-[10px] tabular-nums text-gray-400">{resourceCount}</span>
+      <span className="ml-auto text-[10px] tabular-nums text-[var(--cal-text-subtle)]">
+        {resourceCount}
+      </span>
     </button>
   );
 }

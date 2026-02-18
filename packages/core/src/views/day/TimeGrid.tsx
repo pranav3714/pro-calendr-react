@@ -144,7 +144,12 @@ interface RenderVirtualItemParams {
 }
 
 function renderGroupHeaderPlaceholder({ height }: { readonly height: number }) {
-  return <div className="border-b border-gray-100 bg-gray-50/40" style={{ height }} />;
+  return (
+    <div
+      className="border-b border-[var(--cal-border-light)] bg-[var(--cal-bg-subtle)]"
+      style={{ height }}
+    />
+  );
 }
 
 function renderResourceRow({
@@ -164,7 +169,10 @@ function renderResourceRow({
   const laneData = laneDataByResource.get(itemData.resource.id);
 
   return (
-    <div className="relative border-b border-gray-100" style={{ height: itemData.rowHeight }}>
+    <div
+      className="relative border-b border-[var(--cal-border-light)]"
+      style={{ height: itemData.rowHeight }}
+    >
       <ResourceRowBlocks
         bookings={resourceBookings}
         laneData={laneData}
