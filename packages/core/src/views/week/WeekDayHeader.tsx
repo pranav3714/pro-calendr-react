@@ -1,11 +1,24 @@
 import { format } from "date-fns";
-import type { WeekDayHeaderProps } from "../../interfaces/week-view-props";
+import type {
+  WeekDayHeaderProps,
+  DayColumnHeaderProps,
+  ResolveTodayStyleParams,
+} from "../../interfaces/week-view-props";
 import { isSameDay } from "../../utils/date-helpers";
 import { cn } from "../../utils/cn";
 
-interface DayColumnHeaderProps {
-  readonly day: Date;
-  readonly isToday: boolean;
+function getDayNameClass({ isToday }: ResolveTodayStyleParams): string {
+  if (isToday) {
+    return "text-[var(--cal-accent)]";
+  }
+  return "text-[var(--cal-text-muted)]";
+}
+
+function getDateNumberClass({ isToday }: ResolveTodayStyleParams): string {
+  if (isToday) {
+    return "bg-[var(--cal-accent)] text-white";
+  }
+  return "text-[var(--cal-text)]";
 }
 
 function DayColumnHeader({ day, isToday }: DayColumnHeaderProps) {
@@ -22,7 +35,7 @@ function DayColumnHeader({ day, isToday }: DayColumnHeaderProps) {
       <span
         className={cn(
           "text-[10px] font-medium uppercase tracking-wider",
-          isToday ? "text-[var(--cal-accent)]" : "text-[var(--cal-text-muted)]",
+          getDayNameClass({ isToday }),
         )}
       >
         {dayName}
@@ -30,7 +43,7 @@ function DayColumnHeader({ day, isToday }: DayColumnHeaderProps) {
       <span
         className={cn(
           "flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold",
-          isToday ? "bg-[var(--cal-accent)] text-white" : "text-[var(--cal-text)]",
+          getDateNumberClass({ isToday }),
         )}
       >
         {dateNumber}

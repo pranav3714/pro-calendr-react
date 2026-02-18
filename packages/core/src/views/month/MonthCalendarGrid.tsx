@@ -1,18 +1,15 @@
 import { getMonth } from "date-fns";
-import type { MonthCalendarGridProps } from "../../interfaces/month-view-props";
-import type { MonthTypeIndicator } from "../../interfaces/month-view-props";
-import type { BookingTypeConfig } from "../../interfaces/booking-type";
+import type {
+  MonthCalendarGridProps,
+  MonthTypeIndicator,
+  BuildTypeBreakdownParams,
+} from "../../interfaces/month-view-props";
 import { isSameDay } from "../../utils/date-helpers";
 import { formatDateKey } from "../../utils/format-date-key";
 import { MonthDayCell } from "./MonthDayCell";
 
 const DAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const MAX_VISIBLE_TYPES = 3;
-
-interface BuildTypeBreakdownParams {
-  readonly byType: Readonly<Record<string, number>>;
-  readonly bookingTypes: Readonly<Record<string, BookingTypeConfig>>;
-}
 
 function buildTypeBreakdown({
   byType,

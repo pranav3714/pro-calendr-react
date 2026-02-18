@@ -1,16 +1,30 @@
 import { useCallback, useEffect, useRef } from "react";
-import type { FilterDropdownProps } from "../interfaces/schedule-header-props";
+import type {
+  FilterDropdownProps,
+  GetFilterButtonIndicatorParams,
+  ResolveTypeItemStyleParams,
+} from "../interfaces/schedule-header-props";
 import { cn } from "../utils/cn";
 import { useScheduleStore } from "../hooks/use-schedule-store";
 import { FilterIcon } from "./icons/FilterIcon";
 
-function getFilterButtonIndicator({
-  hasActiveFilter,
-}: {
-  readonly hasActiveFilter: boolean;
-}): string {
+function getFilterButtonIndicator({ hasActiveFilter }: GetFilterButtonIndicatorParams): string {
   if (hasActiveFilter) {
     return "text-[var(--cal-accent)]";
+  }
+  return "text-[var(--cal-text-muted)]";
+}
+
+function getAllTypesButtonStyle({ hasActiveFilter }: GetFilterButtonIndicatorParams): string {
+  if (!hasActiveFilter) {
+    return "font-medium text-[var(--cal-accent)]";
+  }
+  return "text-[var(--cal-text)]";
+}
+
+function resolveTypeItemStyle({ isActive }: ResolveTypeItemStyleParams): string {
+  if (isActive) {
+    return "font-medium text-[var(--cal-text)]";
   }
   return "text-[var(--cal-text-muted)]";
 }
@@ -120,9 +134,7 @@ export function FilterDropdown({ bookingTypes }: FilterDropdownProps) {
               className={cn(
                 "flex w-full items-center gap-2 px-3 py-1.5 text-xs transition-colors",
                 "hover:bg-[var(--cal-hover-bg)]",
-                !hasActiveFilter
-                  ? "font-medium text-[var(--cal-accent)]"
-                  : "text-[var(--cal-text)]",
+                getAllTypesButtonStyle({ hasActiveFilter }),
               )}
             >
               All Types
@@ -139,9 +151,7 @@ export function FilterDropdown({ bookingTypes }: FilterDropdownProps) {
                 className={cn(
                   "flex w-full items-center gap-2 px-3 py-1.5 text-xs transition-colors",
                   "hover:bg-[var(--cal-hover-bg)]",
-                  activeTypeFilter === type
-                    ? "font-medium text-[var(--cal-text)]"
-                    : "text-[var(--cal-text-muted)]",
+                  resolveTypeItemStyle({ isActive: activeTypeFilter === type }),
                 )}
               >
                 <span className={cn("h-2 w-2 shrink-0 rounded-full", config.dot)} />

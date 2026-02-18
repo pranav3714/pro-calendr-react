@@ -38,3 +38,16 @@ export interface MonthCalendarGridProps {
   readonly bookingTypes: Readonly<Record<string, BookingTypeConfig>>;
   readonly onDayClick?: (params: { readonly date: Date }) => void;
 }
+
+export interface BuildTypeBreakdownParams {
+  readonly byType: Readonly<Record<string, number>>;
+  readonly bookingTypes: Readonly<Record<string, BookingTypeConfig>>;
+}
+
+export interface BuildCountSuffixParams {
+  readonly totalCount: number;
+}
+
+export interface ResolveAriaCurrentParams {
+  readonly isToday: boolean;
+}

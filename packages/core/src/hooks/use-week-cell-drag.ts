@@ -5,18 +5,9 @@ import type {
   UseWeekCellDragResult,
   WeekDragTarget,
 } from "../interfaces/week-cell-drag-params";
+import type { CellDragRefsState } from "../interfaces/interaction-ref-states";
 import { resolveWeekDropTarget } from "../utils/resolve-week-drop-target";
 import { useScheduleStore } from "./use-schedule-store";
-
-interface CellDragRefsState {
-  readonly booking: Booking;
-  readonly originDateKey: string;
-  readonly originResourceId: string;
-  readonly startClientX: number;
-  readonly startClientY: number;
-  readonly pointerId: number;
-  readonly captureElement: HTMLElement;
-}
 
 export function useWeekCellDrag({
   rows,

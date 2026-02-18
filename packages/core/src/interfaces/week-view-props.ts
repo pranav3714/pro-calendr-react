@@ -65,3 +65,62 @@ export interface CompactBookingBlockProps {
     readonly booking: Booking;
   }) => void;
 }
+
+export interface DayColumnHeaderProps {
+  readonly day: Date;
+  readonly isToday: boolean;
+}
+
+export interface WeekResourceGridProps {
+  readonly virtualItems: readonly import("@tanstack/react-virtual").VirtualItem[];
+  readonly items: readonly import("./virtual-item-data").VirtualItemData[];
+  readonly totalSize: number;
+  readonly scrollMargin: number;
+  readonly weekDays: readonly Date[];
+  readonly dateKeys: readonly string[];
+  readonly bookingIndex: ReadonlyMap<string, readonly Booking[]>;
+  readonly bookingTypes: Readonly<Record<string, BookingTypeConfig>>;
+  readonly dropTarget: import("./week-cell-drag-params").WeekDragTarget | null;
+  readonly draggedBookingId: string | null;
+  readonly onBookingClick?: (params: {
+    readonly booking: Booking;
+    readonly anchor: PopoverAnchor;
+  }) => void;
+  readonly onDragStart?: (params: {
+    readonly e: React.PointerEvent;
+    readonly booking: Booking;
+    readonly dateKey: string;
+    readonly resourceId: string;
+  }) => void;
+}
+
+export interface WeekRenderGroupHeaderParams {
+  readonly virtualItem: import("@tanstack/react-virtual").VirtualItem;
+  readonly scrollMargin: number;
+  readonly itemData: import("./virtual-item-data").VirtualGroupHeader;
+}
+
+export interface WeekRenderResourceRowParams {
+  readonly virtualItem: import("@tanstack/react-virtual").VirtualItem;
+  readonly scrollMargin: number;
+  readonly itemData: import("./virtual-item-data").VirtualResourceRow;
+  readonly dateKeys: readonly string[];
+  readonly bookingIndex: ReadonlyMap<string, readonly Booking[]>;
+  readonly bookingTypes: Readonly<Record<string, BookingTypeConfig>>;
+  readonly dropTarget: import("./week-cell-drag-params").WeekDragTarget | null;
+  readonly draggedBookingId: string | null;
+  readonly onBookingClick?: (params: {
+    readonly booking: Booking;
+    readonly anchor: PopoverAnchor;
+  }) => void;
+  readonly onDragStart?: (params: {
+    readonly e: React.PointerEvent;
+    readonly booking: Booking;
+    readonly dateKey: string;
+    readonly resourceId: string;
+  }) => void;
+}
+
+export interface ResolveTodayStyleParams {
+  readonly isToday: boolean;
+}

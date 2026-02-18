@@ -4,22 +4,10 @@ import type {
   UseBookingDragResult,
 } from "../interfaces/interaction-hook-params";
 import type { Booking } from "../interfaces/booking";
+import type { DragRefsState, ComputeGrabOffsetParams } from "../interfaces/interaction-ref-states";
 import { positionToMinutes } from "../utils/time-position";
 import { computeDragPosition } from "../utils/compute-drag-position";
 import { useScheduleStore } from "./use-schedule-store";
-
-interface DragRefsState {
-  readonly bookingId: string;
-  readonly originStartMinutes: number;
-  readonly originEndMinutes: number;
-  readonly originResourceId: string;
-  readonly grabOffsetMinutes: number;
-  readonly duration: number;
-  readonly startClientX: number;
-  readonly startClientY: number;
-  readonly pointerId: number;
-  readonly captureElement: HTMLElement;
-}
 
 function computeGrabOffset({
   clientX,
@@ -27,13 +15,7 @@ function computeGrabOffset({
   sidebarWidth,
   bookingStartMinutes,
   config,
-}: {
-  readonly clientX: number;
-  readonly scrollLeft: number;
-  readonly sidebarWidth: number;
-  readonly bookingStartMinutes: number;
-  readonly config: { readonly dayStartHour: number; readonly hourWidth: number };
-}): number {
+}: ComputeGrabOffsetParams): number {
   const timelinePx = clientX + scrollLeft - sidebarWidth;
   const cursorMinutes = positionToMinutes({ px: timelinePx, config });
   return cursorMinutes - bookingStartMinutes;

@@ -1,78 +1,11 @@
-import type { VirtualItem } from "@tanstack/react-virtual";
 import type { Booking } from "../../interfaces/booking";
-import type { BookingTypeConfig } from "../../interfaces/booking-type";
-import type { VirtualItemData } from "../../interfaces/virtual-item-data";
-import type { PopoverAnchor } from "../../interfaces/popover-state";
+import type {
+  WeekResourceGridProps,
+  WeekRenderGroupHeaderParams,
+  WeekRenderResourceRowParams,
+} from "../../interfaces/week-view-props";
 import type { WeekDragTarget } from "../../interfaces/week-cell-drag-params";
 import { WeekCell } from "./WeekCell";
-
-interface WeekResourceGridProps {
-  readonly virtualItems: readonly VirtualItem[];
-  readonly items: readonly VirtualItemData[];
-  readonly totalSize: number;
-  readonly scrollMargin: number;
-  readonly weekDays: readonly Date[];
-  readonly dateKeys: readonly string[];
-  readonly bookingIndex: ReadonlyMap<string, readonly Booking[]>;
-  readonly bookingTypes: Readonly<Record<string, BookingTypeConfig>>;
-  readonly dropTarget: WeekDragTarget | null;
-  readonly draggedBookingId: string | null;
-  readonly onBookingClick?: (params: {
-    readonly booking: Booking;
-    readonly anchor: PopoverAnchor;
-  }) => void;
-  readonly onDragStart?: (params: {
-    readonly e: React.PointerEvent;
-    readonly booking: Booking;
-    readonly dateKey: string;
-    readonly resourceId: string;
-  }) => void;
-}
-
-interface RenderGroupHeaderParams {
-  readonly virtualItem: VirtualItem;
-  readonly scrollMargin: number;
-  readonly itemData: import("../../interfaces/virtual-item-data").VirtualGroupHeader;
-}
-
-function renderGroupHeader({ virtualItem, scrollMargin, itemData }: RenderGroupHeaderParams) {
-  return (
-    <div
-      key={virtualItem.key}
-      className="absolute left-0 w-full"
-      style={{
-        top: virtualItem.start - scrollMargin,
-        height: virtualItem.size,
-      }}
-    >
-      <div
-        className="flex items-center border-b border-[var(--cal-border)] bg-[var(--cal-bg-subtle)] px-3"
-        style={{ height: itemData.height }}
-      />
-    </div>
-  );
-}
-
-interface RenderResourceRowParams {
-  readonly virtualItem: VirtualItem;
-  readonly scrollMargin: number;
-  readonly itemData: import("../../interfaces/virtual-item-data").VirtualResourceRow;
-  readonly dateKeys: readonly string[];
-  readonly bookingIndex: ReadonlyMap<string, readonly Booking[]>;
-  readonly bookingTypes: Readonly<Record<string, BookingTypeConfig>>;
-  readonly dropTarget: WeekDragTarget | null;
-  readonly draggedBookingId: string | null;
-  readonly onBookingClick?: (params: {
-    readonly booking: Booking;
-    readonly anchor: PopoverAnchor;
-  }) => void;
-  readonly onDragStart?: (params: {
-    readonly e: React.PointerEvent;
-    readonly booking: Booking;
-    readonly dateKey: string;
-    readonly resourceId: string;
-  }) => void;
-}
 
 function isDropTargetCell({
   dropTarget,
@@ -108,6 +41,24 @@ function getCellBookings({
   return bookings.filter((b) => b.id !== draggedBookingId);
 }
 
+function renderGroupHeader({ virtualItem, scrollMargin, itemData }: WeekRenderGroupHeaderParams) {
+  return (
+    <div
+      key={virtualItem.key}
+      className="absolute left-0 w-full"
+      style={{
+        top: virtualItem.start - scrollMargin,
+        height: virtualItem.size,
+      }}
+    >
+      <div
+        className="flex items-center border-b border-[var(--cal-border)] bg-[var(--cal-bg-subtle)] px-3"
+        style={{ height: itemData.height }}
+      />
+    </div>
+  );
+}
+
 function renderResourceRow({
   virtualItem,
   scrollMargin,
@@ -119,7 +70,7 @@ function renderResourceRow({
   draggedBookingId,
   onBookingClick,
   onDragStart,
-}: RenderResourceRowParams) {
+}: WeekRenderResourceRowParams) {
   const resourceId = itemData.resource.id;
 
   return (

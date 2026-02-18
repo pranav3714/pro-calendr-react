@@ -4,6 +4,7 @@ import type {
   SlotSelectionState,
   UseSlotSelectionResult,
 } from "../interfaces/interaction-hook-params";
+import type { ComputeSlotMinutesParams, SlotDragRefs } from "../interfaces/interaction-ref-states";
 import { positionToMinutes, snapToGrid, clampMinutes } from "../utils/time-position";
 import { resolveTargetResource } from "../utils/resolve-target-resource";
 import { useScheduleStore } from "./use-schedule-store";
@@ -13,24 +14,12 @@ function computeSlotMinutes({
   scrollLeft,
   sidebarWidth,
   layoutConfig,
-}: {
-  readonly clientX: number;
-  readonly scrollLeft: number;
-  readonly sidebarWidth: number;
-  readonly layoutConfig: UseSlotSelectionParams["layoutConfig"];
-}): number {
+}: ComputeSlotMinutesParams): number {
   const timelinePx = clientX + scrollLeft - sidebarWidth;
   const config = { dayStartHour: layoutConfig.dayStartHour, hourWidth: layoutConfig.hourWidth };
   const rawMinutes = positionToMinutes({ px: timelinePx, config });
   const snapped = snapToGrid({ minutes: rawMinutes, interval: layoutConfig.snapInterval });
   return clampMinutes({ minutes: snapped, config: layoutConfig });
-}
-
-interface SlotDragRefs {
-  readonly startMinutes: number;
-  readonly resourceId: string;
-  readonly pointerId: number;
-  readonly captureElement: HTMLElement;
 }
 
 export function useSlotSelection({

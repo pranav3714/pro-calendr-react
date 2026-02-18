@@ -30,3 +30,11 @@ export interface ScheduleHeaderProps {
   readonly onClose?: () => void;
   readonly title?: string;
 }
+
+export interface GetFilterButtonIndicatorParams {
+  readonly hasActiveFilter: boolean;
+}
+
+export interface ResolveTypeItemStyleParams {
+  readonly isActive: boolean;
+}

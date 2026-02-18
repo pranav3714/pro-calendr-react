@@ -5,16 +5,18 @@ import type {
 } from "../interfaces/interaction-hook-params";
 import type { Booking } from "../interfaces/booking";
 import type { ResizeEdge } from "../interfaces/resize-state";
+import type {
+  ResizeRefsState,
+  ResolveResizeCursorParams,
+} from "../interfaces/interaction-ref-states";
 import { computeResizePosition } from "../utils/compute-resize-position";
 import { useScheduleStore } from "./use-schedule-store";
 
-interface ResizeRefsState {
-  readonly originalStart: number;
-  readonly originalEnd: number;
-  readonly edge: ResizeEdge;
-  readonly startClientX: number;
-  readonly pointerId: number;
-  readonly captureElement: HTMLElement;
+function resolveResizeCursor({ edge }: ResolveResizeCursorParams): string {
+  if (edge === "start") {
+    return "w-resize";
+  }
+  return "e-resize";
 }
 
 export function useBookingResize({
@@ -142,7 +144,7 @@ export function useBookingResize({
       element.setPointerCapture(e.pointerId);
 
       savedCursorRef.current = document.body.style.cursor;
-      document.body.style.cursor = edge === "start" ? "w-resize" : "e-resize";
+      document.body.style.cursor = resolveResizeCursor({ edge });
 
       resizeRefsRef.current = {
         originalStart: booking.startMinutes,

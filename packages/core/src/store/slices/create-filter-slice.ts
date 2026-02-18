@@ -6,7 +6,7 @@ interface CreateFilterSliceParams {
   readonly get: StoreApi<ScheduleStore>["getState"];
 }
 
-export function createFilterSlice({ set, get }: CreateFilterSliceParams): FilterSlice {
+export function createFilterSlice({ set, get: _get }: CreateFilterSliceParams): FilterSlice {
   return {
     activeTypeFilter: null,
     isFilterDropdownOpen: false,
@@ -16,7 +16,7 @@ export function createFilterSlice({ set, get }: CreateFilterSliceParams): Filter
     },
 
     toggleFilterDropdown: () => {
-      set({ isFilterDropdownOpen: !get().isFilterDropdownOpen });
+      set((state) => ({ isFilterDropdownOpen: !state.isFilterDropdownOpen }));
     },
   };
 }

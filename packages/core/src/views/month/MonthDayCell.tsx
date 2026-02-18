@@ -1,5 +1,9 @@
 import { format } from "date-fns";
-import type { MonthDayCellProps } from "../../interfaces/month-view-props";
+import type {
+  MonthDayCellProps,
+  BuildCountSuffixParams,
+  ResolveAriaCurrentParams,
+} from "../../interfaces/month-view-props";
 import { cn } from "../../utils/cn";
 
 const MAX_VISIBLE_TYPES = 3;
@@ -30,6 +34,20 @@ function TotalCountBadge({ count }: { readonly count: number }) {
   );
 }
 
+function buildCountSuffix({ totalCount }: BuildCountSuffixParams): string {
+  if (totalCount <= 0) {
+    return "";
+  }
+  return `, ${String(totalCount)} bookings`;
+}
+
+function resolveAriaCurrent({ isToday }: ResolveAriaCurrentParams): "date" | undefined {
+  if (isToday) {
+    return "date";
+  }
+  return undefined;
+}
+
 export function MonthDayCell({
   date,
   isCurrentMonth,
@@ -49,13 +67,13 @@ export function MonthDayCell({
   }
 
   const dateLabel = format(date, "EEEE, MMMM d, yyyy");
-  const countSuffix = totalCount > 0 ? `, ${String(totalCount)} bookings` : "";
+  const countSuffix = buildCountSuffix({ totalCount });
 
   return (
     <button
       onClick={handleClick}
       aria-label={`${dateLabel}${countSuffix}`}
-      aria-current={isToday ? "date" : undefined}
+      aria-current={resolveAriaCurrent({ isToday })}
       className={cn(
         "flex flex-col gap-0.5 border-b border-r border-[var(--cal-border-light)] p-1.5 text-left transition-colors hover:bg-[var(--cal-hover-bg)]",
         !isCurrentMonth && "opacity-40",
