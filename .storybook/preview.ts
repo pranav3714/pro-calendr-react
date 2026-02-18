@@ -1,8 +1,6 @@
 import type { Preview } from "@storybook/react";
 import { withThemeByClassName } from "@storybook/addon-themes";
 
-import "../packages/core/src/styles/calendar.css";
-
 const preview: Preview = {
   parameters: {
     controls: {

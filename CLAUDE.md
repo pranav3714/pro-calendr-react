@@ -24,17 +24,12 @@ Monorepo (pnpm workspaces). The single package lives at `packages/core/` and pub
 
 ### Source layout (`packages/core/src/`)
 
-- `components/` — Shared components (Calendar, CalendarProvider, DragLayer, SelectionOverlay, etc.)
 - `views/<name>/` — View implementations: timeline, week, month, day, list
-- `hooks/` — React hooks (useCalendar, useDrag, useSelection, useVirtualization, etc.)
-- `store/` — Zustand store (internal state: currentView, currentDate, selection, dragState)
-- `types/` — TypeScript types split by domain (calendar, event, resource, interaction, theme, plugin, config)
-- `utils/` — Pure utilities (date-utils, collision, conflict, grid, snap, slot)
-- `plugins/` — Plugin system (`createPlugin` factory)
+- `interfaces/` — All TypeScript interfaces and types (no inline typing)
+- `utils/` — Pure utility functions (always check here before writing new ones)
 - `headless/` — Headless exports (hooks + store without UI)
-- `toolbar/` — Toolbar components (CalendarToolbar, DateNavigation, ViewSelector)
+- `plugins/` — Plugin system
 - `styles/calendar.css` — CSS custom properties (`--cal-*`) and structural styles
-- `constants/` — Defaults and keyboard key constants
 
 Tests are co-located in `__tests__/` subdirectories next to source files.
 
@@ -63,8 +58,27 @@ Zustand store (`store/calendar-store.ts`) is internal. Consumers interact throug
 
 ## Code Conventions
 
+### Tooling
+
 - ESLint uses `tseslint.configs.strictTypeChecked` — strict type safety is enforced
 - Unused variables must be prefixed with `_` (configured via `argsIgnorePattern` / `varsIgnorePattern`)
 - CSS class prefix: `pro-calendr-react-*`
 - Husky + lint-staged runs ESLint and Prettier on commit
 - Coverage thresholds: 80% statements/functions/lines, 75% branches
+
+### Coding Patterns (Strict — ALWAYS follow)
+
+1. **One function per file** — each file exports exactly one function or component
+2. **No nested ifs/if-else** — use well-named sub-functions with early return pattern instead
+3. **Object params always** — pass objects as function parameters even for a single param, for readability via field names
+4. **No inline typing** — all types and interfaces go in `interfaces/` folder as well-defined interfaces; never define types inline in function files
+5. **Check `utils/` first** — always read the `utils/` folder before writing new helper functions; reuse existing utilities
+6. **Check `package.json` deps** — read dependencies to know what libraries are already available; don't reinvent what a dependency already provides
+7. **SOLID principles** — apply Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion in all code design
+8. **Test complex math** — write test files for any function with complex calculations; include edge cases, corner cases, and potential numerical flaws
+9. **No barrel exports** — index files must NOT re-export from other files; each file exports its own content directly
+10. **Verify after every task** — always run `pnpm typecheck`, `pnpm lint`, and relevant test files after completing any feature or task
+11. **Extract logic to custom hooks** — in React components, isolate complicated logic into custom hooks so the UI/JSX stays clean and readable
+12. **No ternary operators** — never use ternary expressions; use early returns, if-statements, or helper functions for conditional values
+13. **Minimize blast radius** — prefer a larger change contained in one file over small changes spread across many components; keep the surface area of changes small
+14. **No prop drilling** — avoid passing props through multiple component layers; use Zustand stores where shared state makes sense
