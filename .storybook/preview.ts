@@ -1,4 +1,4 @@
-import type { Preview } from "@storybook/react";
+import type { Preview } from "@storybook/react-vite";
 import { withThemeByClassName } from "@storybook/addon-themes";
 
 const preview: Preview = {
@@ -10,7 +10,7 @@ const preview: Preview = {
       },
     },
     layout: "fullscreen",
-    backgrounds: { disable: true },
+    backgrounds: { disabled: true },
   },
   decorators: [
     withThemeByClassName({

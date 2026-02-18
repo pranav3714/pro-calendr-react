@@ -16,6 +16,9 @@ importers:
       "@storybook/addon-a11y":
         specifier: ^8.5.0
         version: 8.6.15(storybook@8.6.15(prettier@3.8.1))
+      "@storybook/addon-docs":
+        specifier: 8.6.15
+        version: 8.6.15(@types/react@18.3.28)(storybook@8.6.15(prettier@3.8.1))
       "@storybook/addon-essentials":
         specifier: ^8.5.0
         version: 8.6.14(@types/react@18.3.28)(storybook@8.6.15(prettier@3.8.1))
@@ -67,6 +70,9 @@ importers:
       eslint-plugin-react-refresh:
         specifier: ^0.4.0
         version: 0.4.26(eslint@9.39.2(jiti@1.21.7))
+      eslint-plugin-storybook:
+        specifier: ^10.2.9
+        version: 10.2.9(eslint@9.39.2(jiti@1.21.7))(storybook@8.6.15(prettier@3.8.1))(typescript@5.9.3)
       globals:
         specifier: ^15.0.0
         version: 15.15.0
@@ -1626,6 +1632,14 @@ packages:
     peerDependencies:
       storybook: ^8.6.14
 
+  "@storybook/addon-docs@8.6.15":
+    resolution:
+      {
+        integrity: sha512-Nm5LlxwAmGQRkCUY36FhtCLz21C+5XlydF7/bkBOHsf08p2xR5MNLMSPrIhte/PY7ne9viNUCm1d3d3LiWnkKg==,
+      }
+    peerDependencies:
+      storybook: ^8.6.15
+
   "@storybook/addon-essentials@8.6.14":
     resolution:
       {
@@ -1707,6 +1721,21 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       storybook: ^8.6.14
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
+  "@storybook/blocks@8.6.15":
+    resolution:
+      {
+        integrity: sha512-nc5jQkvPo0EirteHsrmcx9on/0lGQ8F4lUNky7kN2I5WM8Frr3cPTeRoAvzjUkOwrqt/vm3g+T4zSbmDq/OEDA==,
+      }
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      storybook: ^8.6.15
     peerDependenciesMeta:
       react:
         optional: true
@@ -2988,6 +3017,15 @@ packages:
       }
     peerDependencies:
       eslint: ">=8.40"
+
+  eslint-plugin-storybook@10.2.9:
+    resolution:
+      {
+        integrity: sha512-nmPxjPw2KfmosqAUb/W0jmEfAZzK97kyJ8W5KMuweCblwjIL0hI/GMsWSP8CCBPnhQ9LnuxtT8JtQUOsslcbwA==,
+      }
+    peerDependencies:
+      eslint: ">=8"
+      storybook: ^10.2.9
 
   eslint-scope@8.4.0:
     resolution:
@@ -6305,6 +6343,19 @@ snapshots:
     transitivePeerDependencies:
       - "@types/react"
 
+  "@storybook/addon-docs@8.6.15(@types/react@18.3.28)(storybook@8.6.15(prettier@3.8.1))":
+    dependencies:
+      "@mdx-js/react": 3.1.1(@types/react@18.3.28)(react@18.3.1)
+      "@storybook/blocks": 8.6.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.15(prettier@3.8.1))
+      "@storybook/csf-plugin": 8.6.15(storybook@8.6.15(prettier@3.8.1))
+      "@storybook/react-dom-shim": 8.6.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.15(prettier@3.8.1))
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      storybook: 8.6.15(prettier@3.8.1)
+      ts-dedent: 2.2.0
+    transitivePeerDependencies:
+      - "@types/react"
+
   "@storybook/addon-essentials@8.6.14(@types/react@18.3.28)(storybook@8.6.15(prettier@3.8.1))":
     dependencies:
       "@storybook/addon-actions": 8.6.14(storybook@8.6.15(prettier@3.8.1))
@@ -6367,6 +6418,15 @@ snapshots:
       storybook: 8.6.15(prettier@3.8.1)
 
   "@storybook/blocks@8.6.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.15(prettier@3.8.1))":
+    dependencies:
+      "@storybook/icons": 1.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      storybook: 8.6.15(prettier@3.8.1)
+      ts-dedent: 2.2.0
+    optionalDependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
+  "@storybook/blocks@8.6.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.6.15(prettier@3.8.1))":
     dependencies:
       "@storybook/icons": 1.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       storybook: 8.6.15(prettier@3.8.1)
@@ -7244,6 +7304,15 @@ snapshots:
   eslint-plugin-react-refresh@0.4.26(eslint@9.39.2(jiti@1.21.7)):
     dependencies:
       eslint: 9.39.2(jiti@1.21.7)
+
+  eslint-plugin-storybook@10.2.9(eslint@9.39.2(jiti@1.21.7))(storybook@8.6.15(prettier@3.8.1))(typescript@5.9.3):
+    dependencies:
+      "@typescript-eslint/utils": 8.55.0(eslint@9.39.2(jiti@1.21.7))(typescript@5.9.3)
+      eslint: 9.39.2(jiti@1.21.7)
+      storybook: 8.6.15(prettier@3.8.1)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
 
   eslint-scope@8.4.0:
     dependencies:

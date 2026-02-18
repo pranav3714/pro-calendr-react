@@ -3,16 +3,14 @@ import { resolve } from "node:path";
 
 const config: StorybookConfig = {
   stories: ["../stories/**/*.mdx", "../stories/**/*.stories.@(ts|tsx)"],
-  addons: [
-    "@storybook/addon-essentials",
-    "@storybook/addon-themes",
-    "@storybook/addon-a11y",
-    "@storybook/addon-interactions",
-  ],
+
+  addons: ["@storybook/addon-themes", "@storybook/addon-a11y", "@storybook/addon-docs"],
+
   framework: {
     name: "@storybook/react-vite",
     options: {},
   },
+
   viteFinal(viteConfig) {
     return {
       ...viteConfig,
@@ -27,6 +25,7 @@ const config: StorybookConfig = {
       },
     };
   },
+
   typescript: {
     reactDocgen: "react-docgen-typescript",
     reactDocgenTypescriptOptions: {
@@ -35,9 +34,6 @@ const config: StorybookConfig = {
       propFilter: (prop) =>
         prop.parent ? !/node_modules\/(?!@pro-calendr-react)/.test(prop.parent.fileName) : true,
     },
-  },
-  docs: {
-    autodocs: "tag",
   },
 };
 

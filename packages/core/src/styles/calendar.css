@@ -1,0 +1,288 @@
+/* ==========================================================================
+   Pro Calendar React — CSS Custom Properties & Structural Styles
+   ========================================================================== */
+
+/* --- Light Theme (default) --- */
+.pro-calendr-react {
+  /* Layout */
+  --cal-hour-width: 128px;
+  --cal-row-height: 56px;
+  --cal-sidebar-width: 208px;
+  --cal-group-header-height: 36px;
+
+  /* Colors — Surface */
+  --cal-bg: #ffffff;
+  --cal-bg-subtle: #f9fafb;
+  --cal-bg-muted: #f3f4f6;
+
+  /* Colors — Border */
+  --cal-border: #e5e7eb;
+  --cal-border-light: #f3f4f6;
+
+  /* Colors — Text */
+  --cal-text: #111827;
+  --cal-text-muted: #6b7280;
+  --cal-text-subtle: #9ca3af;
+
+  /* Colors — Accent */
+  --cal-accent: #3b82f6;
+  --cal-accent-light: #eff6ff;
+
+  /* Colors — State */
+  --cal-today-bg: #eff6ff;
+  --cal-weekend-bg: #fafafa;
+  --cal-selected-bg: #dbeafe;
+  --cal-hover-bg: #f3f4f6;
+
+  /* Colors — Now Indicator */
+  --cal-now-indicator: #ef4444;
+
+  /* Colors — Focus */
+  --cal-focus-ring: #3b82f6;
+
+  /* Typography */
+  --cal-font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --cal-font-size-xs: 0.75rem;
+  --cal-font-size-sm: 0.875rem;
+  --cal-font-size-base: 1rem;
+
+  /* Spacing */
+  --cal-spacing-xs: 0.25rem;
+  --cal-spacing-sm: 0.5rem;
+  --cal-spacing-md: 0.75rem;
+  --cal-spacing-lg: 1rem;
+
+  /* Transitions */
+  --cal-transition-fast: 150ms ease;
+  --cal-transition-normal: 200ms ease;
+
+  /* Shadows */
+  --cal-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --cal-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --cal-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* Z-index layers */
+  --cal-z-grid: 1;
+  --cal-z-event: 5;
+  --cal-z-sidebar: 10;
+  --cal-z-header: 20;
+  --cal-z-ghost: 30;
+  --cal-z-popover: 40;
+  --cal-z-tooltip: 50;
+
+  font-family: var(--cal-font-family);
+  color: var(--cal-text);
+  background-color: var(--cal-bg);
+}
+
+/* --- Dark Theme --- */
+[data-theme="dark"] .pro-calendr-react,
+.pro-calendr-react[data-theme="dark"] {
+  --cal-bg: #111827;
+  --cal-bg-subtle: #1f2937;
+  --cal-bg-muted: #374151;
+
+  --cal-border: #374151;
+  --cal-border-light: #1f2937;
+
+  --cal-text: #f9fafb;
+  --cal-text-muted: #9ca3af;
+  --cal-text-subtle: #6b7280;
+
+  --cal-accent: #60a5fa;
+  --cal-accent-light: #1e3a5f;
+
+  --cal-today-bg: #1e3a5f;
+  --cal-weekend-bg: #1a1a2e;
+  --cal-selected-bg: #1e3a5f;
+  --cal-hover-bg: #1f2937;
+
+  --cal-now-indicator: #f87171;
+  --cal-focus-ring: #60a5fa;
+
+  --cal-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --cal-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --cal-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+}
+
+/* --- System dark mode (auto) --- */
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"] .pro-calendr-react,
+  .pro-calendr-react[data-theme="auto"] {
+    --cal-bg: #111827;
+    --cal-bg-subtle: #1f2937;
+    --cal-bg-muted: #374151;
+
+    --cal-border: #374151;
+    --cal-border-light: #1f2937;
+
+    --cal-text: #f9fafb;
+    --cal-text-muted: #9ca3af;
+    --cal-text-subtle: #6b7280;
+
+    --cal-accent: #60a5fa;
+    --cal-accent-light: #1e3a5f;
+
+    --cal-today-bg: #1e3a5f;
+    --cal-weekend-bg: #1a1a2e;
+    --cal-selected-bg: #1e3a5f;
+    --cal-hover-bg: #1f2937;
+
+    --cal-now-indicator: #f87171;
+    --cal-focus-ring: #60a5fa;
+
+    --cal-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --cal-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+    --cal-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  }
+}
+
+/* --- Structural layout --- */
+.pro-calendr-react-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--cal-border);
+  border-radius: 0.5rem;
+  background-color: var(--cal-bg);
+}
+
+.pro-calendr-react-header {
+  display: flex;
+  align-items: center;
+  gap: var(--cal-spacing-md);
+  padding: var(--cal-spacing-sm) var(--cal-spacing-lg);
+  border-bottom: 1px solid var(--cal-border);
+  background-color: var(--cal-bg);
+  z-index: var(--cal-z-header);
+}
+
+.pro-calendr-react-body {
+  position: relative;
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.pro-calendr-react-sidebar {
+  position: sticky;
+  left: 0;
+  width: var(--cal-sidebar-width);
+  flex-shrink: 0;
+  overflow-y: hidden;
+  border-right: 1px solid var(--cal-border);
+  background-color: var(--cal-bg);
+  z-index: var(--cal-z-sidebar);
+}
+
+.pro-calendr-react-grid {
+  position: relative;
+  flex: 1;
+  overflow: auto;
+}
+
+.pro-calendr-react-time-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--cal-z-header);
+  background-color: var(--cal-bg);
+  border-bottom: 1px solid var(--cal-border);
+}
+
+/* --- Now indicator --- */
+.pro-calendr-react-now-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: var(--cal-now-indicator);
+  z-index: var(--cal-z-event);
+  pointer-events: none;
+}
+
+.pro-calendr-react-now-dot {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--cal-now-indicator);
+  animation: pro-calendr-react-pulse 2s ease-in-out infinite;
+}
+
+/* --- Animations --- */
+@keyframes pro-calendr-react-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.3);
+  }
+}
+
+@keyframes pro-calendr-react-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pro-calendr-react-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  .pro-calendr-react,
+  .pro-calendr-react * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --- Print --- */
+@media print {
+  .pro-calendr-react-header {
+    display: none;
+  }
+
+  .pro-calendr-react-container {
+    border: 1px solid #000;
+  }
+
+  .pro-calendr-react {
+    --cal-bg: #fff;
+    --cal-text: #000;
+    --cal-border: #ccc;
+    --cal-shadow-sm: none;
+    --cal-shadow-md: none;
+    --cal-shadow-lg: none;
+  }
+
+  .pro-calendr-react-now-line,
+  .pro-calendr-react-now-dot {
+    display: none;
+  }
+}
+
+/* --- Focus visible --- */
+.pro-calendr-react :focus-visible {
+  outline: 2px solid var(--cal-focus-ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}

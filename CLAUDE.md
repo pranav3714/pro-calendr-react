@@ -25,6 +25,7 @@ Monorepo (pnpm workspaces). The single package lives at `packages/core/` and pub
 ### Source layout (`packages/core/src/`)
 
 - `views/<name>/` — View implementations: timeline, week, month, day, list
+- `components/` — Shared reusable React UI components (always check here before creating new ones)
 - `interfaces/` — All TypeScript interfaces and types (no inline typing)
 - `utils/` — Pure utility functions (always check here before writing new ones)
 - `headless/` — Headless exports (hooks + store without UI)
@@ -73,12 +74,14 @@ Zustand store (`store/calendar-store.ts`) is internal. Consumers interact throug
 3. **Object params always** — pass objects as function parameters even for a single param, for readability via field names
 4. **No inline typing** — all types and interfaces go in `interfaces/` folder as well-defined interfaces; never define types inline in function files
 5. **Check `utils/` first** — always read the `utils/` folder before writing new helper functions; reuse existing utilities
-6. **Check `package.json` deps** — read dependencies to know what libraries are already available; don't reinvent what a dependency already provides
-7. **SOLID principles** — apply Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion in all code design
-8. **Test complex math** — write test files for any function with complex calculations; include edge cases, corner cases, and potential numerical flaws
-9. **No barrel exports** — index files must NOT re-export from other files; each file exports its own content directly
-10. **Verify after every task** — always run `pnpm typecheck`, `pnpm lint`, and relevant test files after completing any feature or task
-11. **Extract logic to custom hooks** — in React components, isolate complicated logic into custom hooks so the UI/JSX stays clean and readable
-12. **No ternary operators** — never use ternary expressions; use early returns, if-statements, or helper functions for conditional values
-13. **Minimize blast radius** — prefer a larger change contained in one file over small changes spread across many components; keep the surface area of changes small
-14. **No prop drilling** — avoid passing props through multiple component layers; use Zustand stores where shared state makes sense
+6. **Check `components/` first** — always read the `components/` folder before creating new React components; reuse existing shared UI elements
+7. **Check `package.json` deps** — read dependencies to know what libraries are already available; don't reinvent what a dependency already provides
+8. **SOLID principles** — apply Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion in all code design
+9. **Test complex math** — write test files for any function with complex calculations; include edge cases, corner cases, and potential numerical flaws
+10. **No barrel exports** — index files must NOT re-export from other files; each file exports its own content directly
+11. **Verify after every task** — always run `pnpm typecheck`, `pnpm lint`, and relevant test files after completing any feature or task
+12. **Extract logic to custom hooks** — in React components, isolate complicated logic into custom hooks so the UI/JSX stays clean and readable
+13. **No ternary operators** — never use ternary expressions; use early returns, if-statements, or helper functions for conditional values
+14. **Minimize blast radius** — prefer a larger change contained in one file over small changes spread across many components; keep the surface area of changes small
+15. **No prop drilling** — avoid passing props through multiple component layers; use Zustand stores where shared state makes sense
+16. **Max 300 lines per component** — React components must not exceed 300 lines; split large components into smaller, specialized UI element components
